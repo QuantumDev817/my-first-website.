@@ -1,21 +1,38 @@
 document.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById("openBtn");
     const secretBox = document.getElementById("secretBox");
+    const petalsContainer = document.getElementById("petals-container");
     
-    // Добавляем музыку
-    const audio = new Audio('music.mp3'); 
-    audio.loop = true; // Музыка будет играть по кругу
-    audio.volume = 0.3; // Громкость 30%, чтобы не оглушило
+    function createRose() {
+        const rose = document.createElement("div");
+        rose.classList.add("rose");
+        rose.innerText = "🌹"; 
+        
+        const size = Math.random() * 20 + 15; 
+        rose.style.fontSize = `${size}px`;
+        rose.style.left = `${Math.random() * 100}vw`;
+        
+        const duration = Math.random() * 4 + 3; 
+        rose.style.animationDuration = `${duration}s`;
+        
+        petalsContainer.appendChild(rose);
+
+        setTimeout(() => {
+            rose.remove();
+        }, duration * 1000);
+    }
 
     btn.addEventListener("click", () => {
-        // 1. Включаем музыку
-        audio.play().catch(e => console.log("Браузер заблокировал автоплей, но по клику должно работать"));
+        btn.classList.add("fade-out");
         
-        // 2. Прячем кнопку и показываем секрет
-        btn.style.display = "none";
-        secretBox.style.display = "block";
-        
-        // 3. Меняем фон (можно добавить красивую картинку через CSS, если хочешь)
-        document.body.style.background = "linear-gradient(135deg, #0a0a0a 0%, #1a0000 100%)";
+        setTimeout(() => {
+            secretBox.classList.add("show");
+        }, 500);
+
+        const roseInterval = setInterval(createRose, 150);
+
+        setTimeout(() => {
+            clearInterval(roseInterval);
+        }, 10000);
     });
 });
