@@ -2,8 +2,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById("openBtn");
     const secretBox = document.getElementById("secretBox");
     const petalsContainer = document.getElementById("petals-container");
-    const container = document.querySelector(".container"); // Берем главный контейнер
     
+    // Находим главный контейнер, в котором лежит старый текст
+    const mainContainer = document.querySelector(".container");
+
     function createRose() {
         const rose = document.createElement("div");
         rose.classList.add("rose");
@@ -24,15 +26,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     btn.addEventListener("click", () => {
+        // Плавно убираем кнопку
         btn.classList.add("fade-out");
         
-        // ВОТ ОНА, МАГИЯ: Добавляем класс, который прячет старый текст
-        container.classList.add("hide-old");
+        // ВОТ ГЛАВНАЯ СТРОКА: добавляем класс, который прячет старый текст через CSS
+        mainContainer.classList.add("hide-old");
 
+        // Показываем секрет
         setTimeout(() => {
             secretBox.classList.add("show");
         }, 400);
 
+        // Запускаем розы
         const roseInterval = setInterval(createRose, 150);
 
         setTimeout(() => {
