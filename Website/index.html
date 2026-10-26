@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html>
-    <head>
+<html lang="ru">
+<head>
     <meta charset="UTF-8">
-    <title>Документ</title>
-    </head>
-    <body>
-      <h1>Привет всем</h1>
-    </body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Опросник</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Первый экран -->
+    <div id="screen1" class="screen">
+        <h1>Ты красивая?</h1>
+        <div class="buttons">
+            <button id="btn-yes" class="btn">Да</button>
+            <button id="btn-no" class="btn">Нет</button>
+        </div>
+    </div>
+
+    <!-- Второй экран (скрыт по умолчанию) -->
+    <div id="screen2" class="screen" style="display: none;">
+        <h1>Вопрос 2: Ты самая лучшая?</h1>
+        <button id="btn-next" class="btn">Конечно да!</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
 </html>
