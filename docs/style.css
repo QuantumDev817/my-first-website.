@@ -127,28 +127,23 @@ body {
     to { transform: translateY(110vh) rotate(360deg); }
 }
 
-/* --- ЕБАНАЯ АНИМЕ-ДЕВКА --- */
+/* --- АНИМЕ-ДЕВКА --- */
 .anime-girl {
-    position: fixed; /* Жестко фиксируем на экране */
-    bottom: 0; /* Прижимаем к низу */
-    right: 0; /* Прижимаем к правому краю (или left: 0, если хочешь слева) */
-    height: 70vh; /* Высота 70% от экрана */
-    z-index: -1; /* Отправляем НА ЗАДНИЙ ПЛАН (за кнопки) */
-    pointer-events: none; /* Клики проходят сквозь нее */
+    position: fixed; /* Вырываем из потока, фиксируем на экране */
+    bottom: 0;       /* Прижимаем к низу */
+    left: -20px;     /* Сдвигаем чуть влево (или right: 0, если хочешь справа) */
+    height: 60vh;    /* Высота 60% от экрана */
     
-    /* Анимация парения */
+    z-index: 1;      /* Ставим на задний план (но не -1, чтобы не улетела за темный фон body) */
+    pointer-events: none; /* Клики проходят сквозь нее! */
+    
     animation: float 3s ease-in-out infinite alternate;
-    filter: drop-shadow(0 0 20px #00ffff); /* Неоновое свечение */
+    filter: drop-shadow(0 0 20px #00ffff); /* Свечение */
 }
 
-@keyframes float {
-    0% { transform: translateY(0px); }
-    100% { transform: translateY(-30px); } /* Поднимается вверх */
-}
-
-/* На телефонах делаем ее поменьше, чтобы не перекрывала весь экран */
-@media (max-width: 600px) {
-    .anime-girl {
-        height: 50vh;
-    }
+/* Экран с кнопками должен быть поверх картинки */
+.screen {
+    position: relative;
+    z-index: 10; /* Кнопки всегда сверху */
+    /* ... остальные стили экрана (display: flex и т.д.) ... */
 }
