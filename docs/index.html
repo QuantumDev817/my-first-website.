@@ -4,37 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Твой личный квест</title>
+    <!-- Подключаем современные шрифты от Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Аниме-девка (Фон) -->
-    <img src="waifu.png" alt="Waifu" class="anime-girl">
-
     <!-- ЭКРАН 1 -->
-    <div id="screen1" class="screen">
-        <h1 class="glow-text">Ты красивая?</h1>
-        <div class="buttons">
-            <button id="btn-yes" class="btn">Да</button>
-            <button id="btn-no" class="btn">Нет</button>
+    <div id="screen1" class="screen active">
+        <div class="card">
+            <h1 class="title">Ты красивая?</h1>
+            <div class="buttons">
+                <button id="btn-yes" class="btn btn-primary">Да</button>
+                <button id="btn-no" class="btn btn-secondary">Нет</button>
+            </div>
         </div>
     </div>
 
-    <!-- ЭКРАН 2 (Изначально скрыт!) -->
+    <!-- ЭКРАН 2 -->
     <div id="screen2" class="screen" style="display: none;">
-        <h1 class="glow-text">Вопрос 2: Ты самая лучшая?</h1>
-        <button id="btn-next" class="btn">Конечно да!</button>
+        <div class="card">
+            <h1 class="title">Вопрос 2:<br>Ты самая лучшая?</h1>
+            <button id="btn-next" class="btn btn-primary">Конечно да!</button>
+        </div>
     </div>
 
-    <!-- ЭКРАН 3 (Изначально скрыт!) -->
+    <!-- ЭКРАН 3 -->
     <div id="screen3" class="screen" style="display: none;">
-        <h1 class="surprise-title">Сюрприз! 🎉</h1>
-        <div class="compliments-container">
-            <p class="compliment c1">Ты самая лучшая! ✨</p>
-            <p class="compliment c2">Ты чертовски красивая! 🌹</p>
-            <p class="compliment c3">С тобой пиздец как круто! 🔥</p>
+        <div class="card">
+            <h1 class="title">Сюрприз 🎉</h1>
+            <div class="compliments">
+                <p class="c1">Ты самая лучшая ✨</p>
+                <p class="c2">Ты чертовски красивая 🌹</p>
+                <p class="c3">С тобой пиздец как круто 🔥</p>
+            </div>
+            <button id="btn-restart" class="btn btn-outline">Пройти заново</button>
         </div>
-        <button id="btn-restart" class="btn restart-btn">Пройти заново</button>
     </div>
 
     <script src="script.js"></script>
