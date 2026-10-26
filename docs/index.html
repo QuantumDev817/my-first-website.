@@ -3,105 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Фан-сайт Амины</title>
+    <title>Секретный проект</title>
     <style>
-        /* --- БАЗА И ТЕМНАЯ ТЕМА --- */
-        body {
+        /* --- БАЗОВЫЕ НАСТРОЙКИ --- */
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            background-color: #111; /* Темный фон как в FNAF */
-            color: white;
-            font-family: 'Courier New', Courier, monospace; /* Шрифт как в хоррорах */
-            overflow: hidden; /* Чтобы не было скролла от падающих смайлов */
+        }
+        body {
+            background-color: #050505;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden; /* Отключаем скролл для падающих элементов */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* --- ЭКРАН 1: ПРИВЕТСТВИЕ --- */
+        /* --- ПАДАЮЩИЕ ЭЛЕМЕНТЫ (ФОН) --- */
+        .falling-element {
+            position: absolute;
+            top: -50px;
+            color: #00ffff;
+            font-size: 14px;
+            opacity: 0.6;
+            pointer-events: none;
+            animation: fall linear forwards;
+            z-index: 1;
+            text-shadow: 0 0 5px #00ffff;
+        }
+        @keyframes fall {
+            to { transform: translateY(110vh); }
+        }
+
+        /* --- ЭКРАН 1: КНОПКА --- */
         #welcome-screen {
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            height: 100vh;
             text-align: center;
             z-index: 10;
             position: relative;
+            padding: 20px;
         }
-
-        h1 { text-shadow: 0 0 10px red; }
+        #welcome-screen h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+            letter-spacing: 2px;
+        }
+        #welcome-screen p {
+            color: #aaa;
+            margin-bottom: 40px;
+            font-size: 1rem;
+            max-width: 300px;
+        }
         
-        button {
-            padding: 15px 30px;
-            font-size: 20px;
-            background-color: transparent;
-            color: #ff4444;
-            border: 2px solid #ff4444;
-            cursor: pointer;
+        /* Кнопка в стиле неоновой рамки */
+        .cyber-btn {
+            background: transparent;
+            color: #00ffff;
+            border: 2px solid #00ffff;
+            padding: 15px 40px;
+            font-size: 1.2rem;
             font-family: inherit;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
             transition: 0.3s;
-            box-shadow: 0 0 10px #ff4444;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+            border-radius: 5px;
+        }
+        .cyber-btn:hover {
+            background: #00ffff;
+            color: #000;
+            box-shadow: 0 0 30px #00ffff;
+            transform: scale(1.05);
         }
 
-        button:hover {
-            background-color: #ff4444;
-            color: black;
-            box-shadow: 0 0 20px #ff4444;
-        }
-
-        /* --- ЭКРАН 2: FNAF КАСКАД (Скрыт по умолчанию) --- */
-        #fnaf-screen {
-            display: none; /* Спрятан */
-            height: 100vh;
-            justify-content: center;
+        /* --- ЭКРАН 2: КОНТЕНТ --- */
+        #main-screen {
+            display: none; /* Изначально скрыт */
+            flex-direction: column;
             align-items: center;
-            position: relative;
-        }
-
-        .fnaf-stack {
-            position: relative;
-            width: 300px;
-            height: 400px;
-            margin-top: 50px;
-        }
-
-        .photo {
-            position: absolute;
-            top: 0;
-            left: 0;
+            justify-content: center;
             width: 100%;
             height: 100%;
+            z-index: 10;
+            position: relative;
+            padding: 20px;
+            overflow-y: auto; /* На случай, если экран маленький */
+        }
+
+        /* Стеклянная карточка */
+        .glass-card {
+            background: rgba(20, 20, 20, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            max-width: 400px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            transform: scale(0.8);
+            opacity: 0;
+        }
+        @keyframes popIn {
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Фото в стиле хакера */
+        .profile-pic {
+            width: 140px;
+            height: 140px;
             object-fit: cover;
-            border: 3px solid #333;
-            opacity: 0; /* Изначально невидимы */
-            /* Анимация появления */
-            animation: jumpScare 0.4s forwards;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.8);
+            border-radius: 50%;
+            border: 3px solid #ff00ff;
+            box-shadow: 0 0 20px #ff00ff;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+        .profile-pic:hover {
+            box-shadow: 0 0 40px #ff00ff;
         }
 
-        /* Задержки для каждой фотки (сначала 1, потом 2 и т.д.) */
-        .p1 { animation-delay: 0.5s; z-index: 1; top: 0px; left; 0px; }
-        .p2 { animation-delay: 1.2s; z-index: 2; top: 20px; left: 20px; }
-        .p3 { animation-delay: 1.9s; z-index: 2; top: 40px; left: 40px; }
-        .p4 { animation-delay: 2.6s; z-index: 1; top: 60px; left:60px; }
-
-        /* Эффект резкого появления (как скример в FNAF) */
-        @keyframes jumpScare {
-            0% { opacity: 0; transform: scale(0.5) rotate(-10deg); }
-            80% { opacity: 1; transform: scale(1.05) rotate(2deg); }
-            100% { opacity: 1; transform: scale(1) rotate(0); }
+        /* Тексты */
+        .main-title {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #00ffff;
         }
-
-        /* --- ПАДАЮЩИЕ СМАЙЛИКИ --- */
-        .falling-emoji {
-            position: absolute;
-            top: -50px;
-            font-size: 30px;
-            pointer-events: none; /* Чтобы не мешали кликать */
-            animation: fall linear forwards;
-            z-index: 1;
+        .subtitle {
+            color: #ff00ff;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
-
-        @keyframes fall {
-            to { transform: translateY(110vh); }
+        .romantic-text {
+            color: #ccc;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .romantic-text span {
+            color: #00ffff;
+            font-weight: bold;
+        }
+        .footer-note {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 30px;
+            border-top: 1px solid #333;
+            padding-top: 15px;
         }
     </style>
 </head>
@@ -109,75 +169,72 @@
 
     <!-- ЭКРАН 1 -->
     <div id="welcome-screen">
-        <h1>ЗАХОДИТЕ, ФАНАТЫ АМИНЫ</h1>
-        <p>Осторожно... то, что внутри, может напугать.</p>
-        <button id="openBtn">ОТКРЫТЬ СЕКРЕТ</button>
+        <h1>ДОСТУП РАЗРЕШЕН</h1>
+        <p>Амина, я тут подумал...<br>Ты сказала сделать по-своему. Вот мой вайб.</p>
+        <button class="cyber-btn" id="startBtn">Открыть</button>
     </div>
 
-    <!-- ЭКРАН 2 (FNAF) -->
-    <div id="fnaf-screen">
-        <div class="fnaf-stack">
-            <img src="fnaf1.jpg" class="photo p1" alt="Фото 1">
-            <img src="fnaf2.jpg" class="photo p2" alt="Фото 2">
-            <img src="fnaf.jpg" class="photo p3" alt="Фото 3">
-            <img src="fnaf3.jpg" class="photo p4" alt="Фото 4">
+    <!-- ЭКРАН 2 -->
+    <div id="main-screen">
+        <div class="glass-card">
+            <!-- Не забудь закинуть свое фото как my_photo.jpg -->
+            <img src="my_photo.jpg" alt="Кодер" class="profile-pic">
+            
+            <h2 class="main-title">Привет, Амина</h2>
+            <div class="subtitle">// Твой личный проект //</div>
+            
+            <p class="romantic-text">
+                Ты шаришь за <span>архитектуру</span>, любишь <span>энергичный казахский вайб</span> и круто выглядишь в <span>очках</span>. 
+                <br><br>
+                Я в это время строю свои миры из кода. Так что это наш общий вайб. Сделано с душой, как ты и просила.
+            </p>
+            
+            <div class="footer-note">
+                P.S. И да, я больше никогда не перепутаю твое имя. <br> Честно. 😉
+            </div>
         </div>
     </div>
 
     <!-- СКРИПТЫ -->
     <script>
         // 1. ЛОГИКА КНОПКИ
-        const openBtn = document.getElementById('openBtn');
+        const startBtn = document.getElementById('startBtn');
         const welcomeScreen = document.getElementById('welcome-screen');
-        const fnafScreen = document.getElementById('fnaf-screen');
+        const mainScreen = document.getElementById('main-screen');
 
-        openBtn.addEventListener('click', () => {
-            welcomeScreen.style.display = 'none'; // Прячем первый экран
-            fnafScreen.style.display = 'flex'; // Показываем экран с фотками
+        startBtn.addEventListener('click', () => {
+            welcomeScreen.style.display = 'none';
+            mainScreen.style.display = 'flex';
         });
 
-        // 2. ЛОГИКА ПАДАЮЩИХ СМАЙЛИКОВ
-        const emojis = ['😈', '💀', '👻', '🖤', '🎃', '👁️']; // Можешь добавить свои
+        // 2. ПАДАЮЩИЕ ЭЛЕМЕНТЫ (Бинарный код и ноты, чтобы было энергично)
+        const symbols = ['0', '1', '🎵', '🎶', '{ }', '</>']; 
+        
+        function createFallingElement() {
+            const el = document.createElement('div');
+            el.classList.add('falling-element');
+            el.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+            
+            // Случайная позиция по ширине
+            el.style.left = Math.random() * 100 + 'vw';
+            
+            // Случайная скорость
+            const duration = Math.random() * 3 + 2; // от 2 до 5 секунд
+            el.style.animationDuration = duration + 's';
+            
+            // Случайный размер и цвет
+            el.style.fontSize = (Math.random() * 15 + 15) + 'px';
+            el.style.color = Math.random() > 0.5 ? '#00ffff' : '#ff00ff'; // Чередуем неон
 
-        function createEmoji() {
-            const emoji = document.createElement('div');
-            emoji.classList.add('falling-emoji');
-            
-            // Выбираем случайный смайлик
-            emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-            
-            // Случайная позиция по горизонтали
-            emoji.style.left = Math.random() * 100 + 'vw';
-            
-            // Случайная скорость падения (от 2 до 5 секунд)
-            const fallDuration = Math.random() * 3 + 2;
-            emoji.style.animationDuration = fallDuration + 's';
-            
-            // Случайный размер
-            emoji.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            document.body.appendChild(el);
 
-            document.body.appendChild(emoji);
-
-            // Удаляем смайлик, когда он упадет, чтобы не грузить браузер
             setTimeout(() => {
-                emoji.remove();
-            }, fallDuration * 1000);
+                el.remove();
+            }, duration * 1000);
         }
 
-        // Запускаем создание смайликов каждые 300 миллисекунд
-        setInterval(createEmoji, 300);
+        // Запускаем генерацию каждые 400 мс
+        setInterval(createFallingElement, 400);
     </script>
-
 </body>
 </html>
-
-<div class="cyber-profile-container">
-    <div class="cyber-card">
-        <div class="cyber-glow"></div>
-        <img src="my_photo.jpg" alt="QuantumDev" class="cyber-photo">
-        <div class="cyber-info">
-            <h3 class="cyber-name">QuantumDev817</h3>
-            <p class="cyber-status">// ROLE: FULL-STACK // STATUS: ONLINE</p>
-        </div>
-    </div>
-</div>
