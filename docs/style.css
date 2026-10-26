@@ -5,18 +5,39 @@ body {
     color: white;
     font-family: 'Courier New', Courier, monospace;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden; /* Чтобы кнопка не создавала скролл */
+    overflow: hidden; /* Запрещаем скролл */
 }
 
+/* --- ЕБАНАЯ АНИМЕ-ДЕВКА --- */
+.anime-girl {
+    position: fixed; /* Фиксируем на экране */
+    bottom: 0;       /* Прижимаем к низу */
+    left: 0;         /* Ставим слева */
+    height: 70vh;    /* Высота 70% от экрана */
+    z-index: -1;     /* Отправляем на задний план (за кнопки) */
+    pointer-events: none; /* Клики проходят сквозь нее */
+    animation: float 3s ease-in-out infinite alternate;
+    filter: drop-shadow(0 0 20px #00ffff); /* Свечение */
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-20px); }
+}
+
+/* --- ЭКРАНЫ (Центрируем всё) --- */
 .screen {
-    text-align: center;
-    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+    text-align: center;
+    z-index: 10; /* Экран поверх картинки */
 }
 
 .glow-text {
@@ -29,11 +50,10 @@ body {
 }
 
 .buttons {
-    position: relative;
-    height: 100px; 
     display: flex;
     gap: 20px;
-    justify-content: center;
+    position: relative;
+    height: 100px;
 }
 
 .btn {
@@ -57,13 +77,12 @@ body {
     box-shadow: 0 0 20px #ff00ff;
 }
 
-/* Кнопка "Нет" (изначально на месте, двигается через JS) */
 #btn-no {
     position: relative;
     transition: 0.2s; 
 }
 
-/* --- СТИЛИ ДЛЯ СЮРПРИЗА --- */
+/* --- СЮРПРИЗ --- */
 .surprise-title {
     font-size: 3.5rem;
     color: #ff00ff;
@@ -88,7 +107,7 @@ body {
     font-size: 1.5rem;
     color: #fff;
     text-shadow: 0 0 10px #00ffff;
-    opacity: 0; /* Появляются через анимацию */
+    opacity: 0; 
     transform: translateY(20px);
     animation: slideUp 0.5s ease forwards;
 }
@@ -113,7 +132,6 @@ body {
     box-shadow: 0 0 20px #00ffff;
 }
 
-/* --- ПАДАЮЩИЕ РОЗЫ --- */
 .falling-rose {
     position: absolute;
     top: -50px;
@@ -125,25 +143,4 @@ body {
 
 @keyframes fallRose {
     to { transform: translateY(110vh) rotate(360deg); }
-}
-
-/* --- АНИМЕ-ДЕВКА --- */
-.anime-girl {
-    position: fixed; /* Вырываем из потока, фиксируем на экране */
-    bottom: 0;       /* Прижимаем к низу */
-    left: -20px;     /* Сдвигаем чуть влево (или right: 0, если хочешь справа) */
-    height: 60vh;    /* Высота 60% от экрана */
-    
-    z-index: 1;      /* Ставим на задний план (но не -1, чтобы не улетела за темный фон body) */
-    pointer-events: none; /* Клики проходят сквозь нее! */
-    
-    animation: float 3s ease-in-out infinite alternate;
-    filter: drop-shadow(0 0 20px #00ffff); /* Свечение */
-}
-
-/* Экран с кнопками должен быть поверх картинки */
-.screen {
-    position: relative;
-    z-index: 10; /* Кнопки всегда сверху */
-    /* ... остальные стили экрана (display: flex и т.д.) ... */
 }
