@@ -3,238 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Секретный проект</title>
-    <style>
-        /* --- БАЗОВЫЕ НАСТРОЙКИ --- */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            background-color: #050505;
-            color: #fff;
-            font-family: 'Courier New', Courier, monospace;
-            overflow: hidden; /* Отключаем скролл для падающих элементов */
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* --- ПАДАЮЩИЕ ЭЛЕМЕНТЫ (ФОН) --- */
-        .falling-element {
-            position: absolute;
-            top: -50px;
-            color: #00ffff;
-            font-size: 14px;
-            opacity: 0.6;
-            pointer-events: none;
-            animation: fall linear forwards;
-            z-index: 1;
-            text-shadow: 0 0 5px #00ffff;
-        }
-        @keyframes fall {
-            to { transform: translateY(110vh); }
-        }
-
-        /* --- ЭКРАН 1: КНОПКА --- */
-        #welcome-screen {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            z-index: 10;
-            position: relative;
-            padding: 20px;
-        }
-        #welcome-screen h1 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
-            letter-spacing: 2px;
-        }
-        #welcome-screen p {
-            color: #aaa;
-            margin-bottom: 40px;
-            font-size: 1rem;
-            max-width: 300px;
-        }
-        
-        /* Кнопка в стиле неоновой рамки */
-        .cyber-btn {
-            background: transparent;
-            color: #00ffff;
-            border: 2px solid #00ffff;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            font-family: inherit;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            position: relative;
-            transition: 0.3s;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
-            border-radius: 5px;
-        }
-        .cyber-btn:hover {
-            background: #00ffff;
-            color: #000;
-            box-shadow: 0 0 30px #00ffff;
-            transform: scale(1.05);
-        }
-
-        /* --- ЭКРАН 2: КОНТЕНТ --- */
-        #main-screen {
-            display: none; /* Изначально скрыт */
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            z-index: 10;
-            position: relative;
-            padding: 20px;
-            overflow-y: auto; /* На случай, если экран маленький */
-        }
-
-        /* Стеклянная карточка */
-        .glass-card {
-            background: rgba(20, 20, 20, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px 30px;
-            text-align: center;
-            max-width: 400px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
-            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            transform: scale(0.8);
-            opacity: 0;
-        }
-        @keyframes popIn {
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        /* Фото в стиле хакера */
-        .profile-pic {
-            width: 140px;
-            height: 140px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 3px solid #ff00ff;
-            box-shadow: 0 0 20px #ff00ff;
-            margin-bottom: 20px;
-            transition: 0.3s;
-        }
-        .profile-pic:hover {
-            box-shadow: 0 0 40px #ff00ff;
-        }
-
-        /* Тексты */
-        .main-title {
-            font-size: 1.8rem;
-            color: #fff;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px #00ffff;
-        }
-        .subtitle {
-            color: #ff00ff;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        .romantic-text {
-            color: #ccc;
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        .romantic-text span {
-            color: #00ffff;
-            font-weight: bold;
-        }
-        .footer-note {
-            font-size: 0.8rem;
-            color: #666;
-            margin-top: 30px;
-            border-top: 1px solid #333;
-            padding-top: 15px;
-        }
-    </style>
+    <title>Опросник</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- ЭКРАН 1 -->
-    <div id="welcome-screen">
-        <h1>ДОСТУП РАЗРЕШЕН</h1>
-        <p>Амина, я тут подумал...<br>Ты сказала сделать по-своему. Вот мой вайб.</p>
-        <button class="cyber-btn" id="startBtn">Открыть</button>
-    </div>
-
-    <!-- ЭКРАН 2 -->
-    <div id="main-screen">
-        <div class="glass-card">
-            <!-- Не забудь закинуть свое фото как my_photo.jpg -->
-            <img src="rose.jpg" alt="Кодер" class="profile-pic">
-            
-            <h2 class="main-title">Привет, Амина</h2>
-            <div class="subtitle">// Твой личный проект //</div>
-            
-            <p class="romantic-text">
-                Ты шаришь за <span>архитектуру</span>, любишь <span>энергичный казахский вайб</span> и круто выглядишь и <span>красиво</span>. 
-                <br><br>
-                Я в это время строю свои миры из кода. Так что это наш общий вайб. Сделано с душой, как ты и просила.
-            </p>
-            
-            <div class="footer-note">
-                P.S. И да, ты очень beatifull. <br> Честно. 😉
-            </div>
+    <!-- Первый экран -->
+    <div id="screen1" class="screen">
+        <h1>Ты красивая?</h1>
+        <div class="buttons">
+            <button id="btn-yes" class="btn">Да</button>
+            <button id="btn-no" class="btn">Нет</button>
         </div>
     </div>
 
-    <!-- СКРИПТЫ -->
-    <script>
-        // 1. ЛОГИКА КНОПКИ
-        const startBtn = document.getElementById('startBtn');
-        const welcomeScreen = document.getElementById('welcome-screen');
-        const mainScreen = document.getElementById('main-screen');
+    <!-- Второй экран (скрыт по умолчанию) -->
+    <div id="screen2" class="screen" style="display: none;">
+        <h1>Вопрос 2: Ты самая лучшая?</h1>
+        <button id="btn-next" class="btn">Конечно да!</button>
+    </div>
 
-        startBtn.addEventListener('click', () => {
-            welcomeScreen.style.display = 'none';
-            mainScreen.style.display = 'flex';
-        });
-
-        // 2. ПАДАЮЩИЕ ЭЛЕМЕНТЫ (Бинарный код и ноты, чтобы было энергично)
-        const symbols = ['0', '1', '🎵', '🎶', '{ }', '</>']; 
-        
-        function createFallingElement() {
-            const el = document.createElement('div');
-            el.classList.add('falling-element');
-            el.innerText = symbols[Math.floor(Math.random() * symbols.length)];
-            
-            // Случайная позиция по ширине
-            el.style.left = Math.random() * 100 + 'vw';
-            
-            // Случайная скорость
-            const duration = Math.random() * 3 + 2; // от 2 до 5 секунд
-            el.style.animationDuration = duration + 's';
-            
-            // Случайный размер и цвет
-            el.style.fontSize = (Math.random() * 15 + 15) + 'px';
-            el.style.color = Math.random() > 0.5 ? '#00ffff' : '#ff00ff'; // Чередуем неон
-
-            document.body.appendChild(el);
-
-            setTimeout(() => {
-                el.remove();
-            }, duration * 1000);
-        }
-
-        // Запускаем генерацию каждые 400 мс
-        setInterval(createFallingElement, 400);
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
