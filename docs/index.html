@@ -3,48 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Твой личный квест</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <title>Access Granted</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body {
-            background-color: #030008; /* Глубокий черный с фиолетовым оттенком */
+            background-color: #020005;
             color: #ffffff;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Share Tech Mono', monospace;
             height: 100vh;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: none; /* Прячем стандартный курсор */
+            /* Перспектива для 3D эффекта */
+            perspective: 1000px; 
         }
 
-        /* --- ЕБАНЫЙ ЖИВОЙ ФОН (Светящиеся пятна) --- */
-        .bg-blobs {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden;
+        /* --- ЖИВОЙ ФОН --- */
+        .bg-grid {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: moveGrid 10s linear infinite;
         }
-        .blob {
-            position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.6;
-            animation: moveBlobs 15s infinite alternate ease-in-out;
-        }
-        .blob-1 { width: 400px; height: 400px; background: #4a00e0; top: -100px; left: -100px; }
-        .blob-2 { width: 300px; height: 300px; background: #8e2de2; bottom: -50px; right: -50px; animation-delay: -5s; }
-        .blob-3 { width: 200px; height: 200px; background: #ff0844; top: 40%; left: 60%; animation-delay: -10s; }
-
-        @keyframes moveBlobs {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(100px, 100px) scale(1.2); }
+        @keyframes moveGrid {
+            0% { background-position: 0 0; }
+            100% { background-position: 30px 30px; }
         }
 
-        /* --- КАСТОМНЫЙ КУРСОР --- */
-        #cursor {
-            position: fixed; width: 20px; height: 20px; border-radius: 50%;
-            background: rgba(255, 255, 255, 0.8); pointer-events: none;
-            z-index: 9999; transform: translate(-50%, -50%);
-            mix-blend-mode: difference; /* Прикольный эффект инверсии */
-            transition: width 0.3s, height 0.3s;
+        /* --- ЭКРАН ЗАГРУЗКИ (Терминал) --- */
+        #boot-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #020005; z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; padding: 40px;
+            color: #00ffff; font-size: 1.2rem; line-height: 1.5;
         }
+        .cursor-blink { animation: blink 1s step-end infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
 
         /* --- ЭКРАНЫ --- */
         .screen {
@@ -53,102 +52,101 @@
             padding: 20px; z-index: 10;
         }
 
-        /* --- СТЕКЛЯННАЯ КАРТОЧКА --- */
+        /* --- 3D СТЕКЛЯННАЯ КАРТОЧКА --- */
         .card {
-            background: rgba(20, 20, 30, 0.4);
-            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 60px 40px; border-radius: 32px;
+            background: rgba(15, 15, 20, 0.6);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            padding: 60px 40px; border-radius: 20px;
             text-align: center; max-width: 480px; width: 100%;
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255,255,255,0.05);
-            transform: translateY(0);
-            animation: cardFloat 6s infinite alternate ease-in-out;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0,255,255,0.1);
+            transform-style: preserve-3d; /* Включаем 3D для детей */
+            transition: transform 0.1s ease-out; /* Плавный наклон */
         }
 
-        @keyframes cardFloat {
-            0% { transform: translateY(0px); }
-            100% { transform: translateY(-15px); }
-        }
-
-        /* --- ТЕКСТ --- */
+        /* --- ТЕКСТ С ГЛИТЧЕМ --- */
         .title {
             font-family: 'Syne', sans-serif;
             font-size: 2.5rem; font-weight: 800;
             margin-bottom: 40px; line-height: 1.1; letter-spacing: -1px;
-            background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            color: #ffffff;
+            text-transform: uppercase;
+            position: relative;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+            transform: translateZ(30px); /* Выпуклость в 3D */
         }
 
         .subtitle {
-            color: #ff0844; font-size: 0.8rem; font-weight: 600;
-            letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px;
-            text-shadow: 0 0 10px rgba(255, 8, 68, 0.5);
+            color: #00ffff; font-size: 0.9rem; font-weight: 600;
+            letter-spacing: 4px; text-transform: uppercase; margin-bottom: 20px;
+            transform: translateZ(20px);
         }
 
         /* --- КНОПКИ --- */
-        .buttons { display: flex; gap: 20px; justify-content: center; position: relative; height: 70px; align-items: center; }
+        .buttons { display: flex; gap: 20px; justify-content: center; position: relative; height: 70px; align-items: center; transform: translateZ(40px); }
 
         .btn {
             padding: 18px 36px; font-size: 16px; font-weight: 600;
-            font-family: 'Inter', sans-serif; border-radius: 16px;
-            cursor: none; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            border: none; text-transform: uppercase; letter-spacing: 1px;
+            font-family: 'Share Tech Mono', monospace; border-radius: 8px;
+            cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            text-transform: uppercase; letter-spacing: 2px;
         }
 
         .btn-primary {
-            background: #ffffff; color: #000000;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            background: #00ffff; color: #000000;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+            border: none;
         }
         .btn-primary:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 50px rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.8);
         }
 
         .btn-secondary {
-            background: transparent; color: #888;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: transparent; color: #00ffff;
+            border: 1px solid #00ffff;
+            box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.2);
         }
-        .btn-secondary:hover { border-color: #fff; color: #fff; }
 
         #btn-no { position: relative; transition: 0.1s; }
 
         /* --- СЮРПРИЗ --- */
-        .compliments { display: flex; flex-direction: column; gap: 20px; margin-top: 30px;}
+        .compliments { display: flex; flex-direction: column; gap: 20px; margin-top: 30px; transform: translateZ(25px);}
         .compliments p { 
-            font-size: 1.2rem; font-weight: 400; color: #fff; opacity: 0; transform: translateY(20px); 
+            font-size: 1.3rem; font-weight: 400; color: #fff; opacity: 0; transform: translateY(20px); 
             animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
             line-height: 1.5;
         }
-        .c1 { animation-delay: 0.2s; }
-        .c2 { animation-delay: 1.0s; }
-        .c3 { animation-delay: 1.8s; font-weight: 600; color: #ff0844; text-shadow: 0 0 15px rgba(255,8,68,0.5); }
+        .c1 { animation-delay: 0.2s; color: #00ffff;}
+        .c2 { animation-delay: 1.0s; color: #ff00ff;}
+        .c3 { animation-delay: 1.8s; font-weight: 800; color: #ffffff; text-shadow: 0 0 15px #fff; }
         
         @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
 
         /* --- ПАДАЮЩИЕ ЭЛЕМЕНТЫ --- */
         .falling-item { 
-            position: absolute; top: -50px; font-size: 24px; 
+            position: absolute; top: -50px; font-size: 30px; 
             pointer-events: none; z-index: 100; 
             animation: fallDown linear forwards; 
+            text-shadow: 0 0 20px #fff;
         }
         @keyframes fallDown { to { transform: translateY(110vh) rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <!-- Живой фон -->
-    <div class="bg-blobs">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
+    <!-- Экран загрузки -->
+    <div id="boot-screen">
+        <div id="boot-text"></div>
+        <div class="cursor-blink">_</div>
     </div>
 
-    <!-- Кастомный курсор -->
-    <div id="cursor"></div>
+    <!-- Фон -->
+    <div class="bg-grid"></div>
 
     <!-- ЭКРАН 1 -->
-    <div id="screen1" class="screen">
-        <div class="card">
+    <div id="screen1" class="screen" style="opacity: 0; pointer-events: none;">
+        <div class="card" id="card1">
             <div class="subtitle">System Check</div>
             <h1 class="title">Ты красивая?</h1>
             <div class="buttons">
@@ -160,7 +158,7 @@
 
     <!-- ЭКРАН 2 -->
     <div id="screen2" class="screen" style="display: none;">
-        <div class="card">
+        <div class="card" id="card2">
             <div class="subtitle">Level 2</div>
             <h1 class="title">Ты сводишь меня с ума, ты в курсе?</h1>
             <button id="btn-next" class="btn btn-primary">Ой, перестань 😳</button>
@@ -169,7 +167,7 @@
 
     <!-- ЭКРАН 3 -->
     <div id="screen3" class="screen" style="display: none;">
-        <div class="card">
+        <div class="card" id="card3">
             <div class="subtitle">Access Granted</div>
             <h1 class="title">Сюрприз 🎉</h1>
             <div class="compliments">
@@ -177,27 +175,73 @@
                 <p class="c2">Я бы дебажил твой вайб 24/7 без перерыва.</p>
                 <p class="c3">Ты — мой главный апдейт в этой жизни. ❤️</p>
             </div>
-            <button id="btn-restart" class="btn btn-primary" style="margin-top: 40px; background: transparent; border: 1px solid #fff; color: #fff;">Начать заново</button>
+            <button id="btn-restart" class="btn btn-secondary" style="margin-top: 40px;">Перезапустить</button>
         </div>
     </div>
 
     <script>
-        // --- 1. КАСТОМНЫЙ КУРСОР ---
-        const cursor = document.getElementById('cursor');
+        // --- 1. ЭФФЕКТ ЗАГРУЗКИ (Терминал) ---
+        const bootText = document.getElementById('boot-text');
+        const bootScreen = document.getElementById('boot-screen');
+        const screen1 = document.getElementById('screen1');
+        const textLines = [
+            "> INITIALIZING SYSTEM...",
+            "> CONNECTING TO SERVER...",
+            "> BYPASSING SECURITY PROTOCOLS...",
+            "> ACCESS GRANTED.",
+            "> LOADING USER INTERFACE..."
+        ];
+        let lineIndex = 0;
+        let charIndex = 0;
+
+        function typeBoot() {
+            if (lineIndex < textLines.length) {
+                if (charIndex < textLines[lineIndex].length) {
+                    bootText.innerHTML += textLines[lineIndex].charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeBoot, 30); // Скорость печати
+                } else {
+                    bootText.innerHTML += "<br>";
+                    lineIndex++;
+                    charIndex = 0;
+                    setTimeout(typeBoot, 300); // Пауза между строками
+                }
+            } else {
+                // Когда текст напечатан, показываем сайт
+                setTimeout(() => {
+                    bootScreen.style.display = 'none';
+                    screen1.style.opacity = '1';
+                    screen1.style.pointerEvents = 'auto';
+                    screen1.style.transition = 'opacity 1s ease';
+                }, 500);
+            }
+        }
+        setTimeout(typeBoot, 500); // Начало загрузки
+
+        // --- 2. 3D ЭФФЕКТ КАРТОЧКИ ---
+        const cards = document.querySelectorAll('.card');
         document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-        // Увеличиваем курсор при наведении на кнопки
-        document.querySelectorAll('button').forEach(btn => {
-            btn.addEventListener('mouseenter', () => { cursor.style.width = '40px'; cursor.style.height = '40px'; });
-            btn.addEventListener('mouseleave', () => { cursor.style.width = '20px'; cursor.style.height = '20px'; });
+            // Вычисляем позицию мышки относительно центра экрана
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            
+            cards.forEach(card => {
+                if(card.offsetParent !== null) { // Применяем только к видимой карточке
+                    card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+                }
+            });
         });
 
-        // --- 2. ЛОГИКА КНОПОК ---
+        // Возвращаем карточку в исходное положение, когда мышка уходит
+        document.addEventListener('mouseleave', () => {
+            cards.forEach(card => {
+                card.style.transform = `rotateY(0deg) rotateX(0deg)`;
+            });
+        });
+
+        // --- 3. ЛОГИКА КНОПОК ---
         const btnYes = document.getElementById('btn-yes');
         const btnNo = document.getElementById('btn-no');
-        const screen1 = document.getElementById('screen1');
         const screen2 = document.getElementById('screen2');
         const btnNext = document.getElementById('btn-next');
         const btnRestart = document.getElementById('btn-restart');
@@ -217,7 +261,10 @@
             btnNo.style.top = randomY + 'px';
 
             clickCount++;
-            btnYes.style.transform = `scale(${1 + clickCount * 0.15})`; 
+            // Кнопка Да растет
+            btnYes.style.transform = `scale(${1 + clickCount * 0.2})`; 
+            // Кнопка Нет уменьшается
+            btnNo.style.transform = `scale(${Math.max(0.2, 1 - clickCount * 0.1)})`; 
             btnNo.innerText = noTexts[Math.min(clickCount, noTexts.length - 1)];
         }
 
@@ -235,9 +282,9 @@
             startRain();
         });
 
-        // --- 3. ДОЖДЬ ИЗ СЕРДЕЦ ---
+        // --- 4. ДОЖДЬ ---
         function startRain() {
-            const items = ['❤️', '✨', '🔥', '🌹', '💖']; 
+            const items = ['❤️', '✨', '🔥', '🌹', '💻']; 
             const interval = setInterval(() => {
                 const el = document.createElement('div');
                 el.classList.add('falling-item');
@@ -256,6 +303,7 @@
             clickCount = 0;
             btnNo.innerText = "Нет";
             btnYes.style.transform = 'scale(1)'; 
+            btnNo.style.transform = 'scale(1)';
             btnNo.style.position = 'relative'; 
             btnNo.style.left = '0px'; btnNo.style.top = '0px';
         });
