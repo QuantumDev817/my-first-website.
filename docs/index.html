@@ -3,116 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кибер-Флирт</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <title>Твой личный квест</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body {
-            background: radial-gradient(circle at top right, #2a0845 0%, #050505 60%);
+            background-color: #030008; /* Глубокий черный с фиолетовым оттенком */
             color: #ffffff;
             font-family: 'Inter', sans-serif;
             height: 100vh;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            cursor: none; /* Прячем стандартный курсор */
         }
 
+        /* --- ЕБАНЫЙ ЖИВОЙ ФОН (Светящиеся пятна) --- */
+        .bg-blobs {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden;
+        }
+        .blob {
+            position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.6;
+            animation: moveBlobs 15s infinite alternate ease-in-out;
+        }
+        .blob-1 { width: 400px; height: 400px; background: #4a00e0; top: -100px; left: -100px; }
+        .blob-2 { width: 300px; height: 300px; background: #8e2de2; bottom: -50px; right: -50px; animation-delay: -5s; }
+        .blob-3 { width: 200px; height: 200px; background: #ff0844; top: 40%; left: 60%; animation-delay: -10s; }
+
+        @keyframes moveBlobs {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(100px, 100px) scale(1.2); }
+        }
+
+        /* --- КАСТОМНЫЙ КУРСОР --- */
+        #cursor {
+            position: fixed; width: 20px; height: 20px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.8); pointer-events: none;
+            z-index: 9999; transform: translate(-50%, -50%);
+            mix-blend-mode: difference; /* Прикольный эффект инверсии */
+            transition: width 0.3s, height 0.3s;
+        }
+
+        /* --- ЭКРАНЫ --- */
         .screen {
-            width: 100%; height: 100%;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; justify-content: center; align-items: center;
             padding: 20px; z-index: 10;
         }
 
-        /* Стеклянная карточка */
+        /* --- СТЕКЛЯННАЯ КАРТОЧКА --- */
         .card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 50px 40px; border-radius: 24px;
-            text-align: center; max-width: 450px; width: 100%;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            position: relative;
+            background: rgba(20, 20, 30, 0.4);
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 60px 40px; border-radius: 32px;
+            text-align: center; max-width: 480px; width: 100%;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255,255,255,0.05);
+            transform: translateY(0);
+            animation: cardFloat 6s infinite alternate ease-in-out;
         }
 
+        @keyframes cardFloat {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-15px); }
+        }
+
+        /* --- ТЕКСТ --- */
         .title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2rem; font-weight: 700;
-            margin-bottom: 40px; line-height: 1.2;
-            background: linear-gradient(90deg, #ff0844 0%, #ffb199 100%);
+            font-family: 'Syne', sans-serif;
+            font-size: 2.5rem; font-weight: 800;
+            margin-bottom: 40px; line-height: 1.1; letter-spacing: -1px;
+            background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
         .subtitle {
-            color: #888;
-            font-size: 0.9rem;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            color: #ff0844; font-size: 0.8rem; font-weight: 600;
+            letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 8, 68, 0.5);
         }
 
-        .buttons { 
-            display: flex; gap: 15px; justify-content: center; 
-            position: relative; height: 80px; align-items: center;
-        }
+        /* --- КНОПКИ --- */
+        .buttons { display: flex; gap: 20px; justify-content: center; position: relative; height: 70px; align-items: center; }
 
         .btn {
-            padding: 16px 32px; font-size: 18px; font-weight: 800;
-            font-family: 'Inter', sans-serif; border-radius: 12px;
-            cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            border: none;
+            padding: 18px 36px; font-size: 16px; font-weight: 600;
+            font-family: 'Inter', sans-serif; border-radius: 16px;
+            cursor: none; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            border: none; text-transform: uppercase; letter-spacing: 1px;
         }
 
-        /* Кнопка ДА (растет и пульсирует) */
         .btn-primary {
-            background: linear-gradient(135deg, #ff0844 0%, #ffb199 100%);
-            color: white; box-shadow: 0 0 20px rgba(255, 8, 68, 0.5);
-            animation: pulse-btn 1.5s infinite alternate;
+            background: #ffffff; color: #000000;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+        }
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.6);
         }
 
-        @keyframes pulse-btn {
-            from { box-shadow: 0 0 15px rgba(255, 8, 68, 0.5); }
-            to { box-shadow: 0 0 30px rgba(255, 8, 68, 0.9); }
-        }
-
-        /* Кнопка НЕТ */
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.05); color: #a0a0a0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: transparent; color: #888;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
+        .btn-secondary:hover { border-color: #fff; color: #fff; }
 
         #btn-no { position: relative; transition: 0.1s; }
 
-        /* Сюрприз */
-        .compliments { display: flex; flex-direction: column; gap: 20px; margin-top: 20px;}
+        /* --- СЮРПРИЗ --- */
+        .compliments { display: flex; flex-direction: column; gap: 20px; margin-top: 30px;}
         .compliments p { 
-            font-size: 1.2rem; font-weight: 600; opacity: 0; transform: translateY(20px); 
-            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+            font-size: 1.2rem; font-weight: 400; color: #fff; opacity: 0; transform: translateY(20px); 
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+            line-height: 1.5;
         }
-        .c1 { animation-delay: 0.2s; color: #ffb199; }
-        .c2 { animation-delay: 1.0s; color: #ff0844; }
-        .c3 { animation-delay: 1.8s; color: #00ff87; }
+        .c1 { animation-delay: 0.2s; }
+        .c2 { animation-delay: 1.0s; }
+        .c3 { animation-delay: 1.8s; font-weight: 600; color: #ff0844; text-shadow: 0 0 15px rgba(255,8,68,0.5); }
         
         @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
 
-        .falling-rose { 
+        /* --- ПАДАЮЩИЕ ЭЛЕМЕНТЫ --- */
+        .falling-item { 
             position: absolute; top: -50px; font-size: 24px; 
             pointer-events: none; z-index: 100; 
-            animation: fallRose linear forwards; 
+            animation: fallDown linear forwards; 
         }
-        @keyframes fallRose { to { transform: translateY(110vh) rotate(360deg); } }
+        @keyframes fallDown { to { transform: translateY(110vh) rotate(360deg); } }
     </style>
 </head>
 <body>
 
+    <!-- Живой фон -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Кастомный курсор -->
+    <div id="cursor"></div>
+
     <!-- ЭКРАН 1 -->
     <div id="screen1" class="screen">
         <div class="card">
-            <div class="subtitle">// Проверка на адекватность //</div>
+            <div class="subtitle">System Check</div>
             <h1 class="title">Ты красивая?</h1>
             <div class="buttons">
-                <button id="btn-yes" class="btn btn-primary">Да, еще как!</button>
+                <button id="btn-yes" class="btn btn-primary">Да</button>
                 <button id="btn-no" class="btn btn-secondary">Нет</button>
             </div>
         </div>
@@ -121,26 +161,40 @@
     <!-- ЭКРАН 2 -->
     <div id="screen2" class="screen" style="display: none;">
         <div class="card">
-            <div class="subtitle">// Сложный уровень //</div>
+            <div class="subtitle">Level 2</div>
             <h1 class="title">Ты сводишь меня с ума, ты в курсе?</h1>
-            <button id="btn-next" class="btn btn-primary">Ой, ну перестань 😳</button>
+            <button id="btn-next" class="btn btn-primary">Ой, перестань 😳</button>
         </div>
     </div>
 
     <!-- ЭКРАН 3 -->
     <div id="screen3" class="screen" style="display: none;">
         <div class="card">
-            <h1 class="title">Инициализация сюрприза... 🚀</h1>
+            <div class="subtitle">Access Granted</div>
+            <h1 class="title">Сюрприз 🎉</h1>
             <div class="compliments">
-                <p class="c1">У тебя глаза красивее, чем мой код.</p>
-                <p class="c2">Я бы дебажил твой вайб 24/7.</p>
+                <p class="c1">У тебя глаза красивее, чем мой самый чистый код.</p>
+                <p class="c2">Я бы дебажил твой вайб 24/7 без перерыва.</p>
                 <p class="c3">Ты — мой главный апдейт в этой жизни. ❤️</p>
             </div>
-            <button id="btn-restart" class="btn btn-primary" style="margin-top: 40px; background: transparent; border: 1px solid #ff0844;">Начать заново</button>
+            <button id="btn-restart" class="btn btn-primary" style="margin-top: 40px; background: transparent; border: 1px solid #fff; color: #fff;">Начать заново</button>
         </div>
     </div>
 
     <script>
+        // --- 1. КАСТОМНЫЙ КУРСОР ---
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        // Увеличиваем курсор при наведении на кнопки
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mouseenter', () => { cursor.style.width = '40px'; cursor.style.height = '40px'; });
+            btn.addEventListener('mouseleave', () => { cursor.style.width = '20px'; cursor.style.height = '20px'; });
+        });
+
+        // --- 2. ЛОГИКА КНОПОК ---
         const btnYes = document.getElementById('btn-yes');
         const btnNo = document.getElementById('btn-no');
         const screen1 = document.getElementById('screen1');
@@ -150,7 +204,7 @@
         const screen3 = document.getElementById('screen3');
 
         let clickCount = 0; 
-        const noTexts = ["Нет", "Точно нет?", "Подумай еще", "Не так быстро", "Я же сказал, да", "Сдавайся 😈", "Ты не сможешь"];
+        const noTexts = ["Нет", "Точно?", "Подумай", "Не так быстро", "Сдавайся 😈", "Ты не сможешь", "Попробуй еще"];
 
         function evadeButton() {
             const maxX = window.innerWidth - btnNo.offsetWidth - 20; 
@@ -163,22 +217,12 @@
             btnNo.style.top = randomY + 'px';
 
             clickCount++;
-            
-            // Кнопка "Да" растет
             btnYes.style.transform = `scale(${1 + clickCount * 0.15})`; 
-            
-            // Кнопка "Нет" меняет текст (если не вышли за пределы массива)
             btnNo.innerText = noTexts[Math.min(clickCount, noTexts.length - 1)];
         }
 
-        // Для компа
         btnNo.addEventListener('mouseover', evadeButton);
-
-        // Для телефонов
-        btnNo.addEventListener('touchstart', (e) => {
-            e.preventDefault(); 
-            evadeButton();
-        });
+        btnNo.addEventListener('touchstart', (e) => { e.preventDefault(); evadeButton(); });
 
         btnYes.addEventListener('click', () => {
             screen1.style.display = 'none'; 
@@ -188,22 +232,22 @@
         btnNext.addEventListener('click', () => {
             screen2.style.display = 'none';
             screen3.style.display = 'flex';
-            startRoseRain();
+            startRain();
         });
 
-        function startRoseRain() {
-            const roses = ['🌹', '❤️', '🔥', '✨', '💖']; 
-            const roseInterval = setInterval(() => {
-                const rose = document.createElement('div');
-                rose.classList.add('falling-rose');
-                rose.innerText = roses[Math.floor(Math.random() * roses.length)];
-                rose.style.left = Math.random() * 100 + 'vw';
-                const duration = Math.random() * 2 + 2; 
-                rose.style.animationDuration = duration + 's';
-                document.body.appendChild(rose);
-                setTimeout(() => { rose.remove(); }, duration * 1000);
-            }, 150);
-            setTimeout(() => clearInterval(roseInterval), 10000);
+        // --- 3. ДОЖДЬ ИЗ СЕРДЕЦ ---
+        function startRain() {
+            const items = ['❤️', '✨', '🔥', '🌹', '💖']; 
+            const interval = setInterval(() => {
+                const el = document.createElement('div');
+                el.classList.add('falling-item');
+                el.innerText = items[Math.floor(Math.random() * items.length)];
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                document.body.appendChild(el);
+                setTimeout(() => { el.remove(); }, 4000);
+            }, 100);
+            setTimeout(() => clearInterval(interval), 10000);
         }
 
         btnRestart.addEventListener('click', () => {
@@ -213,8 +257,7 @@
             btnNo.innerText = "Нет";
             btnYes.style.transform = 'scale(1)'; 
             btnNo.style.position = 'relative'; 
-            btnNo.style.left = '0px';
-            btnNo.style.top = '0px';
+            btnNo.style.left = '0px'; btnNo.style.top = '0px';
         });
     </script>
 </body>
