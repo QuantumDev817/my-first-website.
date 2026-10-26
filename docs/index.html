@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Твой личный квест</title>
+    <title>Кибер-Флирт</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        
         body {
-            background: radial-gradient(circle at top right, #1a103c 0%, #050505 60%);
+            background: radial-gradient(circle at top right, #2a0845 0%, #050505 60%);
             color: #ffffff;
             font-family: 'Inter', sans-serif;
             height: 100vh;
@@ -17,11 +18,14 @@
             align-items: center;
             overflow: hidden;
         }
+
         .screen {
             width: 100%; height: 100%;
             display: flex; justify-content: center; align-items: center;
             padding: 20px; z-index: 10;
         }
+
+        /* Стеклянная карточка */
         .card {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
@@ -29,74 +33,114 @@
             padding: 50px 40px; border-radius: 24px;
             text-align: center; max-width: 450px; width: 100%;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
         }
+
         .title {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.2rem; font-weight: 700;
+            font-size: 2rem; font-weight: 700;
             margin-bottom: 40px; line-height: 1.2;
-            background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);
+            background: linear-gradient(90deg, #ff0844 0%, #ffb199 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        .buttons { display: flex; gap: 15px; justify-content: center; position: relative; height: 60px; }
+
+        .subtitle {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .buttons { 
+            display: flex; gap: 15px; justify-content: center; 
+            position: relative; height: 80px; align-items: center;
+        }
+
         .btn {
-            padding: 16px 32px; font-size: 16px; font-weight: 600;
+            padding: 16px 32px; font-size: 18px; font-weight: 800;
             font-family: 'Inter', sans-serif; border-radius: 12px;
-            cursor: pointer; transition: all 0.3s ease; border: none;
+            cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            border: none;
         }
+
+        /* Кнопка ДА (растет и пульсирует) */
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white; box-shadow: 0 10px 20px -10px rgba(118, 75, 162, 0.5);
+            background: linear-gradient(135deg, #ff0844 0%, #ffb199 100%);
+            color: white; box-shadow: 0 0 20px rgba(255, 8, 68, 0.5);
+            animation: pulse-btn 1.5s infinite alternate;
         }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 15px 25px -10px rgba(118, 75, 162, 0.8); }
+
+        @keyframes pulse-btn {
+            from { box-shadow: 0 0 15px rgba(255, 8, 68, 0.5); }
+            to { box-shadow: 0 0 30px rgba(255, 8, 68, 0.9); }
+        }
+
+        /* Кнопка НЕТ */
         .btn-secondary {
             background: rgba(255, 255, 255, 0.05); color: #a0a0a0;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); color: white; }
-        #btn-no { position: relative; transition: 0.2s; }
-        .compliments { display: flex; flex-direction: column; gap: 15px; }
-        .compliments p { font-size: 1.2rem; font-weight: 600; opacity: 0; transform: translateY(20px); animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .c1 { animation-delay: 0.2s; color: #00f2fe; }
-        .c2 { animation-delay: 0.8s; color: #ff0844; }
-        .c3 { animation-delay: 1.4s; color: #00ff87; }
+
+        #btn-no { position: relative; transition: 0.1s; }
+
+        /* Сюрприз */
+        .compliments { display: flex; flex-direction: column; gap: 20px; margin-top: 20px;}
+        .compliments p { 
+            font-size: 1.2rem; font-weight: 600; opacity: 0; transform: translateY(20px); 
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+        }
+        .c1 { animation-delay: 0.2s; color: #ffb199; }
+        .c2 { animation-delay: 1.0s; color: #ff0844; }
+        .c3 { animation-delay: 1.8s; color: #00ff87; }
+        
         @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
-        .falling-rose { position: absolute; top: -50px; font-size: 24px; pointer-events: none; z-index: 100; animation: fallRose linear forwards; }
+
+        .falling-rose { 
+            position: absolute; top: -50px; font-size: 24px; 
+            pointer-events: none; z-index: 100; 
+            animation: fallRose linear forwards; 
+        }
         @keyframes fallRose { to { transform: translateY(110vh) rotate(360deg); } }
     </style>
 </head>
 <body>
 
+    <!-- ЭКРАН 1 -->
     <div id="screen1" class="screen">
         <div class="card">
+            <div class="subtitle">// Проверка на адекватность //</div>
             <h1 class="title">Ты красивая?</h1>
             <div class="buttons">
-                <button id="btn-yes" class="btn btn-primary">Да</button>
+                <button id="btn-yes" class="btn btn-primary">Да, еще как!</button>
                 <button id="btn-no" class="btn btn-secondary">Нет</button>
             </div>
         </div>
     </div>
 
+    <!-- ЭКРАН 2 -->
     <div id="screen2" class="screen" style="display: none;">
         <div class="card">
-            <h1 class="title">Вопрос 2:<br>Ты самая лучшая?</h1>
-            <button id="btn-next" class="btn btn-primary">Конечно да!</button>
+            <div class="subtitle">// Сложный уровень //</div>
+            <h1 class="title">Ты сводишь меня с ума, ты в курсе?</h1>
+            <button id="btn-next" class="btn btn-primary">Ой, ну перестань 😳</button>
         </div>
     </div>
 
+    <!-- ЭКРАН 3 -->
     <div id="screen3" class="screen" style="display: none;">
         <div class="card">
-            <h1 class="title">Сюрприз 🎉</h1>
+            <h1 class="title">Инициализация сюрприза... 🚀</h1>
             <div class="compliments">
-                <p class="c1">Ты самая лучшая ✨</p>
-                <p class="c2">Ты чертовски красивая 🌹</p>
-                <p class="c3">С тобой пиздец как круто 🔥</p>
+                <p class="c1">У тебя глаза красивее, чем мой код.</p>
+                <p class="c2">Я бы дебажил твой вайб 24/7.</p>
+                <p class="c3">Ты — мой главный апдейт в этой жизни. ❤️</p>
             </div>
-            <button id="btn-restart" class="btn btn-primary" style="margin-top: 30px; background: transparent; border: 1px solid rgba(255,255,255,0.3);">Пройти заново</button>
+            <button id="btn-restart" class="btn btn-primary" style="margin-top: 40px; background: transparent; border: 1px solid #ff0844;">Начать заново</button>
         </div>
     </div>
 
     <script>
-        // Весь JS код прямо здесь, чтобы он точно загрузился
         const btnYes = document.getElementById('btn-yes');
         const btnNo = document.getElementById('btn-no');
         const screen1 = document.getElementById('screen1');
@@ -106,28 +150,34 @@
         const screen3 = document.getElementById('screen3');
 
         let clickCount = 0; 
+        const noTexts = ["Нет", "Точно нет?", "Подумай еще", "Не так быстро", "Я же сказал, да", "Сдавайся 😈", "Ты не сможешь"];
 
-        btnNo.addEventListener('mouseover', () => {
+        function evadeButton() {
             const maxX = window.innerWidth - btnNo.offsetWidth - 20; 
             const maxY = window.innerHeight - btnNo.offsetHeight - 20;
             const randomX = Math.floor(Math.random() * maxX);
             const randomY = Math.floor(Math.random() * maxY);
+            
             btnNo.style.position = 'fixed'; 
             btnNo.style.left = randomX + 'px';
             btnNo.style.top = randomY + 'px';
-            clickCount++;
-            btnYes.style.transform = `scale(${1 + clickCount * 0.1})`; 
-        });
 
+            clickCount++;
+            
+            // Кнопка "Да" растет
+            btnYes.style.transform = `scale(${1 + clickCount * 0.15})`; 
+            
+            // Кнопка "Нет" меняет текст (если не вышли за пределы массива)
+            btnNo.innerText = noTexts[Math.min(clickCount, noTexts.length - 1)];
+        }
+
+        // Для компа
+        btnNo.addEventListener('mouseover', evadeButton);
+
+        // Для телефонов
         btnNo.addEventListener('touchstart', (e) => {
             e.preventDefault(); 
-            const maxX = window.innerWidth - btnNo.offsetWidth - 20;
-            const maxY = window.innerHeight - btnNo.offsetHeight - 20;
-            btnNo.style.position = 'fixed';
-            btnNo.style.left = Math.floor(Math.random() * maxX) + 'px';
-            btnNo.style.top = Math.floor(Math.random() * maxY) + 'px';
-            clickCount++;
-            btnYes.style.transform = `scale(${1 + clickCount * 0.1})`; 
+            evadeButton();
         });
 
         btnYes.addEventListener('click', () => {
@@ -142,7 +192,7 @@
         });
 
         function startRoseRain() {
-            const roses = ['🌹', '🌺', '🌸', '✨', '💖']; 
+            const roses = ['🌹', '❤️', '🔥', '✨', '💖']; 
             const roseInterval = setInterval(() => {
                 const rose = document.createElement('div');
                 rose.classList.add('falling-rose');
@@ -160,6 +210,7 @@
             screen3.style.display = 'none';
             screen1.style.display = 'flex';
             clickCount = 0;
+            btnNo.innerText = "Нет";
             btnYes.style.transform = 'scale(1)'; 
             btnNo.style.position = 'relative'; 
             btnNo.style.left = '0px';
