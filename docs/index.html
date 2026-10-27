@@ -3,309 +3,281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Access Granted</title>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <title>K1ant | Digital HQ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
+        /* --- БАЗА --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background-color: #020005;
+            background-color: #030008;
             color: #ffffff;
-            font-family: 'Share Tech Mono', monospace;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            cursor: none; /* Убираем стандартный курсор */
+        }
+
+        /* --- ЕБАНЫЙ КАСТОМНЫЙ КУРСОР --- */
+        .cursor {
+            width: 20px; height: 20px;
+            background: rgba(0, 255, 255, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background 0.2s;
+            mix-blend-mode: screen;
+        }
+
+        /* --- ФОН С ЧАСТИЦАМИ --- */
+        #particles-js {
+            position: fixed;
+            width: 100%; height: 100%;
+            top: 0; left: 0;
+            z-index: -1;
+        }
+
+        /* --- ГЛАВНЫЙ ЭКРАН --- */
+        header {
             height: 100vh;
-            overflow: hidden;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            /* Перспектива для 3D эффекта */
-            perspective: 1000px; 
+            text-align: center;
+            padding: 20px;
         }
 
-        /* --- ЖИВОЙ ФОН --- */
-        .bg-grid {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
-            background-image: 
-                linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 30px 30px;
-            animation: moveGrid 10s linear infinite;
-        }
-        @keyframes moveGrid {
-            0% { background-position: 0 0; }
-            100% { background-position: 30px 30px; }
-        }
-
-        /* --- ЭКРАН ЗАГРУЗКИ (Терминал) --- */
-        #boot-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #020005; z-index: 9999;
-            display: flex; flex-direction: column; justify-content: center; padding: 40px;
-            color: #00ffff; font-size: 1.2rem; line-height: 1.5;
-        }
-        .cursor-blink { animation: blink 1s step-end infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
-
-        /* --- ЭКРАНЫ --- */
-        .screen {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; justify-content: center; align-items: center;
-            padding: 20px; z-index: 10;
-        }
-
-        /* --- 3D СТЕКЛЯННАЯ КАРТОЧКА --- */
-        .card {
-            background: rgba(15, 15, 20, 0.6);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 255, 255, 0.2);
-            padding: 60px 40px; border-radius: 20px;
-            text-align: center; max-width: 480px; width: 100%;
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0,255,255,0.1);
-            transform-style: preserve-3d; /* Включаем 3D для детей */
-            transition: transform 0.1s ease-out; /* Плавный наклон */
-        }
-
-        /* --- ТЕКСТ С ГЛИТЧЕМ --- */
-        .title {
-            font-family: 'Syne', sans-serif;
-            font-size: 2.5rem; font-weight: 800;
-            margin-bottom: 40px; line-height: 1.1; letter-spacing: -1px;
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 6rem;
             color: #ffffff;
             text-transform: uppercase;
-            position: relative;
-            text-shadow: 0 0 10px rgba(255,255,255,0.3);
-            transform: translateZ(30px); /* Выпуклость в 3D */
+            letter-spacing: 5px;
+            text-shadow: 0 0 20px #00ffff, 0 0 40px #8a2be2;
+            margin-bottom: 10px;
+            opacity: 0;
+            animation: fadeIn 1.5s ease forwards 0.5s;
         }
 
         .subtitle {
-            color: #00ffff; font-size: 0.9rem; font-weight: 600;
-            letter-spacing: 4px; text-transform: uppercase; margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: #a0a0a0;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeIn 1.5s ease forwards 1s;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: 2px solid #00ffff;
+            color: #00ffff;
+            background: transparent;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+            transition: 0.3s;
+            opacity: 0;
+            animation: fadeIn 1.5s ease forwards 1.5s;
+        }
+
+        .btn:hover {
+            background: #00ffff;
+            color: #000;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- СЕКЦИЯ ПРОЕКТОВ (3D КАРТОЧКИ) --- */
+        .projects-section {
+            padding: 100px 10%;
+            perspective: 1000px; /* Для 3D */
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 60px;
+            color: #fff;
+            text-shadow: 0 0 10px #8a2be2;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.1s ease, box-shadow 0.3s;
+            transform-style: preserve-3d;
+        }
+
+        .card:hover {
+            border-color: #00ffff;
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.2);
+        }
+
+        .card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            color: #00ffff;
+            margin-bottom: 15px;
+            transform: translateZ(30px); /* Выпуклость */
+        }
+
+        .card p {
+            color: #b0b0b0;
+            line-height: 1.6;
+            margin-bottom: 25px;
             transform: translateZ(20px);
         }
 
-        /* --- КНОПКИ --- */
-        .buttons { display: flex; gap: 20px; justify-content: center; position: relative; height: 70px; align-items: center; transform: translateZ(40px); }
-
-        .btn {
-            padding: 18px 36px; font-size: 16px; font-weight: 600;
-            font-family: 'Share Tech Mono', monospace; border-radius: 8px;
-            cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            text-transform: uppercase; letter-spacing: 2px;
+        .card a {
+            display: inline-block;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border-bottom: 2px solid #8a2be2;
+            padding-bottom: 5px;
+            transition: 0.3s;
+            transform: translateZ(30px);
         }
 
-        .btn-primary {
-            background: #00ffff; color: #000000;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
-            border: none;
+        .card a:hover {
+            color: #8a2be2;
+            border-color: #00ffff;
         }
-        .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 40px rgba(0, 255, 255, 0.8);
-        }
-
-        .btn-secondary {
-            background: transparent; color: #00ffff;
-            border: 1px solid #00ffff;
-            box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.2);
-        }
-
-        #btn-no { position: relative; transition: 0.1s; }
-
-        /* --- СЮРПРИЗ --- */
-        .compliments { display: flex; flex-direction: column; gap: 20px; margin-top: 30px; transform: translateZ(25px);}
-        .compliments p { 
-            font-size: 1.3rem; font-weight: 400; color: #fff; opacity: 0; transform: translateY(20px); 
-            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
-            line-height: 1.5;
-        }
-        .c1 { animation-delay: 0.2s; color: #00ffff;}
-        .c2 { animation-delay: 1.0s; color: #ff00ff;}
-        .c3 { animation-delay: 1.8s; font-weight: 800; color: #ffffff; text-shadow: 0 0 15px #fff; }
         
-        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
-
-        /* --- ПАДАЮЩИЕ ЭЛЕМЕНТЫ --- */
-        .falling-item { 
-            position: absolute; top: -50px; font-size: 30px; 
-            pointer-events: none; z-index: 100; 
-            animation: fallDown linear forwards; 
-            text-shadow: 0 0 20px #fff;
+        /* --- ФУТЕР --- */
+        footer {
+            text-align: center;
+            padding: 50px;
+            color: #555;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
-        @keyframes fallDown { to { transform: translateY(110vh) rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <!-- Экран загрузки -->
-    <div id="boot-screen">
-        <div id="boot-text"></div>
-        <div class="cursor-blink">_</div>
-    </div>
+    <!-- Кастомный курсор -->
+    <div class="cursor" id="cursor"></div>
 
-    <!-- Фон -->
-    <div class="bg-grid"></div>
+    <!-- Фон с частицами (сеть) -->
+    <div id="particles-js"></div>
 
-    <!-- ЭКРАН 1 -->
-    <div id="screen1" class="screen" style="opacity: 0; pointer-events: none;">
-        <div class="card" id="card1">
-            <div class="subtitle">System Check</div>
-            <h1 class="title">Ты красивая?</h1>
-            <div class="buttons">
-                <button id="btn-yes" class="btn btn-primary">Да</button>
-                <button id="btn-no" class="btn btn-secondary">Нет</button>
+    <!-- ГЛАВНЫЙ ЭКРАН -->
+    <header>
+        <h1>K1ant</h1>
+        <p class="subtitle">FRONTEND DEVELOPER</p>
+        <a href="#projects" class="btn">Мои проекты</a>
+    </header>
+
+    <!-- ПРОЕКТЫ -->
+    <section class="projects-section" id="projects">
+        <h2 class="section-title">Мои работы</h2>
+        <div class="grid">
+            
+            <div class="card tilt">
+                <h3>Интерактивный Квест</h3>
+                <p>Сайт с анимациями, падающими элементами и скрытыми секретами на JavaScript.</p>
+                <!-- Вставь ссылку на сайт Амины -->
+                <a href="#" target="_blank">Открыть проект &rarr;</a>
             </div>
-        </div>
-    </div>
 
-    <!-- ЭКРАН 2 -->
-    <div id="screen2" class="screen" style="display: none;">
-        <div class="card" id="card2">
-            <div class="subtitle">Level 2</div>
-            <h1 class="title">Ты сводишь меня с ума, ты в курсе?</h1>
-            <button id="btn-next" class="btn btn-primary">Ой, перестань 😳</button>
-        </div>
-    </div>
-
-    <!-- ЭКРАН 3 -->
-    <div id="screen3" class="screen" style="display: none;">
-        <div class="card" id="card3">
-            <div class="subtitle">Access Granted</div>
-            <h1 class="title">Сюрприз 🎉</h1>
-            <div class="compliments">
-                <p class="c1">У тебя глаза красивее, чем мой самый чистый код.</p>
-                <p class="c2">Я бы дебажил твой вайб 24/7 без перерыва.</p>
-                <p class="c3">Ты — мой главный апдейт в этой жизни. ❤️</p>
+            <div class="card tilt">
+                <h3>FNAF Mini-Game</h3>
+                <p>Игра с эффектами скримера, каскадным появлением фото и интерактивом.</p>
+                <!-- Вставь ссылку на FNAF -->
+                <a href="#" target="_blank">Играть &rarr;</a>
             </div>
-            <button id="btn-restart" class="btn btn-secondary" style="margin-top: 40px;">Перезапустить</button>
-        </div>
-    </div>
 
+            <div class="card tilt">
+                <h3>Python Algorithms</h3>
+                <p>Решения сложных олимпиадных задач по информатике. Оптимизация и логика.</p>
+                <!-- Вставь ссылку на GitHub с задачами -->
+                <a href="#" target="_blank">Смотреть код &rarr;</a>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 K1ant. Сделано с душой и кофеином.</p>
+    </footer>
+
+    <!-- Подключаем библиотеку для частиц -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // --- 1. ЭФФЕКТ ЗАГРУЗКИ (Терминал) ---
-        const bootText = document.getElementById('boot-text');
-        const bootScreen = document.getElementById('boot-screen');
-        const screen1 = document.getElementById('screen1');
-        const textLines = [
-            "> INITIALIZING SYSTEM...",
-            "> CONNECTING TO SERVER...",
-            "> BYPASSING SECURITY PROTOCOLS...",
-            "> ACCESS GRANTED.",
-            "> LOADING USER INTERFACE..."
-        ];
-        let lineIndex = 0;
-        let charIndex = 0;
-
-        function typeBoot() {
-            if (lineIndex < textLines.length) {
-                if (charIndex < textLines[lineIndex].length) {
-                    bootText.innerHTML += textLines[lineIndex].charAt(charIndex);
-                    charIndex++;
-                    setTimeout(typeBoot, 30); // Скорость печати
-                } else {
-                    bootText.innerHTML += "<br>";
-                    lineIndex++;
-                    charIndex = 0;
-                    setTimeout(typeBoot, 300); // Пауза между строками
-                }
-            } else {
-                // Когда текст напечатан, показываем сайт
-                setTimeout(() => {
-                    bootScreen.style.display = 'none';
-                    screen1.style.opacity = '1';
-                    screen1.style.pointerEvents = 'auto';
-                    screen1.style.transition = 'opacity 1s ease';
-                }, 500);
-            }
-        }
-        setTimeout(typeBoot, 500); // Начало загрузки
-
-        // --- 2. 3D ЭФФЕКТ КАРТОЧКИ ---
-        const cards = document.querySelectorAll('.card');
+        // --- 1. КАСТОМНЫЙ КУРСОР ---
+        const cursor = document.getElementById('cursor');
         document.addEventListener('mousemove', (e) => {
-            // Вычисляем позицию мышки относительно центра экрана
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-            
-            cards.forEach(card => {
-                if(card.offsetParent !== null) { // Применяем только к видимой карточке
-                    card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-                }
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        // Увеличение курсора на ссылках
+        document.querySelectorAll('a, .card').forEach(el => {
+            el.addEventListener('mouseenter', () => { cursor.style.width = '50px'; cursor.style.height = '50px'; cursor.style.background = 'rgba(0, 255, 255, 0.2)'; });
+            el.addEventListener('mouseleave', () => { cursor.style.width = '20px'; cursor.style.height = '20px'; cursor.style.background = 'rgba(0, 255, 255, 0.5)'; });
+        });
+
+        // --- 2. 3D НАКЛОН КАРТОЧЕК ---
+        const cards = document.querySelectorAll('.tilt');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -10; // Наклон по X
+                const rotateY = ((x - centerX) / centerX) * 10;  // Наклон по Y
+
+                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `rotateX(0) rotateY(0)`;
             });
         });
 
-        // Возвращаем карточку в исходное положение, когда мышка уходит
-        document.addEventListener('mouseleave', () => {
-            cards.forEach(card => {
-                card.style.transform = `rotateY(0deg) rotateX(0deg)`;
-            });
-        });
-
-        // --- 3. ЛОГИКА КНОПОК ---
-        const btnYes = document.getElementById('btn-yes');
-        const btnNo = document.getElementById('btn-no');
-        const screen2 = document.getElementById('screen2');
-        const btnNext = document.getElementById('btn-next');
-        const btnRestart = document.getElementById('btn-restart');
-        const screen3 = document.getElementById('screen3');
-
-        let clickCount = 0; 
-        const noTexts = ["Нет", "Точно?", "Подумай", "Не так быстро", "Сдавайся 😈", "Ты не сможешь", "Попробуй еще"];
-
-        function evadeButton() {
-            const maxX = window.innerWidth - btnNo.offsetWidth - 20; 
-            const maxY = window.innerHeight - btnNo.offsetHeight - 20;
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
-            
-            btnNo.style.position = 'fixed'; 
-            btnNo.style.left = randomX + 'px';
-            btnNo.style.top = randomY + 'px';
-
-            clickCount++;
-            // Кнопка Да растет
-            btnYes.style.transform = `scale(${1 + clickCount * 0.2})`; 
-            // Кнопка Нет уменьшается
-            btnNo.style.transform = `scale(${Math.max(0.2, 1 - clickCount * 0.1)})`; 
-            btnNo.innerText = noTexts[Math.min(clickCount, noTexts.length - 1)];
-        }
-
-        btnNo.addEventListener('mouseover', evadeButton);
-        btnNo.addEventListener('touchstart', (e) => { e.preventDefault(); evadeButton(); });
-
-        btnYes.addEventListener('click', () => {
-            screen1.style.display = 'none'; 
-            screen2.style.display = 'flex'; 
-        });
-
-        btnNext.addEventListener('click', () => {
-            screen2.style.display = 'none';
-            screen3.style.display = 'flex';
-            startRain();
-        });
-
-        // --- 4. ДОЖДЬ ---
-        function startRain() {
-            const items = ['❤️', '✨', '🔥', '🌹', '💻']; 
-            const interval = setInterval(() => {
-                const el = document.createElement('div');
-                el.classList.add('falling-item');
-                el.innerText = items[Math.floor(Math.random() * items.length)];
-                el.style.left = Math.random() * 100 + 'vw';
-                el.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                document.body.appendChild(el);
-                setTimeout(() => { el.remove(); }, 4000);
-            }, 100);
-            setTimeout(() => clearInterval(interval), 10000);
-        }
-
-        btnRestart.addEventListener('click', () => {
-            screen3.style.display = 'none';
-            screen1.style.display = 'flex';
-            clickCount = 0;
-            btnNo.innerText = "Нет";
-            btnYes.style.transform = 'scale(1)'; 
-            btnNo.style.transform = 'scale(1)';
-            btnNo.style.position = 'relative'; 
-            btnNo.style.left = '0px'; btnNo.style.top = '0px';
+        // --- 3. ЕБАНЫЕ ЧАСТИЦЫ НА ФОНЕ ---
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": ["#00ffff", "#8a2be2"] },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": true },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.1, "width": 1 },
+                "move": { "enable": true, "speed": 2, "direction": "none", "random": true, "out_mode": "out" }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": { "enable": true, "mode": "grab" }, // Линии тянутся к мышке
+                    "onclick": { "enable": true, "mode": "push" }
+                },
+                "modes": { "grab": { "distance": 200, "line_linked": { "opacity": 0.5 } } }
+            },
+            "retina_detect": true
         });
     </script>
 </body>
