@@ -1,264 +1,802 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K1ant | CYBER-OS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            background-color: #020202;
-            color: #00ffff;
-            font-family: 'Share Tech Mono', monospace;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            perspective: 1000px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K-NEXUS | v2.0</title>
 
-        /* --- МАТРИЧНЫЙ ФОН --- */
-        canvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -1;
-            opacity: 0.3;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
-        /* --- 3D ГОЛОГРАММА --- */
-        .hud-container {
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.1s ease;
-            z-index: 10;
-        }
+<style>
+:root {
+    --neon: #00ffff;
+    --pink: #ff00ff;
+    --bg: #050508;
+    --panel: rgba(15, 20, 35, 0.85);
+}
 
-        .card {
-            background: rgba(0, 20, 20, 0.6);
-            border: 2px solid #00ffff;
-            border-radius: 15px;
-            padding: 40px;
-            width: 500px;
-            text-align: center;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2), inset 0 0 20px rgba(0, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        /* Ебаные декоративные линии по углам */
-        .card::before, .card::after {
-            content: ''; position: absolute; width: 50px; height: 50px;
-        }
-        .card::before {
-            top: -2px; left: -2px;
-            border-top: 4px solid #ff00ff;
-            border-left: 4px solid #ff00ff;
-        }
-        .card::after {
-            bottom: -2px; right: -2px;
-            border-bottom: 4px solid #ff00ff;
-            border-right: 4px solid #ff00ff;
-        }
+body {
+    background: var(--bg);
+    color: white;
+    font-family: 'Share Tech Mono', monospace;
+    min-height: 100vh;
+    display: flex;
+    overflow-x: hidden;
+}
 
-        .title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
-            transform: translateZ(50px); /* Выпуклость */
-        }
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+        linear-gradient(rgba(0,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg,rgba(0,255,255,.035) 1px,transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+}
 
-        .subtitle {
-            color: #ff00ff;
-            font-size: 1rem;
-            letter-spacing: 2px;
-            margin-bottom: 30px;
-            text-shadow: 0 0 10px #ff00ff;
-            transform: translateZ(40px);
-        }
+.sidebar {
+    width: 250px;
+    min-height: 100vh;
+    padding: 25px 15px;
+    background: rgba(10,15,25,.95);
+    border-right: 1px solid var(--neon);
+    box-shadow: 0 0 25px rgba(0,255,255,.1);
+    position: fixed;
+    z-index: 10;
+}
 
-        .terminal-text {
-            text-align: left;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            color: #00ff41;
-            min-height: 100px;
-            margin-bottom: 30px;
-            border-left: 2px solid #00ff41;
-            padding-left: 10px;
-            transform: translateZ(30px);
-        }
+.logo {
+    font-family: Orbitron;
+    color: var(--neon);
+    text-shadow: 0 0 15px var(--neon);
+    font-size: 27px;
+    text-align: center;
+    margin-bottom: 45px;
+}
 
-        /* КНОПКА */
-        .btn {
-            background: transparent;
-            border: 2px solid #00ffff;
-            color: #00ffff;
-            padding: 15px 40px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: 0.3s;
-            text-transform: uppercase;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
-            transform: translateZ(60px);
-        }
+.nav {
+    padding: 15px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    color: #888;
+    border-left: 3px solid transparent;
+    transition: .3s;
+}
 
-        .btn:hover {
-            background: #00ffff;
-            color: #000;
-            box-shadow: 0 0 30px #00ffff;
-        }
+.nav:hover,
+.nav.active {
+    color: var(--neon);
+    background: rgba(0,255,255,.07);
+    border-left-color: var(--neon);
+}
 
-        /* --- ЭФФЕКТ ГЛИТЧА --- */
-        .glitch {
-            animation: glitchAnim 0.3s linear infinite;
-        }
+.main {
+    margin-left: 250px;
+    padding: 35px;
+    width: calc(100% - 250px);
+    position: relative;
+}
 
-        @keyframes glitchAnim {
-            0% { transform: translate(0); }
-            20% { transform: translate(-5px, 5px); filter: hue-rotate(90deg); }
-            40% { transform: translate(-5px, -5px); }
-            60% { transform: translate(5px, 5px); filter: hue-rotate(-90deg); }
-            80% { transform: translate(5px, -5px); }
-            100% { transform: translate(0); }
-        }
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 35px;
+}
 
-        /* Частицы при взломе */
-        .particle {
-            position: absolute;
-            color: #00ffff;
-            font-family: 'Share Tech Mono', monospace;
-            font-weight: bold;
-            pointer-events: none;
-            z-index: 9999;
-        }
-    </style>
+h1, h2, h3 {
+    font-family: Orbitron;
+}
+
+h1 {
+    font-size: clamp(20px, 3vw, 32px);
+    text-shadow: 0 0 15px var(--pink);
+}
+
+.online {
+    color: #00ff41;
+    animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+    from { opacity: .4; }
+    to { opacity: 1; text-shadow: 0 0 15px #00ff41; }
+}
+
+.page {
+    display: none;
+    animation: appear .4s ease;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: var(--panel);
+    border: 1px solid rgba(0,255,255,.25);
+    border-radius: 14px;
+    padding: 25px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(15px);
+    transition: .3s;
+}
+
+.card:hover {
+    border-color: var(--neon);
+    box-shadow: 0 0 20px rgba(0,255,255,.15);
+    transform: translateY(-3px);
+}
+
+.card h3 {
+    font-size: 13px;
+    color: var(--pink);
+    margin-bottom: 15px;
+}
+
+.value {
+    font-size: 30px;
+    color: var(--neon);
+    overflow-wrap: anywhere;
+}
+
+.terminal {
+    height: 330px;
+    background: #020405;
+    border: 1px solid var(--neon);
+    border-radius: 12px;
+    padding: 20px;
+    overflow-y: auto;
+    box-shadow: inset 0 0 25px rgba(0,255,255,.08);
+}
+
+.line {
+    color: #00ff41;
+    margin-bottom: 8px;
+    overflow-wrap: anywhere;
+}
+
+.input-line {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    align-items: center;
+}
+
+input {
+    background: transparent;
+    color: white;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 15px;
+    min-width: 0;
+}
+
+.input-line input {
+    flex: 1;
+}
+
+.prompt {
+    color: var(--neon);
+}
+
+button {
+    padding: 12px 20px;
+    background: transparent;
+    border: 1px solid var(--neon);
+    color: var(--neon);
+    cursor: pointer;
+    font-family: inherit;
+    transition: .3s;
+    border-radius: 7px;
+}
+
+button:hover {
+    background: var(--neon);
+    color: black;
+    box-shadow: 0 0 20px var(--neon);
+}
+
+.ai-chat {
+    height: 300px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    padding: 15px;
+    background: rgba(0,0,0,.4);
+    border-radius: 10px;
+}
+
+.message {
+    margin-bottom: 12px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.user {
+    color: var(--neon);
+}
+
+.bot {
+    color: #00ff41;
+}
+
+.ai-input {
+    display: flex;
+    gap: 10px;
+}
+
+.ai-input input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #333;
+    border-radius: 7px;
+}
+
+.color-options {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.color {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid white;
+}
+
+#boot {
+    position: fixed;
+    inset: 0;
+    background: black;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transition: opacity .5s;
+}
+
+.boot-logo {
+    font-family: Orbitron;
+    font-size: clamp(30px, 8vw, 60px);
+    color: var(--neon);
+    text-shadow: 0 0 30px var(--neon);
+}
+
+.progress {
+    width: min(300px, 80vw);
+    height: 5px;
+    background: #222;
+    margin-top: 30px;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--neon);
+    box-shadow: 0 0 15px var(--neon);
+}
+
+.mobile-nav {
+    display: none;
+}
+
+@media(max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+
+    .main {
+        margin: 0;
+        width: 100%;
+        padding: 20px 15px 95px;
+    }
+
+    .mobile-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: #080c15;
+        border-top: 1px solid var(--neon);
+        justify-content: space-around;
+        padding: 10px 4px;
+        z-index: 20;
+    }
+
+    .mobile-nav button {
+        font-size: 11px;
+        padding: 10px 6px;
+    }
+
+    header {
+        align-items: flex-start;
+    }
+
+    .input-line {
+        flex-wrap: wrap;
+    }
+}
+
+@media(prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+    }
+}
+</style>
 </head>
+
 <body>
 
-    <canvas id="matrix-canvas"></canvas>
+<div id="boot">
+    <div class="boot-logo">K-NEXUS</div>
+    <p style="margin-top:20px;color:#888">INITIALIZING SYSTEM...</p>
+    <div class="progress">
+        <div class="progress-bar" id="progress"></div>
+    </div>
+    <p id="percent" style="margin-top:15px">0%</p>
+</div>
 
-    <div class="hud-container" id="hud">
+<aside class="sidebar">
+    <div class="logo">K-NEXUS</div>
+
+    <div class="nav active" data-page="dashboard">◈ DASHBOARD</div>
+    <div class="nav" data-page="terminal">⌘ TERMINAL</div>
+    <div class="nav" data-page="larry">◉ LARRY AI</div>
+    <div class="nav" data-page="settings">⚙ SETTINGS</div>
+
+    <p style="position:absolute;bottom:25px;color:#555">
+        K-NEXUS OS v2.0<br>
+        CREATED BY K1ANT
+    </p>
+</aside>
+
+<nav class="mobile-nav">
+    <button data-page="dashboard">HOME</button>
+    <button data-page="terminal">TERM</button>
+    <button data-page="larry">LARRY</button>
+    <button data-page="settings">SET</button>
+</nav>
+
+<main class="main">
+
+<header>
+    <h1 id="pageTitle">SYSTEM DASHBOARD</h1>
+    <div class="online">● ONLINE</div>
+</header>
+
+<section class="page active" id="dashboard">
+
+    <div class="grid">
         <div class="card">
-            <h1 class="title">K1ant OS</h1>
-            <div class="subtitle">System Version 1.0.8</div>
-            
-            <div class="terminal-text" id="terminal">
-                > Инициализация ядра...<br>
-                > Проверка безопасности...<br>
-                > Статус: СТАБИЛЕН.<br>
-                > Ожидание команды...
-            </div>
+            <h3>LOCAL TIME</h3>
+            <div class="value" id="clock">00:00:00</div>
+        </div>
 
-            <button class="btn" id="hackBtn">Взломать систему</button>
+        <div class="card">
+            <h3>DATE</h3>
+            <div class="value" id="date" style="font-size:20px">---</div>
+        </div>
+
+        <div class="card">
+            <h3>SESSION UPTIME</h3>
+            <div class="value" id="uptime">00:00</div>
+        </div>
+
+        <div class="card">
+            <h3>ACCESS LEVEL</h3>
+            <div class="value">ADMIN</div>
         </div>
     </div>
 
-    <script>
-        // --- 1. 3D НАКЛОН ЗА КУРСОРОМ ---
-        const hud = document.getElementById('hud');
-        document.addEventListener('mousemove', (e) => {
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 20;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 20;
-            hud.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-        });
+    <div class="card">
+        <h3>SYSTEM INFORMATION</h3>
+        <p>> SYSTEM: K-NEXUS OS 2.0</p><br>
+        <p>> USER: K1ANT</p><br>
+        <p>> INTERFACE: WEB</p><br>
+        <p>> STATUS: OPERATIONAL</p><br>
+        <p>> PLATFORM: <span id="platform"></span></p>
+    </div>
 
-        // --- 2. МАТРИЧНЫЙ ДОЖДЬ НА CANVAS ---
-        const canvas = document.getElementById('matrix-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+    <div class="card">
+        <h3>QUICK ACCESS</h3>
+        <button data-page="terminal">OPEN TERMINAL</button>
+        <button data-page="larry">LAUNCH LARRY</button>
+    </div>
 
-        const letters = "01010101ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%^&*";
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = [];
-        for (let x = 0; x < columns; x++) drops[x] = 1;
+</section>
 
-        function drawMatrix() {
-            ctx.fillStyle = "rgba(2, 2, 2, 0.05)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#00ffff"; // Цвет букв
-            ctx.font = fontSize + "px monospace";
+<section class="page" id="terminal">
 
-            for (let i = 0; i < drops.length; i++) {
-                const text = letters.charAt(Math.floor(Math.random() * letters.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                drops[i]++;
-            }
-        }
-        setInterval(drawMatrix, 33);
+    <div class="card">
+        <h3>K-NEXUS COMMAND TERMINAL</h3>
 
-        // --- 3. ЛОГИКА ВЗЛОМА ---
-        const btn = document.getElementById('hackBtn');
-        const terminal = document.getElementById('terminal');
-        let isHacked = false;
+        <div class="terminal" id="terminalBox">
+            <div id="terminalOutput">
+                <div class="line">> K-NEXUS OS v2.0 initialized...</div>
+                <div class="line">> Welcome back, K1ANT.</div>
+                <div class="line">> Type "help" to see commands.</div>
+            </div>
 
-        btn.addEventListener('click', () => {
-            if (isHacked) return;
-            isHacked = true;
-            
-            // Запускаем ебаный глитч
-            document.body.classList.add('glitch');
-            terminal.innerHTML = "> ВЗЛОМ...<br>> ДОСТУП РАЗРЕШЕН.<br>> ПРИВЕТ, СЫНОК. ТЫ КРУТ.";
-            
-            // Создаем ебаный взрыв из кода
-            createExplosion();
+            <div class="input-line">
+                <span class="prompt">root@nexus:~$</span>
+                <input id="commandInput" autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section class="page" id="larry">
+
+    <div class="card">
+        <h3>LARRY ASSISTANT // LOCAL MODE</h3>
+
+        <div class="ai-chat" id="chat">
+            <div class="message bot">
+                LARRY: Здравствуйте, сэр. Система готова.
+            </div>
+            <div class="message bot">
+                LARRY: Я работаю в демонстрационном режиме.
+            </div>
+        </div>
+
+        <div class="ai-input">
+            <input id="aiInput" placeholder="Напишите Ларри...">
+            <button id="sendAi">SEND</button>
+        </div>
+    </div>
+
+</section>
+
+<section class="page" id="settings">
+
+    <div class="card">
+        <h3>APPEARANCE SETTINGS</h3>
+        <p>Выберите основной цвет системы:</p>
+
+        <div class="color-options">
+            <div class="color" data-color="#00ffff" style="background:#00ffff"></div>
+            <div class="color" data-color="#ff00ff" style="background:#ff00ff"></div>
+            <div class="color" data-color="#00ff41" style="background:#00ff41"></div>
+            <div class="color" data-color="#ff3333" style="background:#ff3333"></div>
+            <div class="color" data-color="#ffaa00" style="background:#ffaa00"></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>SYSTEM CONTROL</h3>
+        <button id="resetTheme">RESET THEME</button>
+        <button id="reboot">REBOOT SYSTEM</button>
+    </div>
+
+</section>
+
+</main>
+
+<script>
+// ===============================
+// K-NEXUS OS v2.0
+// ===============================
+
+// ЗАГРУЗКА
+const boot = document.getElementById("boot");
+const progress = document.getElementById("progress");
+const percent = document.getElementById("percent");
+
+function startBoot() {
+    boot.style.display = "flex";
+    boot.style.opacity = "1";
+
+    let value = 0;
+
+    const loading = setInterval(() => {
+        value += 4;
+        progress.style.width = value + "%";
+        percent.textContent = value + "%";
+
+        if (value >= 100) {
+            clearInterval(loading);
 
             setTimeout(() => {
-                document.body.classList.remove('glitch');
-                isHacked = false;
-            }, 2000);
-        });
+                boot.style.opacity = "0";
 
-        function createExplosion() {
-            const chars = ['0', '1', 'X', '!', '?', '>', '<', 'K1ant'];
-            for (let i = 0; i < 150; i++) {
-                const p = document.createElement('div');
-                p.classList.add('particle');
-                p.innerText = chars[Math.floor(Math.random() * chars.length)];
-                
-                // Ставим в центр экрана
-                p.style.left = '50%';
-                p.style.top = '50%';
-                
-                // Случайный цвет
-                p.style.color = Math.random() > 0.5 ? '#ff00ff' : '#00ffff';
-                p.style.fontSize = (Math.random() * 20 + 10) + 'px';
-                
-                document.body.appendChild(p);
-
-                // Разлетаемся нахуй
-                const angle = Math.random() * Math.PI * 2;
-                const dist = Math.random() * 600 + 100;
-                const x = Math.cos(angle) * dist;
-                const y = Math.sin(angle) * dist;
-
-                p.animate([
-                    { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
-                    { transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(0)`, opacity: 0 }
-                ], {
-                    duration: 1500,
-                    easing: 'cubic-bezier(0, .9, .57, 1)'
-                });
-
-                setTimeout(() => p.remove(), 1500);
-            }
+                setTimeout(() => {
+                    boot.style.display = "none";
+                }, 500);
+            }, 250);
         }
-    </script>
+    }, 35);
+}
+
+startBoot();
+
+
+// НАВИГАЦИЯ
+const titles = {
+    dashboard: "SYSTEM DASHBOARD",
+    terminal: "COMMAND TERMINAL",
+    larry: "LARRY ASSISTANT",
+    settings: "SYSTEM SETTINGS"
+};
+
+function openPage(page) {
+    if (!titles[page]) return;
+
+    document.querySelectorAll(".page").forEach(el => {
+        el.classList.remove("active");
+    });
+
+    document.querySelectorAll(".nav").forEach(el => {
+        el.classList.remove("active");
+    });
+
+    document.getElementById(page).classList.add("active");
+
+    document.querySelectorAll(`[data-page="${page}"]`).forEach(el => {
+        el.classList.add("active");
+    });
+
+    document.getElementById("pageTitle").textContent = titles[page];
+
+    if (page === "terminal") {
+        document.getElementById("commandInput").focus();
+    }
+}
+
+document.querySelectorAll("[data-page]").forEach(button => {
+    button.addEventListener("click", () => {
+        openPage(button.dataset.page);
+    });
+});
+
+
+// ЧАСЫ
+const startTime = Date.now();
+
+function updateClock() {
+    const now = new Date();
+
+    document.getElementById("clock").textContent =
+        now.toLocaleTimeString("ru-RU");
+
+    document.getElementById("date").textContent =
+        now.toLocaleDateString("ru-RU");
+
+    const seconds = Math.floor((Date.now() - startTime) / 1000);
+
+    const minutes = Math.floor(seconds / 60);
+    const remaining = seconds % 60;
+
+    document.getElementById("uptime").textContent =
+        String(minutes).padStart(2, "0") + ":" +
+        String(remaining).padStart(2, "0");
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+
+document.getElementById("platform").textContent =
+    navigator.platform || "WEB BROWSER";
+
+
+// ТЕРМИНАЛ
+const commandInput = document.getElementById("commandInput");
+const terminalOutput = document.getElementById("terminalOutput");
+const terminalBox = document.getElementById("terminalBox");
+
+const history = [];
+let historyIndex = 0;
+
+const commands = [
+    "help", "clear", "whoami", "date", "time",
+    "echo", "hack", "about", "reboot", "larry"
+];
+
+function printLine(message, color = "#00ff41") {
+    const line = document.createElement("div");
+    line.className = "line";
+    line.textContent = message;
+    line.style.color = color;
+
+    terminalOutput.appendChild(line);
+    terminalBox.scrollTop = terminalBox.scrollHeight;
+}
+
+function runCommand(raw) {
+    const input = raw.trim();
+    if (!input) return;
+
+    history.push(input);
+    historyIndex = history.length;
+
+    printLine("root@nexus:~$ " + input, "#ffffff");
+
+    const [cmd, ...args] = input.split(/\s+/);
+    const command = cmd.toLowerCase();
+
+    switch(command) {
+        case "help":
+            printLine("AVAILABLE COMMANDS:");
+            printLine(commands.join(" | "));
+            break;
+
+        case "clear":
+            terminalOutput.replaceChildren();
+            break;
+
+        case "whoami":
+            printLine("USER: K1ANT | ACCESS: ADMIN");
+            break;
+
+        case "date":
+            printLine(new Date().toLocaleDateString("ru-RU"));
+            break;
+
+        case "time":
+            printLine(new Date().toLocaleTimeString("ru-RU"));
+            break;
+
+        case "echo":
+            printLine(args.join(" "));
+            break;
+
+        case "hack":
+            printLine("SIMULATION STARTED...", "#ff00ff");
+            printLine("ACCESS GRANTED // DEMO MODE", "#ff00ff");
+            break;
+
+        case "about":
+            printLine("K-NEXUS OS v2.0");
+            printLine("CREATED BY K1ANT");
+            break;
+
+        case "reboot":
+            location.reload();
+            break;
+
+        case "larry":
+            openPage("larry");
+            break;
+
+        default:
+            printLine("COMMAND NOT FOUND: " + command, "#ff3333");
+    }
+}
+
+commandInput.addEventListener("keydown", e => {
+    if (e.key === "Enter") {
+        runCommand(commandInput.value);
+        commandInput.value = "";
+    }
+
+    if (e.key === "ArrowUp") {
+        e.preventDefault();
+        historyIndex = Math.max(0, historyIndex - 1);
+        commandInput.value = history[historyIndex] || "";
+    }
+
+    if (e.key === "ArrowDown") {
+        e.preventDefault();
+        historyIndex = Math.min(history.length, historyIndex + 1);
+        commandInput.value = history[historyIndex] || "";
+    }
+
+    if (e.key === "Tab") {
+        e.preventDefault();
+
+        const matches = commands.filter(cmd =>
+            cmd.startsWith(commandInput.value.toLowerCase())
+        );
+
+        if (matches.length === 1) {
+            commandInput.value = matches[0];
+        }
+    }
+});
+
+
+// LARRY AI — ДЕМОНСТРАЦИОННЫЙ РЕЖИМ
+const chat = document.getElementById("chat");
+const aiInput = document.getElementById("aiInput");
+
+function addMessage(sender, message, type) {
+    const div = document.createElement("div");
+    div.className = "message " + type;
+    div.textContent = sender + ": " + message;
+
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+}
+
+function sendMessage() {
+    const message = aiInput.value.trim();
+    if (!message) return;
+
+    addMessage("YOU", message, "user");
+    aiInput.value = "";
+
+    const text = message.toLowerCase();
+    let answer;
+
+    if (text.includes("привет")) {
+        answer = "Здравствуйте, сэр. Рад вас видеть.";
+    } else if (text.includes("время")) {
+        answer = "Сейчас " + new Date().toLocaleTimeString("ru-RU");
+    } else if (text.includes("дата")) {
+        answer = "Сегодня " + new Date().toLocaleDateString("ru-RU");
+    } else if (text.includes("кто ты")) {
+        answer = "Я Ларри, локальный ассистент системы K-NEXUS.";
+    } else if (text.includes("помощь")) {
+        answer = "Я могу сообщить время, дату и информацию о системе.";
+    } else {
+        answer = "Команда пока неизвестна, сэр. Мои возможности расширяются.";
+    }
+
+    setTimeout(() => {
+        addMessage("LARRY", answer, "bot");
+    }, 400);
+}
+
+document.getElementById("sendAi").addEventListener("click", sendMessage);
+
+aiInput.addEventListener("keydown", e => {
+    if (e.key === "Enter") sendMessage();
+});
+
+
+// НАСТРОЙКИ
+function setTheme(color) {
+    document.documentElement.style.setProperty("--neon", color);
+    localStorage.setItem("nexus-theme", color);
+}
+
+document.querySelectorAll(".color").forEach(el => {
+    el.addEventListener("click", () => {
+        setTheme(el.dataset.color);
+    });
+});
+
+document.getElementById("resetTheme").addEventListener("click", () => {
+    setTheme("#00ffff");
+});
+
+document.getElementById("reboot").addEventListener("click", () => {
+    location.reload();
+});
+
+const savedTheme = localStorage.getItem("nexus-theme");
+
+if (savedTheme) {
+    setTheme(savedTheme);
+}
+
+</script>
+
 </body>
 </html>
