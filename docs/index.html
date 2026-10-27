@@ -190,38 +190,47 @@
     </header>
 
     <!-- ПРОЕКТЫ -->
-    <section class="projects-section" id="projects">
-        <h2 class="section-title">Мои работы</h2>
-        <div class="grid">
-            
-            <div class="card tilt">
+<section class="projects-section" id="projects">
+    <h2 class="section-title">Мои работы</h2>
+    
+    <div class="bento-grid">
+        
+        <!-- Большая карточка (Интерактивный квест) -->
+        <a href="ССЫЛКА_НА_КВЕСТ" target="_blank" class="bento-card card-large tilt">
+            <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop');"></div>
+            <div class="card-content">
+                <span class="tag">JavaScript / CSS</span>
                 <h3>Интерактивный Квест</h3>
-                <p>Сайт с анимациями, падающими элементами и скрытыми секретами на JavaScript.</p>
-                <!-- Вставь ссылку на сайт Амины -->
-                <a href="#" target="_blank">Открыть проект &rarr;</a>
+                <p>Сайт с анимациями, падающими элементами и скрытыми секретами. Полный интерактив.</p>
+                <span class="card-link">Открыть проект &rarr;</span>
             </div>
+        </a>
 
-            <div class="card tilt">
-                <h3>FNAF Mini-Game</h3>
-                <p>Игра с эффектами скримера, каскадным появлением фото и интерактивом.</p>
-                <!-- Вставь ссылку на FNAF -->
-                <a href="#" target="_blank">Играть &rarr;</a>
+        <!-- Карточка 2 (Python) -->
+        <a href="ССЫЛКА_НА_ГИТХАБ" target="_blank" class="bento-card tilt">
+            <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1000&auto=format&fit=crop');"></div>
+            <div class="card-content">
+                <span class="tag">Python</span>
+                <h3>Алгоритмы</h3>
+                <p>Решения олимпиадных задач. Оптимизация и чистая логика.</p>
+                <span class="card-link">Смотреть код &rarr;</span>
             </div>
+        </a>
 
-            <div class="card tilt">
-                <h3>Python Algorithms</h3>
-                <p>Решения сложных олимпиадных задач по информатике. Оптимизация и логика.</p>
-                <!-- Вставь ссылку на GitHub с задачами -->
-                <a href="#" target="_blank">Смотреть код &rarr;</a>
+        <!-- Карточка 3 (О себе / Контакты) -->
+        <a href="#" class="bento-card tilt">
+            <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000&auto=format&fit=crop');"></div>
+            <div class="card-content">
+                <span class="tag">K1ant</span>
+                <h3>Digital HQ</h3>
+                <p>Этот сайт. Сделан с нуля на чистом HTML/CSS/JS.</p>
+                <span class="card-link">Наверх &uarr;</span>
             </div>
+        </a>
 
-        </div>
-    </section>
-
-    <footer>
-        <p>&copy; 2024 K1ant. Сделано с душой и кофеином.</p>
-    </footer>
-
+    </div>
+</section>
+    
     <!-- Подключаем библиотеку для частиц -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
