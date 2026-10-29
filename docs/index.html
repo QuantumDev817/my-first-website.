@@ -3,13 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Мамандық таңдау — Болашаққа қадам</title>
+<title>Мамандық таңдау | Болашаққа қадам</title>
 
 <style>
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
 }
 
 body {
@@ -19,15 +24,44 @@ body {
     overflow: hidden;
 }
 
+/* ФОН */
+
 .background {
     position: fixed;
     inset: 0;
     background:
-        radial-gradient(circle at 20% 20%, #183c83, transparent 45%),
-        radial-gradient(circle at 80% 80%, #4b1b76, transparent 45%),
+        radial-gradient(
+            circle at 20% 20%,
+            #183c83,
+            transparent 45%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            #4b1b76,
+            transparent 45%
+        ),
         #080d1e;
     z-index: -1;
 }
+
+/* ПРОГРЕСС */
+
+.progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 5px;
+    width: 12.5%;
+    background: linear-gradient(
+        90deg,
+        #00eaff,
+        #a855f7
+    );
+    transition: width 0.5s;
+    z-index: 100;
+}
+
+/* СЛАЙДЫ */
 
 .slide {
     position: absolute;
@@ -35,18 +69,26 @@ body {
     width: 100%;
     height: 100vh;
     height: 100dvh;
-    padding: 70px 8% 110px;
+
+    padding: 65px 8% 115px;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
     text-align: center;
+    overflow-x: hidden;
     overflow-y: auto;
 
     opacity: 0;
     visibility: hidden;
-    transform: translateX(100px);
-    transition: 0.6s ease;
+    transform: translateX(70px);
+
+    transition:
+        opacity 0.5s ease,
+        transform 0.5s ease,
+        visibility 0.5s;
 }
 
 .slide.active {
@@ -55,18 +97,26 @@ body {
     transform: translateX(0);
 }
 
+/* ЗАГОЛОВКИ */
+
 h1 {
-    font-size: clamp(32px, 6vw, 70px);
+    font-size: clamp(30px, 6vw, 68px);
     margin-bottom: 25px;
-    background: linear-gradient(90deg, #00eaff, #b57aff);
-    background-clip: text;
+
+    background: linear-gradient(
+        90deg,
+        #00eaff,
+        #b57aff
+    );
+
     -webkit-background-clip: text;
+    background-clip: text;
     color: transparent;
 }
 
 h2 {
-    font-size: clamp(26px, 4vw, 46px);
-    margin-bottom: 30px;
+    font-size: clamp(25px, 4vw, 46px);
+    margin-bottom: 25px;
     color: #67eaff;
 }
 
@@ -82,6 +132,13 @@ p {
     margin-bottom: 25px;
 }
 
+.highlight {
+    color: #67eaff;
+    font-weight: bold;
+}
+
+/* АНИМАЦИИ */
+
 .active h1,
 .active h2 {
     animation: titleAnimation 0.8s ease;
@@ -94,8 +151,9 @@ p {
 @keyframes titleAnimation {
     from {
         opacity: 0;
-        transform: translateY(-50px);
+        transform: translateY(-40px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -105,8 +163,9 @@ p {
 @keyframes textAnimation {
     from {
         opacity: 0;
-        transform: translateY(40px);
+        transform: translateY(35px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -114,24 +173,27 @@ p {
 }
 
 .big-icon {
-    font-size: 80px;
+    font-size: 75px;
     margin-bottom: 25px;
-    animation: float 3s ease-in-out infinite;
+    animation: floating 3s ease-in-out infinite;
 }
 
-@keyframes float {
+@keyframes floating {
     0%, 100% {
         transform: translateY(0);
     }
+
     50% {
-        transform: translateY(-18px);
+        transform: translateY(-15px);
     }
 }
 
+/* КАРТОЧКИ */
+
 .cards {
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 20px;
     margin-top: 30px;
     width: 100%;
@@ -139,22 +201,25 @@ p {
 
 .card {
     width: 250px;
+    max-width: 100%;
     padding: 25px;
     border-radius: 18px;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.15);
+
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
     backdrop-filter: blur(12px);
     transition: 0.3s;
 }
 
 .card:hover {
-    transform: translateY(-12px);
+    transform: translateY(-10px);
     border-color: #00eaff;
-    box-shadow: 0 0 30px #00eaff33;
+    box-shadow: 0 0 25px #00eaff33;
 }
 
 .card .icon {
-    font-size: 45px;
+    font-size: 43px;
     margin-bottom: 15px;
 }
 
@@ -167,12 +232,17 @@ p {
     font-size: 15px;
 }
 
+/* КНОПКИ */
+
 button {
     padding: 13px 25px;
+
     border: 1px solid #00eaff;
     border-radius: 12px;
-    background: rgba(0,234,255,0.12);
+
+    background: rgba(0, 234, 255, 0.12);
     color: white;
+
     font-size: 16px;
     cursor: pointer;
     transition: 0.3s;
@@ -181,35 +251,41 @@ button {
 button:hover {
     background: #00eaff;
     color: #07101d;
-    box-shadow: 0 0 25px #00eaff;
+    box-shadow: 0 0 20px #00eaff;
 }
+
+/* НАВИГАЦИЯ */
 
 .navigation {
     position: fixed;
-    bottom: 25px;
+
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
+
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 20px;
-    z-index: 100;
+
+    gap: 15px;
+    padding: 8px;
+
+    max-width: calc(100% - 20px);
+    z-index: 999;
+}
+
+.navigation button {
+    white-space: nowrap;
 }
 
 #counter {
-    color: #a8b7dd;
     min-width: 55px;
     text-align: center;
+    color: #a8b7dd;
+    white-space: nowrap;
 }
 
-.progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 5px;
-    background: linear-gradient(90deg, #00eaff, #a855f7);
-    transition: width 0.5s;
-    z-index: 100;
-}
+/* ТЕСТ */
 
 .quiz {
     width: 100%;
@@ -230,72 +306,179 @@ button:hover {
     min-height: 35px;
 }
 
-.highlight {
-    color: #67eaff;
-    font-weight: bold;
-}
-
-/* TELEGRAM КНОПКА */
+/* TELEGRAM */
 
 .telegram-btn {
-    display: inline-block;
-    margin-top: 30px;
-    padding: 18px 35px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 
-    background: linear-gradient(135deg, #0088cc, #00d4ff);
+    max-width: 100%;
+    margin-top: 25px;
+    padding: 17px 30px;
+
+    background: linear-gradient(
+        135deg,
+        #0088cc,
+        #00d4ff
+    );
+
     color: white;
-
-    font-size: 20px;
+    font-size: 19px;
     font-weight: bold;
     text-decoration: none;
+    text-align: center;
 
     border-radius: 15px;
     border: 1px solid #70eaff;
 
-    box-shadow: 0 0 25px rgba(0,212,255,0.4);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
     transition: 0.3s;
-
-    animation: telegramPulse 2s infinite;
 }
 
 .telegram-btn:hover {
-    transform: scale(1.08);
-    box-shadow: 0 0 40px rgba(0,212,255,0.9);
+    transform: scale(1.05);
+    box-shadow: 0 0 35px rgba(0, 212, 255, 0.8);
 }
 
-@keyframes telegramPulse {
-    0%, 100% {
-        box-shadow: 0 0 15px rgba(0,212,255,0.3);
-    }
-    50% {
-        box-shadow: 0 0 35px rgba(0,212,255,0.8);
-    }
-}
+/* ТЕЛЕФОН */
 
 @media (max-width: 600px) {
+
     .slide {
-        padding: 70px 20px 110px;
+        padding: 35px 18px 110px;
         justify-content: flex-start;
+        align-items: center;
+    }
+
+    .slide > :first-child {
+        margin-top: auto;
+    }
+
+    .slide > :last-child {
+        margin-bottom: auto;
+    }
+
+    h1 {
+        font-size: 32px;
+        overflow-wrap: anywhere;
+    }
+
+    h2 {
+        font-size: 27px;
+        overflow-wrap: anywhere;
+    }
+
+    p {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .cards {
+        gap: 12px;
+        margin-top: 20px;
     }
 
     .card {
         width: 100%;
-        padding: 18px;
+        padding: 16px;
     }
+
+    .card .icon {
+        font-size: 32px;
+        margin-bottom: 8px;
+    }
+
+    .card p {
+        font-size: 14px;
+    }
+
+    .big-icon {
+        font-size: 55px;
+    }
+
+    /* ИСПРАВЛЕННЫЕ КНОПКИ */
 
     .navigation {
-        bottom: 15px;
-        gap: 10px;
+        position: fixed;
+
+        left: 0;
+        right: 0;
+        bottom: calc(12px + env(safe-area-inset-bottom));
+
+        width: 100%;
+        max-width: 100%;
+
+        transform: none;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        gap: 8px;
+        padding: 8px 12px;
     }
 
-    button {
-        padding: 11px 15px;
-        font-size: 14px;
+    .navigation button {
+        flex: 0 1 auto;
+        min-width: 0;
+        padding: 11px 13px;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+    #counter {
+        min-width: 42px;
+        font-size: 13px;
     }
 
     .telegram-btn {
         font-size: 16px;
         padding: 15px 20px;
+        margin-top: 20px;
+    }
+
+    .quiz button {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    #result {
+        font-size: 16px;
+    }
+}
+
+/* ОЧЕНЬ МАЛЕНЬКИЕ ЭКРАНЫ */
+
+@media (max-width: 360px) {
+
+    .navigation {
+        gap: 5px;
+        padding: 6px;
+    }
+
+    .navigation button {
+        font-size: 12px;
+        padding: 9px 10px;
+    }
+
+    #counter {
+        min-width: 38px;
+        font-size: 12px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
     }
 }
 </style>
@@ -517,7 +700,7 @@ button:hover {
     </div>
 </section>
 
-<!-- 8-СЛАЙД: TELEGRAM -->
+<!-- 8-СЛАЙД -->
 
 <section class="slide">
 
@@ -545,8 +728,6 @@ button:hover {
         төмендегі сілтемеге өтіңіз!
     </p>
 
-    <!-- КНОПКА TELEGRAM -->
-
     <a
         href="https://t.me/ENT_Dinara_bot"
         target="_blank"
@@ -556,29 +737,25 @@ button:hover {
         🚀 Telegram ботқа өту
     </a>
 
-    <br><br>
-
-
 </section>
 
 <!-- НАВИГАЦИЯ -->
 
 <div class="navigation">
 
-    <button onclick="changeSlide(-1)">
+    <button type="button" onclick="changeSlide(-1)">
         ❮ Артқа
     </button>
 
     <span id="counter">1 / 8</span>
 
-    <button onclick="changeSlide(1)">
+    <button type="button" onclick="changeSlide(1)">
         Алға ❯
     </button>
 
 </div>
 
 <script>
-
 const slides = document.querySelectorAll(".slide");
 
 let currentSlide = 0;
@@ -606,6 +783,8 @@ function changeSlide(direction) {
     goToSlide(currentSlide + direction);
 }
 
+/* КЛАВИАТУРА */
+
 document.addEventListener("keydown", function(event) {
 
     if (event.key === "ArrowRight") {
@@ -617,6 +796,8 @@ document.addEventListener("keydown", function(event) {
     }
 
 });
+
+/* ТЕСТ */
 
 function showResult(type) {
 
@@ -636,8 +817,9 @@ function showResult(type) {
         results[type];
 }
 
-goToSlide(0);
+/* БАСТАПҚЫ СЛАЙД */
 
+goToSlide(0);
 </script>
 
 </body>
