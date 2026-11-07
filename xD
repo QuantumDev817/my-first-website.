@@ -1,1 +1,201 @@
 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Для тебя</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f0f13;
+            --card-bg: #1a1a20;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a8;
+            --accent: #00e5ff;
+            --accent-glow: rgba(0, 229, 255, 0.4);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
+        
+        body {
+            background-color: var(--bg-dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+            background-image: radial-gradient(circle at 50% 0%, #2a2a35 0%, transparent 60%);
+            position: relative;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 40px 25px;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.05);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .fade-in { animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .emoji { font-size: 50px; margin-bottom: 20px; display: block; }
+        h1 { font-size: 24px; color: var(--text-main); margin-bottom: 15px; font-weight: 800; }
+        p { font-size: 15px; color: var(--text-muted); line-height: 1.6; margin-bottom: 30px; }
+        
+        .btn {
+            background: var(--text-main);
+            color: var(--bg-dark);
+            border: none;
+            padding: 16px 30px;
+            font-size: 15px;
+            font-weight: 800;
+            border-radius: 14px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn:active { transform: scale(0.95); background: #ccc; }
+
+        .step { display: none; }
+        .step.active { display: block; }
+
+        .final-box {
+            background: rgba(0, 229, 255, 0.05);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            min-height: 120px;
+            text-align: left;
+        }
+        
+        #typewriter {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 15px;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+        
+        .heart {
+            position: absolute;
+            color: var(--accent);
+            font-size: 20px;
+            bottom: -20px;
+            animation: floatUp 4s linear forwards;
+            z-index: 1;
+            opacity: 0;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.5) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) scale(1.5) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card" id="card">
+        
+        <div class="step active fade-in" id="step1">
+            <span class="emoji">👨‍💻</span>
+            <h1>Привет, Хадиша</h1>
+            <p>Я не мастер говорить красивые слова вживую. Поэтому решил написать этот код. Просто нажми кнопку.</p>
+            <button class="btn" onclick="nextStep(2)">Погнали</button>
+        </div>
+
+        <div class="step" id="step2">
+            <span class="emoji">🌭</span>
+            <h1>Помнишь Сосиску?</h1>
+            <p>Та самая случайная шутка. Я обещал сделать сайт — и вот он. Написан на HTML, CSS и немного на JavaScript.</p>
+            <button class="btn" onclick="nextStep(3)">И что дальше?</button>
+        </div>
+
+        <div class="step" id="step3">
+            <span class="emoji">⚡</span>
+            <h1>Обычно я пишу код</h1>
+            <p>Мой мозг привык решать задачи, алгоритмы и дебажить ошибки. Но есть одна вещь, которую я не могу просчитать.</p>
+            <button class="btn" onclick="nextStep(4)">Показать</button>
+        </div>
+
+        <div class="step" id="step4">
+            <span class="emoji">✨</span>
+            <h1>Сбой в системе</h1>
+            <div class="final-box">
+                <div id="typewriter"></div>
+            </div>
+            <p id="final-subtext" style="opacity: 0; transition: opacity 1s; font-weight: 800; color: var(--accent); font-size: 14px; margin-top: 10px;">
+                — QuantumDev817
+            </p>
+        </div>
+        
+    </div>
+
+    <script>
+        function nextStep(stepNumber) {
+            const steps = document.querySelectorAll('.step');
+            steps.forEach(step => step.classList.remove('active', 'fade-in'));
+            
+            const next = document.getElementById('step' + stepNumber);
+            next.classList.add('active');
+            setTimeout(() => next.classList.add('fade-in'), 10);
+
+            if(stepNumber === 4) {
+                startTypewriter();
+                createHearts();
+            }
+        }
+
+        // --- ИЗМЕНЕННЫЙ ТЕКСТ (БЕЗ СОПЛЕЙ) ---
+        const finalText = "Ты сломала мой алгоритм. Я не знаю, как это работает, но я не могу перестать думать о тебе. Давай на перемене объяснишь, как ты это сделала?";
+        let i = 0;
+        
+        function startTypewriter() {
+            const element = document.getElementById("typewriter");
+            element.innerHTML = ""; 
+            
+            function type() {
+                if (i < finalText.length) {
+                    element.innerHTML += finalText.charAt(i);
+                    i++;
+                    setTimeout(type, 40); 
+                } else {
+                    document.getElementById("final-subtext").style.opacity = "1";
+                }
+            }
+            setTimeout(type, 500); 
+        }
+
+        function createHearts() {
+            const emojis = ['♥', '💙', '✨'];
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                
+                const size = Math.random() * 20 + 10;
+                heart.style.fontSize = size + 'px';
+                heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+                
+                document.body.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 5000);
+            }, 300); 
+        }
+    </script>
+</body>
+</html>
