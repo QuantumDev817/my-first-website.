@@ -1,200 +1,250 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="kk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Для тебя</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-dark: #0f0f13;
-            --card-bg: #1a1a20;
-            --text-main: #ffffff;
-            --text-muted: #a0a0a8;
-            --accent: #00e5ff;
-            --accent-glow: rgba(0, 229, 255, 0.4);
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
-        
-        body {
-            background-color: var(--bg-dark);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            overflow: hidden;
-            background-image: radial-gradient(circle at 50% 0%, #2a2a35 0%, transparent 60%);
-            position: relative;
-        }
-        
-        .card {
-            background: var(--card-bg);
-            border-radius: 24px;
-            padding: 40px 25px;
-            width: 100%;
-            max-width: 380px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.05);
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .fade-in { animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px) scale(0.98); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        .emoji { font-size: 50px; margin-bottom: 20px; display: block; }
-        h1 { font-size: 24px; color: var(--text-main); margin-bottom: 15px; font-weight: 800; }
-        p { font-size: 15px; color: var(--text-muted); line-height: 1.6; margin-bottom: 30px; }
-        
-        .btn {
-            background: var(--text-main);
-            color: var(--bg-dark);
-            border: none;
-            padding: 16px 30px;
-            font-size: 15px;
-            font-weight: 800;
-            border-radius: 14px;
-            cursor: pointer;
-            width: 100%;
-            transition: all 0.2s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .btn:active { transform: scale(0.95); background: #ccc; }
-
-        .step { display: none; }
-        .step.active { display: block; }
-
-        .final-box {
-            background: rgba(0, 229, 255, 0.05);
-            border: 1px solid rgba(0, 229, 255, 0.2);
-            padding: 20px;
-            border-radius: 16px;
-            margin-bottom: 25px;
-            min-height: 120px;
-            text-align: left;
-        }
-        
-        #typewriter {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 15px;
-            color: var(--text-main);
-            line-height: 1.6;
-        }
-        
-        .heart {
-            position: absolute;
-            color: var(--accent);
-            font-size: 20px;
-            bottom: -20px;
-            animation: floatUp 4s linear forwards;
-            z-index: 1;
-            opacity: 0;
-        }
-        @keyframes floatUp {
-            0% { transform: translateY(0) scale(0.5) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(-100vh) scale(1.5) rotate(360deg); opacity: 0; }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Кенесары – Наурызбай | Комикс</title>
+<style>
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;background:#050302;color:#e3c58f;font-family:Georgia,"Times New Roman",serif;overflow:hidden}
+button{font:inherit;cursor:pointer}
+#cover,#app{position:fixed;inset:0}
+#cover{z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;transition:opacity 1s,transform 1s}
+#cover.out{opacity:0;transform:scale(1.2);pointer-events:none}
+.bg,.bg svg{position:absolute;inset:0;width:100%;height:100%}
+.vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,#0000 20%,#000e 100%)}
+#fx{position:fixed;inset:0;z-index:6;pointer-events:none;width:100%;height:100%}
+.smoke{position:absolute;bottom:-20%;width:60vmax;height:60vmax;border-radius:50%;background:radial-gradient(#000a,#0000 65%);filter:blur(30px);animation:sm 14s linear infinite}
+@keyframes sm{from{transform:translate(0,0)}to{transform:translate(20vw,-40vh) scale(1.5);opacity:0}}
+h1{position:relative;font-size:clamp(30px,8.5vw,108px);line-height:1.1;letter-spacing:.05em;color:#d4a24a;text-shadow:0 0 30px #7a1a14,0 4px 0 #3a0f0b,0 0 60px #000}
+h1 span,.fl span{display:inline-block;opacity:0;transform:translateY(40px) scale(1.5);filter:blur(8px);animation:ltr .9s forwards}
+@keyframes ltr{to{opacity:1;transform:none;filter:none}}
+.sub{position:relative;margin:18px 0 34px;font-style:italic;font-size:clamp(15px,3.2vw,26px);color:#f3d58a;text-shadow:0 2px 10px #000;opacity:0;animation:ltr 1.2s 2.2s forwards}
+.btn{position:relative;background:linear-gradient(#9b1c14,#5a0f0b);color:#f3d58a;border:2px solid #d4a24a;padding:14px 30px;letter-spacing:.12em;font-size:clamp(14px,3.4vw,20px);box-shadow:0 0 30px #9b1c1499;transition:.3s;opacity:0;animation:ltr 1s 2.8s forwards}
+.btn:hover{transform:scale(1.06);box-shadow:0 0 50px #d4a24a88}
+#app{display:none;flex-direction:column;z-index:2;background:radial-gradient(#2a0d0a,#050302)}
+.top,.bot{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 10px;background:#0b0706;border:0 solid #d4a24a55;flex:none}
+.top{border-bottom-width:1px}.bot{border-top-width:1px;justify-content:center;gap:12px}
+.top b{flex:1;text-align:center;font-size:clamp(12px,2.6vw,18px);color:#d4a24a}
+.ib{background:#2a0d0a;color:#f3d58a;border:1px solid #d4a24a;padding:6px 11px;font-size:14px;border-radius:3px}
+.ib:hover{background:#7a1a14}.ib[disabled]{opacity:.35;cursor:default}
+#cnt{min-width:60px;text-align:center;font-size:18px;color:#d4a24a}
+#prog{height:3px;background:#d4a24a;width:0;transition:width .6s;flex:none}
+#stage{flex:1;overflow:auto;padding:8px;min-height:0}
+.pg{height:100%;min-height:560px;display:grid;gap:8px}
+.fr{position:relative;overflow:hidden;border:3px solid #0b0706;outline:1px solid #d4a24a;background:#000;min-height:0;animation:pop .8s both;animation-delay:calc(var(--i)*.3s + .6s)}
+@keyframes pop{from{opacity:0;transform:scale(.9) rotate(-1deg);filter:brightness(2.5)}}
+.art{position:absolute;inset:0}
+.art svg{width:100%;height:100%;display:block}
+.ov{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:8px;gap:6px;pointer-events:none}
+.cap,.bb,.ov .btn{pointer-events:auto}
+.cap{align-self:flex-start;background:#f0dba8;color:#2a0d0a;border:2px solid #0b0706;padding:6px 10px;font-size:clamp(11px,1.35vw,16px);font-style:italic;line-height:1.3;max-width:90%;box-shadow:3px 3px 0 #0009}
+.bs{display:flex;flex-direction:column;gap:12px;margin-top:auto}
+.bb{position:relative;background:#fff;color:#111;border:2px solid #111;border-radius:16px;padding:6px 11px;font-size:clamp(11px,1.4vw,16px);max-width:80%;line-height:1.3;font-weight:600;animation:bp .5s both;animation-delay:calc(var(--i)*.3s + 1.2s)}
+@keyframes bp{from{opacity:0;transform:scale(.5)}}
+.bb b{display:block;color:#9b1c14;font-size:.82em;letter-spacing:.05em}
+.bb.l{align-self:flex-start;margin-bottom:8px}.bb.r{align-self:flex-end;margin-bottom:8px}
+.bb::after{content:"";position:absolute;bottom:-9px;border:8px solid transparent;border-top:9px solid #111;border-bottom:0}
+.bb.l::after{left:22px}.bb.r::after{right:22px}
+.big{position:absolute;left:0;right:0;top:36%;text-align:center;font-size:clamp(22px,6vw,76px);letter-spacing:.06em;color:#f3d58a;text-shadow:0 0 25px #d4a24a,0 0 60px #9b1c14,0 3px 0 #000;animation:gl 3s ease-in-out infinite alternate}
+@keyframes gl{from{filter:brightness(.8)}to{filter:brightness(1.4)}}
+.rs{align-self:center;opacity:1;animation:none;font-size:clamp(11px,1.6vw,16px);padding:10px 20px}
+.note{font-size:clamp(9px,1.1vw,12px);color:#f3d58a;opacity:.85;text-align:center}
+.fl{position:fixed;inset:0;z-index:15;display:flex;align-items:center;justify-content:center;pointer-events:none;text-align:center;font-size:clamp(30px,10vw,120px);color:#d4a24a;letter-spacing:.1em;text-shadow:0 0 40px #9b1c14,0 0 8px #000;opacity:0}
+.fl.on{animation:fo 2.2s}
+@keyframes fo{0%,85%{opacity:1}100%{opacity:0}}
+#cu{position:fixed;inset:0;z-index:20;pointer-events:none}
+#cu i{position:absolute;top:0;bottom:0;width:50.5%;background:linear-gradient(#0b0706,#4a120d);transition:transform .5s cubic-bezier(.7,0,.3,1)}
+#cu i:first-child{left:0;transform:translateX(-101%);border-right:3px solid #d4a24a}
+#cu i:last-child{right:0;transform:translateX(101%);border-left:3px solid #d4a24a}
+#cu.go i{transform:none}
+@media(max-width:700px){
+ .pg{display:flex!important;flex-direction:column;height:auto;min-height:0;gap:14px}
+ .fr{flex:none;animation-delay:calc(var(--i)*.12s)}
+ .art{position:relative;inset:auto;aspect-ratio:4/3}
+ .ov{position:static;padding:10px;gap:10px;background:linear-gradient(#1a0b08,#0b0706);pointer-events:auto}
+ .cap{max-width:100%;align-self:stretch;font-size:15px;box-shadow:none}
+ .bs{gap:8px;margin:0}
+ .bb{max-width:100%;align-self:stretch!important;margin:0!important;font-size:15px;border-radius:12px;animation:none}
+ .bb::after{display:none}
+ .big{top:30%;font-size:clamp(22px,8vw,40px)}
+ .note{font-size:11px}
+ .top .ib span{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-delay:0s!important}}
+</style>
 </head>
 <body>
+<canvas id="fx"></canvas>
+<section id="cover">
+ <div class="bg" id="cbg"></div><div class="vig"></div>
+ <div class="smoke" style="left:-10%"></div><div class="smoke" style="left:40%;animation-delay:-7s"></div>
+ <h1 id="h1"></h1>
+ <p class="sub">Нысанбай жыраудың тарихи дастаны</p>
+ <button class="btn" id="start">КОМИКСТІ БАСТАУ</button>
+</section>
+<main id="app">
+ <div class="top">
+  <button class="ib" id="mus" title="Музыка">♪ <span>Музыка: өшірулі</span></button>
+  <b id="pt"></b>
+  <button class="ib" id="fs" title="Толық экран">⛶</button>
+  <button class="ib" id="rs1" title="Қайта бастау">↺ <span>Қайта бастау</span></button>
+ </div>
+ <div id="prog"></div>
+ <div id="stage"></div>
+ <div class="bot">
+  <button class="ib" id="pv">◀ Алдыңғы бет</button>
+  <span id="cnt">1/10</span>
+  <button class="ib" id="nx">Келесі бет ▶</button>
+ </div>
+</main>
+<div class="fl" id="fl"></div>
+<div id="cu"><i></i><i></i></div>
 
-    <div class="card" id="card">
-        
-        <div class="step active fade-in" id="step1">
-            <span class="emoji">👨‍💻</span>
-            <h1>Привет, Хадиша</h1>
-            <p>Я не мастер говорить красивые слова вживую. Поэтому решил написать этот код. Просто нажми кнопку.</p>
-            <button class="btn" onclick="nextStep(2)">Погнали</button>
-        </div>
-
-        <div class="step" id="step2">
-            <span class="emoji">🌭</span>
-            <h1>Помнишь Сосиску?</h1>
-            <p>Та самая случайная шутка. Я обещал сделать сайт — и вот он. Написан на HTML, CSS и немного на JavaScript.</p>
-            <button class="btn" onclick="nextStep(3)">И что дальше?</button>
-        </div>
-
-        <div class="step" id="step3">
-            <span class="emoji">⚡</span>
-            <h1>Обычно я пишу код</h1>
-            <p>Мой мозг привык решать задачи, алгоритмы и дебажить ошибки. Но есть одна вещь, которую я не могу просчитать.</p>
-            <button class="btn" onclick="nextStep(4)">Показать</button>
-        </div>
-
-        <div class="step" id="step4">
-            <span class="emoji">✨</span>
-            <h1>Сбой в системе</h1>
-            <div class="final-box">
-                <div id="typewriter"></div>
-            </div>
-            <p id="final-subtext" style="opacity: 0; transition: opacity 1s; font-weight: 800; color: var(--accent); font-size: 14px; margin-top: 10px;">
-                — QuantumDev817
-            </p>
-        </div>
-        
-    </div>
-
-    <script>
-        function nextStep(stepNumber) {
-            const steps = document.querySelectorAll('.step');
-            steps.forEach(step => step.classList.remove('active', 'fade-in'));
-            
-            const next = document.getElementById('step' + stepNumber);
-            next.classList.add('active');
-            setTimeout(() => next.classList.add('fade-in'), 10);
-
-            if(stepNumber === 4) {
-                startTypewriter();
-                createHearts();
-            }
-        }
-
-        // --- ИЗМЕНЕННЫЙ ТЕКСТ (БЕЗ СОПЛЕЙ) ---
-        const finalText = "Ты сломала мой алгоритм. Я не знаю, как это работает, но я не могу перестать думать о тебе. Давай на перемене объяснишь, как ты это сделала?";
-        let i = 0;
-        
-        function startTypewriter() {
-            const element = document.getElementById("typewriter");
-            element.innerHTML = ""; 
-            
-            function type() {
-                if (i < finalText.length) {
-                    element.innerHTML += finalText.charAt(i);
-                    i++;
-                    setTimeout(type, 40); 
-                } else {
-                    document.getElementById("final-subtext").style.opacity = "1";
-                }
-            }
-            setTimeout(type, 500); 
-        }
-
-        function createHearts() {
-            const emojis = ['♥', '💙', '✨'];
-            setInterval(() => {
-                const heart = document.createElement('div');
-                heart.classList.add('heart');
-                heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-                heart.style.left = Math.random() * 100 + 'vw';
-                
-                const size = Math.random() * 20 + 10;
-                heart.style.fontSize = size + 'px';
-                heart.style.animationDuration = Math.random() * 2 + 3 + 's';
-                
-                document.body.appendChild(heart);
-                
-                setTimeout(() => {
-                    heart.remove();
-                }, 5000);
-            }, 300); 
-        }
-    </script>
+<script>
+/* ===== Иллюстрациялар: SVG графикалық роман стилінде (контур + жартылай тон + растр) ===== */
+let gid=0;
+const O='stroke="#140806" stroke-width="2.4" stroke-linejoin="round"';
+const W=b=>{const i='h'+gid++;return `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><defs><pattern id="${i}" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="1" fill="#000"/></pattern><linearGradient id="${i}g" x1="0" y1="0" x2="0" y2="1"><stop offset=".4" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".7"/></linearGradient><radialGradient id="${i}v"><stop offset=".5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".6"/></radialGradient></defs>${b}<rect x="-200" y="-100" width="800" height="500" fill="url(#${i})" opacity=".13"/><rect x="-200" y="-100" width="800" height="500" fill="url(#${i}g)"/><rect x="-200" y="-100" width="800" height="500" fill="url(#${i}v)"/></svg>`};
+const sky=(a,b)=>{const i='s'+gid++;return `<defs><linearGradient id="${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect x="-200" y="-100" width="800" height="500" fill="url(#${i})"/>`};
+const sun=(x,y,r,c)=>`<circle cx="${x}" cy="${y}" r="${r*2.4}" fill="${c}" opacity=".2"/><circle cx="${x}" cy="${y}" r="${r*1.5}" fill="${c}" opacity=".3"/><circle cx="${x}" cy="${y}" r="${r}" fill="${c}"/>`;
+const hill=(y,c,a=20)=>`<path d="M-200 ${y}Q-50 ${y-a} 100 ${y}T400 ${y}T700 ${y}V400H-200Z" fill="${c}" ${O}/>`;
+const st=n=>{let s='';for(let i=0;i<n;i++)s+=`<circle cx="${(i*97+31)%520-60}" cy="${(i*53+11)%160}" r="${i%3?.8:1.6}" fill="#f3d58a" opacity=".85"/>`;return s};
+const moon='<circle cx="330" cy="50" r="20" fill="#f3e3b0"/><circle cx="338" cy="45" r="18" fill="#0b0706" opacity=".6"/>';
+const orn=(y,c='#d4a24a')=>{let s='';for(let i=-5;i<12;i++)s+=`<path d="M${i*40} ${y}q10-12 20 0q10 12 20 0" fill="none" stroke="${c}" stroke-width="2"/><circle cx="${i*40+20}" cy="${y}" r="2.5" fill="${c}"/>`;return s};
+const yurt=(x,y,s,c='#e8d0a0')=>`<g transform="translate(${x} ${y}) scale(${s})" ${O}><path d="M-34 0V-20Q0-54 34-20V0Z" fill="${c}"/><path d="M-34-20Q0-54 34-20" fill="none" stroke="#9b1c14" stroke-width="4"/><path d="M-34-8H34" stroke="#9b1c14" stroke-width="3"/><path d="M-8 0V-16Q0-22 8-16V0Z" fill="#2a0d0a"/><circle cy="-43" r="5" fill="#2a1410"/></g>`;
+const fort=(x,y,s=1)=>`<g transform="translate(${x} ${y}) scale(${s})" fill="#2e1812" ${O}><rect x="-60" y="-30" width="120" height="30"/><rect x="-68" y="-54" width="24" height="54"/><rect x="44" y="-54" width="24" height="54"/><path d="M-70-54l14-16 14 16zM42-54l14-16 14 16z"/><path d="M-60-30h4v-6h6v6h6v-6h6v6h6v-6h6v6h6v-6h6v6h6v-6h4v6" fill="none"/><rect x="-6" y="-16" width="12" height="16" fill="#e08a3a"/><path d="M0-30V-66" stroke="#d4a24a"/><path d="M0-66l20 5-20 7z" fill="#ddd"/></g>`;
+const fire=(x,y,s)=>`<g transform="translate(${x} ${y}) scale(${s})"><path d="M-60-30q8-38 15-8q6-34 15 0q8-32 17 2q8-34 17 4q8-30 16 2V-26Z" fill="#ff7a1a" ${O}/><path d="M-38-28q4-20 9-4q4-18 9 0q4-16 9 2z" fill="#ffd23a"/></g>`;
+const smoke=(x,y)=>`<circle cx="${x}" cy="${y}" r="30" fill="#000" opacity=".4"/><circle cx="${x+25}" cy="${y-30}" r="26" fill="#000" opacity=".32"/><circle cx="${x+10}" cy="${y-62}" r="24" fill="#000" opacity=".25"/>`;
+const carpet='<rect x="-200" y="238" width="800" height="80" fill="#8a2a1a"/><path d="M-200 252H600M-200 280H600" stroke="#d4a24a" stroke-width="2"/>'+orn(266,'#e8c070');
+const lattice=()=>{let s='<rect x="-200" y="-100" width="800" height="400" fill="#3a1410"/>';for(let i=-12;i<22;i++)s+=`<path d="M${i*28} 0L${i*28+60} 240M${i*28+60} 0L${i*28} 240" stroke="#1a0b08" stroke-width="2" opacity=".6"/>`;return s+'<path d="M-200 0Q200 90 600 0V30H-200Z" fill="#7a1a14"/><path d="M-200 30Q200 118 600 30" fill="none" stroke="#d4a24a" stroke-width="3"/>'};
+/* бет-әлпет: кейіпкер бюсті */
+const face=(x,y,s,o)=>{const sk=o.skin||'#cf9a6a',hr='#1a0e0a',br=o.mad?'M-19 -2L-4 -8M19 -2L4 -8':'M-18 -6Q-10 -10-3 -6M18 -6Q10 -10 3 -6';
+return `<g transform="translate(${x} ${y}) scale(${s})" ${O}><path d="M-68 190Q-66 52-24 40L24 40Q66 52 68 190Z" fill="${o.robe}"/><path d="M-44 90Q0 118 44 90M-60 140Q0 168 60 140" fill="none" stroke="#d4a24a" stroke-width="2.5" opacity=".65"/><path d="M-17 40L0 98L17 40" fill="#00000033" stroke="#d4a24a" stroke-width="5"/><rect x="-11" y="16" width="22" height="30" fill="#a8764a"/><ellipse cx="-25" cy="6" rx="4" ry="7" fill="${sk}"/><ellipse cx="25" cy="6" rx="4" ry="7" fill="${sk}"/><path d="M-24-8Q-26 36 0 46Q26 36 24-8Q22-28 0-28Q-22-28-24-8Z" fill="${sk}"/><path d="M6-28Q24-26 24-8Q26 36 0 46Q16 20 6-28Z" fill="#5a2a10" opacity=".25" stroke="none"/><path d="M-16 1Q-10-3-4 1Q-10 5-16 1ZM16 1Q10-3 4 1Q10 5 16 1Z" fill="#fff" stroke-width="1.2"/><circle cx="-10" cy="1" r="2.3" fill="#000" stroke="none"/><circle cx="10" cy="1" r="2.3" fill="#000" stroke="none"/><path d="${br}" fill="none" stroke="${hr}" stroke-width="3.4" stroke-linecap="round"/><path d="M0 4L-3 16Q0 19 4 16" fill="none" stroke-width="1.6"/>${o.beard?`<path d="M-24 12Q-27 54 0 62Q27 54 24 12Q18 34 0 34Q-18 34-24 12Z" fill="${hr}"/>`:''}<path d="M-14 25Q-7 19 0 23Q7 19 14 25Q7 29 0 26Q-7 29-14 25Z" fill="${hr}" stroke-width="1"/><path d="M-5 33Q0 35 5 33" fill="none" stroke="#9a5a4a" stroke-width="1.8"/>${o.hat}</g>`};
+const cap=(c,f='#2b1a12')=>`<path d="M-28-12Q-33-52 0-56Q33-52 28-12Q0-22-28-12Z" fill="${c}"/><path d="M-30-14Q0-26 30-14L29-2Q0-13-29-2Z" fill="${f}"/>`;
+const HK=cap('#a81f16')+'<path d="M-12-40Q0-46 12-40" fill="none" stroke="#d4a24a" stroke-width="2.5"/><circle cy="-34" r="3" fill="#d4a24a" stroke-width="1"/>';
+const HN='<path d="M-26-10Q-28-50 0-54Q28-50 26-10Q0-20-26-10Z" fill="#aab3b9"/><path d="M-27-12Q0-22 27-12L26-4Q0-14-26-4Z" fill="#d4a24a"/><path d="M-2-54L0-76L2-54Z" fill="#d4a24a"/><path d="M-27-6Q-34 14-26 30L-20 6ZM27-6Q34 14 26 30L20 6Z" fill="#6b747a"/><path d="M-10-34Q0-40 10-34" stroke="#fff" stroke-width="2" fill="none" opacity=".6"/>';
+const HW='<path d="M-26-12Q-30-52 0-58Q30-52 26-12Q0-22-26-12Z" fill="#f2efe6"/><path d="M-28-14Q0-24 28-14L27-4Q0-14-27-4Z" fill="#1a1a1a"/>';
+const HT=cap('#1f5a5a','#3a2418'),HB=cap('#6b5a3a','#2b1a12');
+const HS='<path d="M-32-10Q-34-56 0-58Q34-56 32-10L33 52Q0 38-33 52ZM-22-10Q-24 36 0 44Q24 36 22-10Q22-24 0-26Q-22-24-22-10Z" fill="#f2efe6" fill-rule="evenodd"/>';
+/* жылқы мен салт атты */
+const horse=c=>`<path d="M-34-4Q-34-18-14-18L14-18Q26-22 32-34L42-42L52-38L52-30L42-24Q36-10 30 8L28 30L22 30L24 10L8 8L-2 28L-8 28L-8 6L-24 6L-32 28L-38 28L-32 4Z" fill="${c}"/><path d="M-34-10Q-54-8-56 18Q-44 6-34 2Z" fill="${c}"/>`;
+const rider=(x,y,s,c='#7a1a14',f=0,hc='#2a140c')=>`<g transform="translate(${x} ${y}) scale(${s})" ${O}>${horse(hc)}<path d="M-12-18L-8-44L6-44L10-18Z" fill="${c}"/><circle cx="-1" cy="-52" r="7" fill="#cf9a6a"/><path d="M-9-54Q-1-66 8-54Z" fill="#a81f16"/>${f?'<path d="M10-40L26-84" stroke="#d4a24a" stroke-width="2.4"/><path d="M26-84l24 6-20 13z" fill="#b3261e"/>':'<path d="M10-40L36-72" stroke="#d4a24a" stroke-width="2"/>'}</g>`;
+const dombra=(x,y,r)=>`<g transform="translate(${x} ${y}) rotate(${r})" ${O}><rect x="12" y="-3" width="100" height="6" fill="#4a210d"/><ellipse rx="28" ry="19" fill="#a8672e"/><circle r="6" fill="#2a0d0a"/><path d="M-8-6V6" stroke="#f3d58a" stroke-width="1.5"/></g>`;
+const glow=(c='#d4a24a')=>`<circle cx="200" cy="130" r="120" fill="${c}" opacity=".18"/><circle cx="200" cy="130" r="100" fill="none" stroke="${c}" stroke-width="2" opacity=".5"/>`;
+const SC={
+ cover:()=>sky('#1a0504','#e08a3a')+sun(200,175,36,'#f6cf63')+'<path d="M-100 210L40 120L120 190L200 100L290 195L360 130L500 210V400H-100Z" fill="#5a1710" '+O+'/><path d="M200 100L180 128L200 120L216 130ZM40 120L24 146L42 137L58 149Z" fill="#f2e6c8"/>'+hill(228,'#2a0d0a',14)+face(-10,170,1.3,{robe:'#7a1a14',hat:HK,beard:1,mad:1})+face(410,185,1.2,{robe:'#5a1f12',hat:HN,mad:1})+hill(262,'#0b0706',8)+rider(170,266,1.8,'#9b1c14',1)+rider(250,276,1.4,'#7a1a14',1)+rider(110,278,1.1,'#7a1a14',0,'#1a0b08')+rider(310,284,1,'#7a1a14',0,'#1a0b08'),
+ dawn:()=>sky('#2a0d0a','#e08a3a')+sun(285,170,22,'#f6cf63')+hill(200,'#6b2514',16)+hill(232,'#2a0d0a',12)+yurt(70,244,.9,'#9a7a4a')+yurt(115,252,.7,'#9a7a4a')+rider(190,250,1.2,'#7a1a14',1)+rider(250,258,1)+orn(290,'#d4a24a'),
+ fort:()=>sky('#2a0d0a','#c9824a')+hill(212,'#3b1a10',10)+smoke(270,150)+fort(270,222,1.3)+yurt(60,250,1)+yurt(120,262,.7)+hill(270,'#1a0b08',6),
+ zh:()=>sky('#0b0706','#2a0d0a')+st(45)+moon+hill(238,'#150a07',10)+yurt(60,252,1,'#8a6a3a')+face(185,100,1.2,{robe:'#3a3a3a',hat:HW,beard:1})+dombra(235,225,-42),
+ mourn:()=>sky('#2a0d0a','#6b2514')+sun(60,140,18,'#d98b3a')+hill(236,'#150a07',10)+face(195,100,1.2,{robe:'#3a3a3a',hat:HW,beard:1})+dombra(235,225,-42),
+ k:()=>sky('#3a0f0b','#0b0706')+glow()+'<path d="M80 300V120" stroke="#d4a24a" stroke-width="3"/><path d="M80 120l50 14-50 20z" fill="#b3261e" '+O+'/>'+face(200,100,1.25,{robe:'#7a1a14',hat:HK,beard:1,mad:1}),
+ n:()=>sky('#3a0f0b','#0b0706')+glow()+face(200,100,1.25,{robe:'#5a1f12',hat:HN,mad:1}),
+ ride:()=>sky('#3a0f0b','#e8a050')+sun(90,150,18,'#f6cf63')+hill(196,'#5a1f12',14)+hill(230,'#1a0b08',12)+rider(165,248,1.4,'#7a1a14',1)+rider(240,256,1.4,'#9b1c14',1)+rider(305,246,1.1)+rider(95,258,.9),
+ council:()=>lattice()+carpet+face(95,118,.85,{robe:'#3a2a1a',hat:HT,beard:1})+face(305,118,.85,{robe:'#2a2a3a',hat:HB,beard:1})+face(200,108,1,{robe:'#7a1a14',hat:HK,beard:1,mad:1}),
+ attack:()=>sky('#1a0706','#b3401a')+smoke(210,130)+hill(228,'#1a0b08',8)+fort(210,236,1.4)+fire(210,236,1.4)+rider(80,264,1.2,'#9b1c14',1)+rider(330,268,1),
+ battle:()=>sky('#1a0504','#7a1a14')+'<path d="M20 120L380 230M60 95L330 245M120 80L390 200" stroke="#d4a24a" stroke-width="1" opacity=".6"/>'+hill(218,'#0b0706',6)+rider(110,250,1.4,'#9b1c14',1)+rider(200,258,1.2)+rider(290,252,1.3,'#444',0,'#d8c8a8')+rider(345,266,1,'#444',0,'#d8c8a8')+'<circle cx="150" cy="205" r="3" fill="#ffd23a"/><circle cx="250" cy="220" r="2" fill="#ff7a1a"/>',
+ folk:()=>sky('#3a0f0b','#e8a050')+hill(205,'#5a1f12',10)+yurt(50,236,.9)+yurt(350,240,1)+face(155,120,.8,{robe:'#3a2a1a',hat:HS,skin:'#d8a878'})+face(250,120,.8,{robe:'#2a2a3a',hat:HB,beard:1})+orn(290),
+ mt:()=>sky('#14202e','#e3c58f')+'<path d="M-100 230L70 110L120 170L190 80L260 180L320 120L500 230Z" fill="#33414f" '+O+'/><path d="M190 80L170 110L190 102L205 114ZM70 110L54 136L72 127L88 139ZM320 120L304 144L322 135L338 146Z" fill="#fff"/>'+hill(248,'#2a1410',10)+rider(110,272,.9,'#7a1a14',1)+rider(160,278,.8)+rider(205,274,.8)+rider(250,280,.8),
+ sad:()=>sky('#050302','#1a0b08')+st(40)+moon+hill(252,'#0b0706',8)+yurt(110,268,1,'#6b5a3a')+'<path d="M300 268V150" stroke="#d4a24a" stroke-width="2"/><path d="M300 150l32 10-32 14z" fill="#7a1a14"/>',
+ mem:()=>sky('#050302','#3a0f0b')+st(70)+'<circle cx="200" cy="170" r="90" fill="#d4a24a" opacity=".15"/>'+hill(255,'#0b0706',8)+'<path d="M182 255V130L200 100L218 130V255Z" fill="#d4a24a" '+O+'/><circle cx="200" cy="160" r="9" fill="#7a1a14"/><path d="M140 255V190L152 170L164 190V255ZM236 255V190L248 170L260 190V255Z" fill="#a8792f" '+O+'/>'
+};
+/* ===== Комикс мазмұны ===== */
+const P=[
+{t:'Тарихи кезең',a:"'a b' 'a c'",f:[
+ {s:'dawn',n:'XIX ғасыр. Кең байтақ қазақ даласы Ресей империясы мен Қоқан хандығының қысымына түсті. Ел тәуелсіздігі мен жер тағдыры қыл үстінде тұрды.'},
+ {s:'fort',n:'Дала ішіне бекіністер салынып, құнарлы жайылымдар тарыла берді.',b:[['Ақсақал','Жайылым тарылса, мал қайда жайылады? Жер кетсе, ел де кетеді...','l']]},
+ {s:'zh',n:'Сол заманның сырын жыраулар жырға қосты.',b:[['Нысанбай жырау','Жер — елдің анасы. Оны қорғамаған ел жетім қалады.','r']]}]},
+{t:'Кенесарының мақсаты',a:"'a b' 'c b'",nm:'КЕНЕСАРЫ',f:[
+ {s:'fort',n:'Ол ауыр салыққа және бекіністердің көбеюіне қарсы шықты.',b:[['Кенесары','Тәуелсіз ел ғана өз жерінің қожасы.','l']]},
+ {s:'k',n:'Абылай ханның немересі Кенесары Қасымұлы (1802–1847) ата-бабасы құрған қазақ хандығын қалпына келтіруді мақсат етті.',b:[['Кенесары','Жер — біздікі, ел — біздікі. Өз тағдырымызды өзіміз шешуіміз керек!','r']]},
+ {s:'council',n:'Кейін ол хан болып сайланды.',b:[['Би','Хан ием, жолың ауыр, бірақ халқың сенімен.','r']]}]},
+{t:'Наурызбай батыр',a:"'a b c'",nm:'НАУРЫЗБАЙ',f:[
+ {s:'n',n:'Кенесарының ұлы Наурызбай жас кезінен ержүрек, сенімді батыр атанды.',b:[['Наурызбай','Әке, мен сенің жаныңдамын. Қылышым да, жаным да елім үшін!','r']]},
+ {s:'k',n:'Кенесары ұлының қолдауына сүйенді.',b:[['Кенесары','Балам, ер жігіттің серті — елі. Саған үмітім зор.','l']]},
+ {s:'ride',n:'Наурызбай жасақтың алдында шайқасқа бірінші кірді.',b:[['Наурызбай','Алға, жігіттер! Ту қолымызда!','r']]}]},
+{t:'Халықты біріктіру',a:"'a b' 'a c'",f:[
+ {s:'council',n:'Кенесары билер мен батырларды, сұлтандарды кеңеске жинады.',b:[['Кенесары','Ру-руға бөлінсек, жау оңай жеңеді. Бірлік болса — ел мәңгі!','l'],['Би','Хан ием, біз сенің сөзіңе құлақ асамыз.','r']]},
+ {s:'folk',n:'Хабар елге тарап, жігіттер хан туының астына жиналды.'},
+ {s:'ride',n:'Әр өңірден батырлар жасақ бастап келді.',b:[['Батыр','Қазақтың жігіттері бір ту астында болсын!','r']]}]},
+{t:'Азаттық жолындағы күрес',a:"'a b' 'c b'",f:[
+ {s:'ride',n:'1837 жылы басталған көтеріліс кең өріс алып, халықтың үміті оянды.'},
+ {s:'attack',n:'1838 жылы көтерілісшілер Ақмола бекінісін өртеді.',b:[['Наурызбай','Бекіністен қорықпаймыз. Ел азат болсын!','r']]},
+ {s:'folk',n:'Халық батырларға бата берді.',b:[['Әже','Жолдарың болсын, балаларым! Құдай жар болсын!','l']]}]},
+{t:'Қиын шайқастар',a:"'a b' 'a c'",f:[
+ {s:'battle',n:'Көтеріліс жылдары қазақ жасақтары патша әскерімен де, Қоқан бектерімен де шайқасты. Шайқастар ауыр, шығын көп болды.',b:[['Наурызбай','Тайма, жігіттер! Артымызда ел тұр!','l']]},
+ {s:'attack',n:'Бекіністер мен өзен бойындағы қақтығыс тоқтамады.',b:[['Кенесары','Жау көп, бірақ жүрегіміз мықты. Бірлікпен тұрайық!','r']]},
+ {s:'sad',n:'Әр жеңіс қымбатқа түсті: аштық пен жоқшылық жасақты титықтатты.'}]},
+{t:'Қырғыз жеріне жорық',a:"'a b' 'c b'",f:[
+ {s:'ride',n:'Мақсаты — жаңа тірек табу және күш жинау.',b:[['Кенесары','Таулы өлкеде ел жинап, күшімізді қайта жинаймыз.','l']]},
+ {s:'mt',n:'1846 жылы Кенесары жасағымен Жетісу арқылы Іле Алатауы мен қырғыз жеріне бет алды.'},
+ {s:'n',n:'Жағдай өте күрделі еді: қырғыз билеушілерінің бір бөлігі онымен келіспей, қарсы шықты.',b:[['Наурызбай','Әке, жол ауыр, бірақ біз бірге боламыз.','r']]}]},
+{t:'Қайғылы оқиғалар',a:"'a b c'",f:[
+ {s:'sad',n:'Жорық қайғылы аяқталды: 1846 жылы Наурызбай қаза тапты.'},
+ {s:'mt',n:'1847 жылы Кенесары қырғыз манаптарының жасағымен болған ұрыстан кейін қолға түсіп, қаза тапты.'},
+ {s:'folk',n:'Қазақ халқы өз ханы мен батырынан айырылды.',b:[['Халық','Ел тірегінен айырылды...','l']]}]},
+{t:'Нысанбай жыраудың жоқтауы',a:"'a b' 'a c'",nm:'НЫСАНБАЙ ЖЫРАУ',f:[
+ {s:'mourn',n:'Нысанбай жырау (1815–1889) хан мен батыр тағдырын жоқтау жырына айналдырды.',b:[['Нысанбай жырау','Тұлпарынан айырылған ердей, елі қалды мұң болып...','r']]},
+ {s:'sad',n:'Дастан елдің мұңын, батырлардың тағдырын ұрпаққа жеткізеді.'},
+ {s:'zh',n:'Жырау сөзі — халық жадының сақтаушысы.',b:[['Нысанбай жырау','Ер өлсе де, есімі атымен тірі жүреді.','l']]}]},
+{t:'Тарихта қалған есімдер',a:"'a b' 'a c'",f:[
+ {s:'mem',n:'Кенесары мен Наурызбайдың есімі — ерлік пен азаттық идеясының белгісі.',big:'ТАРИХ ҰМЫТЫЛМАЙДЫ',rs:1},
+ {s:'k',n:'Кенесары — қазақтың соңғы ханы, ел тәуелсіздігі үшін күрескен тұлға.'},
+ {s:'n',n:'Наурызбай — жас батыр, ерлік пен адалдықтың үлгісі.'}]}
+];
+/* ===== Қозғалтқыш ===== */
+const $=i=>document.getElementById(i);
+const letters=(el,txt,d=.07)=>{el.innerHTML='';[...txt].forEach((c,i)=>{const s=document.createElement('span');s.textContent=c===' '?'\u00a0':c;s.style.animationDelay=i*d+'s';el.appendChild(s)})};
+$('cbg').innerHTML=W(SC.cover());
+letters($('h1'),'КЕНЕСАРЫ – НАУРЫЗБАЙ',.09);
+let cur=0,busy=false;
+function render(n){
+ cur=n;const p=P[n],g=$('stage'),rw=p.a.split("' '");
+ const cols=rw[0].replace(/'/g,'').split(' ').length;
+ let h=`<div class="pg" style="grid-template-areas:${p.a};grid-template-columns:repeat(${cols},1fr);grid-template-rows:repeat(${rw.length},1fr)">`;
+ p.f.forEach((f,i)=>{
+  h+=`<div class="fr" style="grid-area:${'abcd'[i]};--i:${i}"><div class="art">${W(SC[f.s]())}${f.big?`<div class="big">${f.big}</div>`:''}</div><div class="ov"><div class="cap">${f.n}</div><div class="bs">`+(f.b||[]).map((b,j)=>`<div class="bb ${b[2]}" style="--i:${i+j+1}"><b>${b[0]}</b>${b[1]}</div>`).join('')+(f.rs?`<button class="btn rs" onclick="show(0)">↺ КОМИКСТІ ҚАЙТА БАСТАУ</button>`:'')+(n==9&&i==0?`<div class="note">Ескерту: даталар тарихи деректерге сүйенеді; диалогтар — көркем баяндау.</div>`:'')+`</div></div></div>`;
+ });
+ g.innerHTML=h+'</div>';g.scrollTop=0;
+ $('pt').textContent=(n+1)+'-бет · '+p.t;$('cnt').textContent=(n+1)+'/'+P.length;
+ $('prog').style.width=(n+1)*10+'%';$('pv').disabled=n==0;$('nx').disabled=n==P.length-1;
+ if(p.nm){const f=$('fl');letters(f,p.nm,.08);f.classList.remove('on');void f.offsetWidth;f.classList.add('on')}
+}
+function show(n){
+ if(busy||n<0||n>=P.length)return;busy=true;$('cu').classList.add('go');
+ setTimeout(()=>render(n),550);setTimeout(()=>{$('cu').classList.remove('go');busy=false},1150);
+}
+$('start').onclick=()=>{
+ const d=document.documentElement;(d.requestFullscreen||d.webkitRequestFullscreen||(()=>0)).call(d);
+ $('cover').classList.add('out');$('app').style.display='flex';busy=false;show(0);
+};
+$('nx').onclick=()=>show(cur+1);$('pv').onclick=()=>show(cur-1);$('rs1').onclick=()=>show(0);
+$('fs').onclick=()=>{document.fullscreenElement?document.exitFullscreen():(document.documentElement.requestFullscreen||(()=>0)).call(document.documentElement)};
+addEventListener('keydown',e=>{if($('app').style.display!=='flex')return;if(e.key==='ArrowRight')show(cur+1);if(e.key==='ArrowLeft')show(cur-1)});
+let tx=0,ty=0;
+addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+addEventListener('touchend',e=>{if($('app').style.display!=='flex')return;const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>70&&Math.abs(dy)<60)show(dx<0?cur+1:cur-1)},{passive:true});
+/* ===== Музыка (Web Audio-мен жасалған, авторлық құқықсыз) ===== */
+let ac,mg,on=false;
+$('mus').onclick=()=>{
+ if(!ac){
+  ac=new(window.AudioContext||window.webkitAudioContext)();mg=ac.createGain();mg.gain.value=0;mg.connect(ac.destination);
+  [73.4,110,146.8].forEach(f=>{const o=ac.createOscillator(),l=ac.createBiquadFilter(),g=ac.createGain();o.type='sawtooth';o.frequency.value=f;l.type='lowpass';l.frequency.value=260;g.gain.value=.5;o.connect(l);l.connect(g);g.connect(mg);o.start()});
+  const sc=[293.7,329.6,370,440,493.9,587.3,440,370];let k=0;
+  setInterval(()=>{if(!on)return;const o=ac.createOscillator(),g=ac.createGain();o.type='triangle';o.frequency.value=sc[(k++*3+(k>>2))%sc.length];g.gain.setValueAtTime(.5,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+1.2);o.connect(g);g.connect(mg);o.start();o.stop(ac.currentTime+1.3)},650);
+ }
+ on=!on;ac.resume();mg.gain.setTargetAtTime(on?.14:0,ac.currentTime,.3);
+ $('mus').querySelector('span').textContent='Музыка: '+(on?'қосулы':'өшірулі');
+};
+/* ===== Ұшқын бөлшектері ===== */
+const cv=$('fx'),cx=cv.getContext('2d');const E=[];
+function rz(){cv.width=innerWidth;cv.height=innerHeight}rz();addEventListener('resize',rz);
+for(let i=0;i<60;i++)E.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*2+.5,v:Math.random()*.8+.3,d:Math.random()*6});
+(function tick(){
+ cx.clearRect(0,0,cv.width,cv.height);
+ E.forEach(e=>{e.y-=e.v;e.x+=Math.sin(e.y/40+e.d)*.5;if(e.y<-5){e.y=cv.height+5;e.x=Math.random()*cv.width}
+  cx.beginPath();cx.arc(e.x,e.y,e.r,0,7);cx.fillStyle=`rgba(255,${150+e.r*30|0},60,${.3+e.r/7})`;cx.fill()});
+ requestAnimationFrame(tick)})();
+</script>
 </body>
 </html>
