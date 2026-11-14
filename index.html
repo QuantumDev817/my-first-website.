@@ -73,6 +73,22 @@ h1 span,.fl span{display:inline-block;opacity:0;transform:translateY(40px) scale
 }
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-delay:0s!important}}
 </style>
+<style id="ref">
+#stage{background:#262626;padding:10px}
+.pg{background:#fff;padding:8px;gap:8px;max-width:1150px;margin:0 auto;box-shadow:0 0 40px #000}
+.fr{border:3px solid #111;outline:none;background:#fff}
+.cap,.bb{font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif;font-style:italic;text-transform:uppercase;text-align:center;line-height:1.25}
+.cap{background:#fbeeb0;color:#222;border:2px solid #111;border-radius:0;box-shadow:none;font-size:clamp(9px,1.1vw,14px);letter-spacing:.02em;font-weight:500;max-width:92%}
+.bb{background:#fff;color:#1a1a1a;border:1.5px solid #222;border-radius:50%/45%;padding:12px 20px;font-weight:500;font-size:clamp(9px,1.15vw,14px);max-width:72%}
+.bb b{color:#8a1a12;font-size:.78em;letter-spacing:.05em;margin-bottom:1px}
+.bb.l::after{left:28px}.bb.r::after{right:28px}
+@media(max-width:700px){
+ .pg{padding:6px;gap:8px}
+ .ov{background:#fff;padding:8px;gap:8px}
+ .cap{font-size:12px;max-width:100%;align-self:stretch}
+ .bb{font-size:12.5px;border-radius:18px;padding:8px 12px}
+}
+</style>
 </head>
 <body>
 <canvas id="fx"></canvas>
@@ -102,52 +118,50 @@ h1 span,.fl span{display:inline-block;opacity:0;transform:translateY(40px) scale
 <div id="cu"><i></i><i></i></div>
 
 <script>
-/* ===== Иллюстрациялар: SVG графикалық роман стилінде (контур + жартылай тон + растр) ===== */
+/* ===== Иллюстрациялар: жарық түсті графикалық роман стилі (контур + плоский түс) ===== */
 let gid=0;
-const O='stroke="#140806" stroke-width="2.4" stroke-linejoin="round"';
-const W=b=>{const i='h'+gid++;return `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><defs><pattern id="${i}" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="1" fill="#000"/></pattern><linearGradient id="${i}g" x1="0" y1="0" x2="0" y2="1"><stop offset=".4" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".7"/></linearGradient><radialGradient id="${i}v"><stop offset=".5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".6"/></radialGradient></defs>${b}<rect x="-200" y="-100" width="800" height="500" fill="url(#${i})" opacity=".13"/><rect x="-200" y="-100" width="800" height="500" fill="url(#${i}g)"/><rect x="-200" y="-100" width="800" height="500" fill="url(#${i}v)"/></svg>`};
+const O='stroke="#1a1410" stroke-width="1.8" stroke-linejoin="round"';
+const W=b=>{const i='h'+gid++;return `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><defs><pattern id="${i}" width="4" height="4" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".8" fill="#000"/></pattern></defs>${b}<rect x="-200" y="-100" width="800" height="500" fill="url(#${i})" opacity=".05"/></svg>`};
 const sky=(a,b)=>{const i='s'+gid++;return `<defs><linearGradient id="${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect x="-200" y="-100" width="800" height="500" fill="url(#${i})"/>`};
-const sun=(x,y,r,c)=>`<circle cx="${x}" cy="${y}" r="${r*2.4}" fill="${c}" opacity=".2"/><circle cx="${x}" cy="${y}" r="${r*1.5}" fill="${c}" opacity=".3"/><circle cx="${x}" cy="${y}" r="${r}" fill="${c}"/>`;
+const sun=(x,y,r,c)=>`<circle cx="${x}" cy="${y}" r="${r*2.4}" fill="${c}" opacity=".25"/><circle cx="${x}" cy="${y}" r="${r*1.5}" fill="${c}" opacity=".35"/><circle cx="${x}" cy="${y}" r="${r}" fill="${c}"/>`;
 const hill=(y,c,a=20)=>`<path d="M-200 ${y}Q-50 ${y-a} 100 ${y}T400 ${y}T700 ${y}V400H-200Z" fill="${c}" ${O}/>`;
-const st=n=>{let s='';for(let i=0;i<n;i++)s+=`<circle cx="${(i*97+31)%520-60}" cy="${(i*53+11)%160}" r="${i%3?.8:1.6}" fill="#f3d58a" opacity=".85"/>`;return s};
-const moon='<circle cx="330" cy="50" r="20" fill="#f3e3b0"/><circle cx="338" cy="45" r="18" fill="#0b0706" opacity=".6"/>';
+const cloud=(x,y,s=1)=>`<g transform="translate(${x} ${y}) scale(${s})" fill="#fff" opacity=".94"><ellipse rx="34" ry="12"/><ellipse cx="-18" cy="-8" rx="20" ry="12"/><ellipse cx="14" cy="-12" rx="24" ry="14"/></g>`;
+const DAY=()=>sky('#4f95d8','#d5ecf8')+cloud(70,48,1.3)+cloud(260,32,1)+cloud(345,85,.8);
+const st=n=>{let s='';for(let i=0;i<n;i++)s+=`<circle cx="${(i*97+31)%520-60}" cy="${(i*53+11)%160}" r="${i%3?.8:1.6}" fill="#f3d58a" opacity=".9"/>`;return s};
+const moon='<circle cx="330" cy="50" r="20" fill="#f3e3b0"/><circle cx="338" cy="45" r="18" fill="#2b3a67" opacity=".7"/>';
 const orn=(y,c='#d4a24a')=>{let s='';for(let i=-5;i<12;i++)s+=`<path d="M${i*40} ${y}q10-12 20 0q10 12 20 0" fill="none" stroke="${c}" stroke-width="2"/><circle cx="${i*40+20}" cy="${y}" r="2.5" fill="${c}"/>`;return s};
-const yurt=(x,y,s,c='#e8d0a0')=>`<g transform="translate(${x} ${y}) scale(${s})" ${O}><path d="M-34 0V-20Q0-54 34-20V0Z" fill="${c}"/><path d="M-34-20Q0-54 34-20" fill="none" stroke="#9b1c14" stroke-width="4"/><path d="M-34-8H34" stroke="#9b1c14" stroke-width="3"/><path d="M-8 0V-16Q0-22 8-16V0Z" fill="#2a0d0a"/><circle cy="-43" r="5" fill="#2a1410"/></g>`;
-const fort=(x,y,s=1)=>`<g transform="translate(${x} ${y}) scale(${s})" fill="#2e1812" ${O}><rect x="-60" y="-30" width="120" height="30"/><rect x="-68" y="-54" width="24" height="54"/><rect x="44" y="-54" width="24" height="54"/><path d="M-70-54l14-16 14 16zM42-54l14-16 14 16z"/><path d="M-60-30h4v-6h6v6h6v-6h6v6h6v-6h6v6h6v-6h6v6h6v-6h4v6" fill="none"/><rect x="-6" y="-16" width="12" height="16" fill="#e08a3a"/><path d="M0-30V-66" stroke="#d4a24a"/><path d="M0-66l20 5-20 7z" fill="#ddd"/></g>`;
+const yurt=(x,y,s,c='#f0dcb0')=>`<g transform="translate(${x} ${y}) scale(${s})" ${O}><path d="M-34 0V-20Q0-54 34-20V0Z" fill="${c}"/><path d="M-34-20Q0-54 34-20" fill="none" stroke="#c0392b" stroke-width="4"/><path d="M-34-8H34" stroke="#c0392b" stroke-width="3"/><path d="M-8 0V-16Q0-22 8-16V0Z" fill="#3a1a10"/><circle cy="-43" r="5" fill="#3a2a1e"/></g>`;
+const fort=(x,y,s=1)=>`<g transform="translate(${x} ${y}) scale(${s})" fill="#8a6a52" ${O}><rect x="-60" y="-30" width="120" height="30"/><rect x="-68" y="-54" width="24" height="54"/><rect x="44" y="-54" width="24" height="54"/><path d="M-70-54l14-16 14 16zM42-54l14-16 14 16z" fill="#5a3a2a"/><rect x="-6" y="-16" width="12" height="16" fill="#3a2a1e"/><path d="M0-30V-66" stroke="#222"/><path d="M0-66l20 5-20 7z" fill="#eee"/></g>`;
 const fire=(x,y,s)=>`<g transform="translate(${x} ${y}) scale(${s})"><path d="M-60-30q8-38 15-8q6-34 15 0q8-32 17 2q8-34 17 4q8-30 16 2V-26Z" fill="#ff7a1a" ${O}/><path d="M-38-28q4-20 9-4q4-18 9 0q4-16 9 2z" fill="#ffd23a"/></g>`;
-const smoke=(x,y)=>`<circle cx="${x}" cy="${y}" r="30" fill="#000" opacity=".4"/><circle cx="${x+25}" cy="${y-30}" r="26" fill="#000" opacity=".32"/><circle cx="${x+10}" cy="${y-62}" r="24" fill="#000" opacity=".25"/>`;
-const carpet='<rect x="-200" y="238" width="800" height="80" fill="#8a2a1a"/><path d="M-200 252H600M-200 280H600" stroke="#d4a24a" stroke-width="2"/>'+orn(266,'#e8c070');
-const lattice=()=>{let s='<rect x="-200" y="-100" width="800" height="400" fill="#3a1410"/>';for(let i=-12;i<22;i++)s+=`<path d="M${i*28} 0L${i*28+60} 240M${i*28+60} 0L${i*28} 240" stroke="#1a0b08" stroke-width="2" opacity=".6"/>`;return s+'<path d="M-200 0Q200 90 600 0V30H-200Z" fill="#7a1a14"/><path d="M-200 30Q200 118 600 30" fill="none" stroke="#d4a24a" stroke-width="3"/>'};
-/* бет-әлпет: кейіпкер бюсті */
-const face=(x,y,s,o)=>{const sk=o.skin||'#cf9a6a',hr='#1a0e0a',br=o.mad?'M-19 -2L-4 -8M19 -2L4 -8':'M-18 -6Q-10 -10-3 -6M18 -6Q10 -10 3 -6';
-return `<g transform="translate(${x} ${y}) scale(${s})" ${O}><path d="M-68 190Q-66 52-24 40L24 40Q66 52 68 190Z" fill="${o.robe}"/><path d="M-44 90Q0 118 44 90M-60 140Q0 168 60 140" fill="none" stroke="#d4a24a" stroke-width="2.5" opacity=".65"/><path d="M-17 40L0 98L17 40" fill="#00000033" stroke="#d4a24a" stroke-width="5"/><rect x="-11" y="16" width="22" height="30" fill="#a8764a"/><ellipse cx="-25" cy="6" rx="4" ry="7" fill="${sk}"/><ellipse cx="25" cy="6" rx="4" ry="7" fill="${sk}"/><path d="M-24-8Q-26 36 0 46Q26 36 24-8Q22-28 0-28Q-22-28-24-8Z" fill="${sk}"/><path d="M6-28Q24-26 24-8Q26 36 0 46Q16 20 6-28Z" fill="#5a2a10" opacity=".25" stroke="none"/><path d="M-16 1Q-10-3-4 1Q-10 5-16 1ZM16 1Q10-3 4 1Q10 5 16 1Z" fill="#fff" stroke-width="1.2"/><circle cx="-10" cy="1" r="2.3" fill="#000" stroke="none"/><circle cx="10" cy="1" r="2.3" fill="#000" stroke="none"/><path d="${br}" fill="none" stroke="${hr}" stroke-width="3.4" stroke-linecap="round"/><path d="M0 4L-3 16Q0 19 4 16" fill="none" stroke-width="1.6"/>${o.beard?`<path d="M-24 12Q-27 54 0 62Q27 54 24 12Q18 34 0 34Q-18 34-24 12Z" fill="${hr}"/>`:''}<path d="M-14 25Q-7 19 0 23Q7 19 14 25Q7 29 0 26Q-7 29-14 25Z" fill="${hr}" stroke-width="1"/><path d="M-5 33Q0 35 5 33" fill="none" stroke="#9a5a4a" stroke-width="1.8"/>${o.hat}</g>`};
-const cap=(c,f='#2b1a12')=>`<path d="M-28-12Q-33-52 0-56Q33-52 28-12Q0-22-28-12Z" fill="${c}"/><path d="M-30-14Q0-26 30-14L29-2Q0-13-29-2Z" fill="${f}"/>`;
-const HK=cap('#a81f16')+'<path d="M-12-40Q0-46 12-40" fill="none" stroke="#d4a24a" stroke-width="2.5"/><circle cy="-34" r="3" fill="#d4a24a" stroke-width="1"/>';
-const HN='<path d="M-26-10Q-28-50 0-54Q28-50 26-10Q0-20-26-10Z" fill="#aab3b9"/><path d="M-27-12Q0-22 27-12L26-4Q0-14-26-4Z" fill="#d4a24a"/><path d="M-2-54L0-76L2-54Z" fill="#d4a24a"/><path d="M-27-6Q-34 14-26 30L-20 6ZM27-6Q34 14 26 30L20 6Z" fill="#6b747a"/><path d="M-10-34Q0-40 10-34" stroke="#fff" stroke-width="2" fill="none" opacity=".6"/>';
-const HW='<path d="M-26-12Q-30-52 0-58Q30-52 26-12Q0-22-26-12Z" fill="#f2efe6"/><path d="M-28-14Q0-24 28-14L27-4Q0-14-27-4Z" fill="#1a1a1a"/>';
-const HT=cap('#1f5a5a','#3a2418'),HB=cap('#6b5a3a','#2b1a12');
-const HS='<path d="M-32-10Q-34-56 0-58Q34-56 32-10L33 52Q0 38-33 52ZM-22-10Q-24 36 0 44Q24 36 22-10Q22-24 0-26Q-22-24-22-10Z" fill="#f2efe6" fill-rule="evenodd"/>';
-/* жылқы мен салт атты */
+const smoke=(x,y)=>`<circle cx="${x}" cy="${y}" r="30" fill="#555" opacity=".45"/><circle cx="${x+25}" cy="${y-30}" r="26" fill="#555" opacity=".38"/><circle cx="${x+10}" cy="${y-62}" r="24" fill="#555" opacity=".3"/>`;
+const inter=()=>'<rect x="-200" y="-100" width="800" height="500" fill="#e6cc98"/>'+orn(40,'#cfae72')+orn(95,'#cfae72')+orn(150,'#cfae72')+orn(205,'#cfae72')+'<rect x="-200" y="252" width="800" height="60" fill="#c99a5a"/><path d="M-200 252H600" stroke="#1a1410" stroke-width="2"/>';
+const face=(x,y,s,o)=>{const sk=o.skin||'#d9a070',hr='#1a0e0a',br=o.mad?'M-19 -2L-4 -8M19 -2L4 -8':'M-18 -6Q-10 -10-3 -6M18 -6Q10 -10 3 -6';
+return `<g transform="translate(${x} ${y}) scale(${s})" ${O}><path d="M-68 190Q-66 52-24 40L24 40Q66 52 68 190Z" fill="${o.robe}"/><path d="M-44 90Q0 118 44 90M-60 140Q0 168 60 140" fill="none" stroke="#e6b64a" stroke-width="2.5"/><path d="M-17 40L0 98L17 40" fill="#00000030" stroke="#e6b64a" stroke-width="5"/><rect x="-11" y="16" width="22" height="30" fill="#b9854e"/><ellipse cx="-25" cy="6" rx="4" ry="7" fill="${sk}"/><ellipse cx="25" cy="6" rx="4" ry="7" fill="${sk}"/><path d="M-24-8Q-26 36 0 46Q26 36 24-8Q22-28 0-28Q-22-28-24-8Z" fill="${sk}"/><path d="M6-28Q24-26 24-8Q26 36 0 46Q16 20 6-28Z" fill="#7a3a10" opacity=".22" stroke="none"/><path d="M-16 1Q-10-3-4 1Q-10 5-16 1ZM16 1Q10-3 4 1Q10 5 16 1Z" fill="#fff" stroke-width="1.2"/><circle cx="-10" cy="1" r="2.3" fill="#000" stroke="none"/><circle cx="10" cy="1" r="2.3" fill="#000" stroke="none"/><path d="${br}" fill="none" stroke="${hr}" stroke-width="3.2" stroke-linecap="round"/><path d="M0 4L-3 16Q0 19 4 16" fill="none" stroke-width="1.4"/>${o.beard?`<path d="M-24 12Q-27 54 0 62Q27 54 24 12Q18 34 0 34Q-18 34-24 12Z" fill="${hr}"/>`:''}<path d="M-14 25Q-7 19 0 23Q7 19 14 25Q7 29 0 26Q-7 29-14 25Z" fill="${hr}" stroke-width="1"/><path d="M-5 33Q0 35 5 33" fill="none" stroke="#9a5a4a" stroke-width="1.6"/>${o.hat}</g>`};
+const cap=(c,f='#3a2a1e')=>`<path d="M-28-12Q-33-52 0-56Q33-52 28-12Q0-22-28-12Z" fill="${c}"/><path d="M-30-14Q0-26 30-14L29-2Q0-13-29-2Z" fill="${f}"/>`;
+const HK=cap('#d8392b')+'<path d="M-12-40Q0-46 12-40" fill="none" stroke="#e6b64a" stroke-width="2.5"/><circle cy="-34" r="3" fill="#e6b64a" stroke-width="1"/>';
+const HN='<path d="M-26-10Q-28-50 0-54Q28-50 26-10Q0-20-26-10Z" fill="#b8c2c8"/><path d="M-27-12Q0-22 27-12L26-4Q0-14-26-4Z" fill="#e6b64a"/><path d="M-2-54L0-76L2-54Z" fill="#e6b64a"/><path d="M-27-6Q-34 14-26 30L-20 6ZM27-6Q34 14 26 30L20 6Z" fill="#7a848a"/><path d="M-10-34Q0-40 10-34" stroke="#fff" stroke-width="2" fill="none" opacity=".7"/>';
+const HW='<path d="M-26-12Q-30-52 0-58Q30-52 26-12Q0-22-26-12Z" fill="#f6f3ea"/><path d="M-28-14Q0-24 28-14L27-4Q0-14-27-4Z" fill="#222"/>';
+const HT=cap('#2f8f94'),HB=cap('#7a6a44');
+const HS='<path d="M-32-10Q-34-56 0-58Q34-56 32-10L33 52Q0 38-33 52ZM-22-10Q-24 36 0 44Q24 36 22-10Q22-24 0-26Q-22-24-22-10Z" fill="#f6f3ea" fill-rule="evenodd"/><path d="M-27-20Q0-32 27-20L26-12Q0-24-26-12Z" fill="#e6b64a"/>';
 const horse=c=>`<path d="M-34-4Q-34-18-14-18L14-18Q26-22 32-34L42-42L52-38L52-30L42-24Q36-10 30 8L28 30L22 30L24 10L8 8L-2 28L-8 28L-8 6L-24 6L-32 28L-38 28L-32 4Z" fill="${c}"/><path d="M-34-10Q-54-8-56 18Q-44 6-34 2Z" fill="${c}"/>`;
-const rider=(x,y,s,c='#7a1a14',f=0,hc='#2a140c')=>`<g transform="translate(${x} ${y}) scale(${s})" ${O}>${horse(hc)}<path d="M-12-18L-8-44L6-44L10-18Z" fill="${c}"/><circle cx="-1" cy="-52" r="7" fill="#cf9a6a"/><path d="M-9-54Q-1-66 8-54Z" fill="#a81f16"/>${f?'<path d="M10-40L26-84" stroke="#d4a24a" stroke-width="2.4"/><path d="M26-84l24 6-20 13z" fill="#b3261e"/>':'<path d="M10-40L36-72" stroke="#d4a24a" stroke-width="2"/>'}</g>`;
-const dombra=(x,y,r)=>`<g transform="translate(${x} ${y}) rotate(${r})" ${O}><rect x="12" y="-3" width="100" height="6" fill="#4a210d"/><ellipse rx="28" ry="19" fill="#a8672e"/><circle r="6" fill="#2a0d0a"/><path d="M-8-6V6" stroke="#f3d58a" stroke-width="1.5"/></g>`;
-const glow=(c='#d4a24a')=>`<circle cx="200" cy="130" r="120" fill="${c}" opacity=".18"/><circle cx="200" cy="130" r="100" fill="none" stroke="${c}" stroke-width="2" opacity=".5"/>`;
+const rider=(x,y,s,c='#d8392b',f=0,hc='#7a4a2a')=>`<g transform="translate(${x} ${y}) scale(${s})" ${O}>${horse(hc)}<path d="M-12-18L-8-44L6-44L10-18Z" fill="${c}"/><circle cx="-1" cy="-52" r="7" fill="#d9a070"/><path d="M-9-54Q-1-66 8-54Z" fill="#d8392b"/>${f?'<path d="M10-40L26-84" stroke="#e6b64a" stroke-width="2.4"/><path d="M26-84l24 6-20 13z" fill="#d8392b"/>':'<path d="M10-40L36-72" stroke="#e6b64a" stroke-width="2"/>'}</g>`;
+const dombra=(x,y,r)=>`<g transform="translate(${x} ${y}) rotate(${r})" ${O}><rect x="12" y="-3" width="100" height="6" fill="#5a2a10"/><ellipse rx="28" ry="19" fill="#c0813a"/><circle r="6" fill="#3a1a10"/></g>`;
 const SC={
- cover:()=>sky('#1a0504','#e08a3a')+sun(200,175,36,'#f6cf63')+'<path d="M-100 210L40 120L120 190L200 100L290 195L360 130L500 210V400H-100Z" fill="#5a1710" '+O+'/><path d="M200 100L180 128L200 120L216 130ZM40 120L24 146L42 137L58 149Z" fill="#f2e6c8"/>'+hill(228,'#2a0d0a',14)+face(-10,170,1.3,{robe:'#7a1a14',hat:HK,beard:1,mad:1})+face(410,185,1.2,{robe:'#5a1f12',hat:HN,mad:1})+hill(262,'#0b0706',8)+rider(170,266,1.8,'#9b1c14',1)+rider(250,276,1.4,'#7a1a14',1)+rider(110,278,1.1,'#7a1a14',0,'#1a0b08')+rider(310,284,1,'#7a1a14',0,'#1a0b08'),
- dawn:()=>sky('#2a0d0a','#e08a3a')+sun(285,170,22,'#f6cf63')+hill(200,'#6b2514',16)+hill(232,'#2a0d0a',12)+yurt(70,244,.9,'#9a7a4a')+yurt(115,252,.7,'#9a7a4a')+rider(190,250,1.2,'#7a1a14',1)+rider(250,258,1)+orn(290,'#d4a24a'),
- fort:()=>sky('#2a0d0a','#c9824a')+hill(212,'#3b1a10',10)+smoke(270,150)+fort(270,222,1.3)+yurt(60,250,1)+yurt(120,262,.7)+hill(270,'#1a0b08',6),
- zh:()=>sky('#0b0706','#2a0d0a')+st(45)+moon+hill(238,'#150a07',10)+yurt(60,252,1,'#8a6a3a')+face(185,100,1.2,{robe:'#3a3a3a',hat:HW,beard:1})+dombra(235,225,-42),
- mourn:()=>sky('#2a0d0a','#6b2514')+sun(60,140,18,'#d98b3a')+hill(236,'#150a07',10)+face(195,100,1.2,{robe:'#3a3a3a',hat:HW,beard:1})+dombra(235,225,-42),
- k:()=>sky('#3a0f0b','#0b0706')+glow()+'<path d="M80 300V120" stroke="#d4a24a" stroke-width="3"/><path d="M80 120l50 14-50 20z" fill="#b3261e" '+O+'/>'+face(200,100,1.25,{robe:'#7a1a14',hat:HK,beard:1,mad:1}),
- n:()=>sky('#3a0f0b','#0b0706')+glow()+face(200,100,1.25,{robe:'#5a1f12',hat:HN,mad:1}),
- ride:()=>sky('#3a0f0b','#e8a050')+sun(90,150,18,'#f6cf63')+hill(196,'#5a1f12',14)+hill(230,'#1a0b08',12)+rider(165,248,1.4,'#7a1a14',1)+rider(240,256,1.4,'#9b1c14',1)+rider(305,246,1.1)+rider(95,258,.9),
- council:()=>lattice()+carpet+face(95,118,.85,{robe:'#3a2a1a',hat:HT,beard:1})+face(305,118,.85,{robe:'#2a2a3a',hat:HB,beard:1})+face(200,108,1,{robe:'#7a1a14',hat:HK,beard:1,mad:1}),
- attack:()=>sky('#1a0706','#b3401a')+smoke(210,130)+hill(228,'#1a0b08',8)+fort(210,236,1.4)+fire(210,236,1.4)+rider(80,264,1.2,'#9b1c14',1)+rider(330,268,1),
- battle:()=>sky('#1a0504','#7a1a14')+'<path d="M20 120L380 230M60 95L330 245M120 80L390 200" stroke="#d4a24a" stroke-width="1" opacity=".6"/>'+hill(218,'#0b0706',6)+rider(110,250,1.4,'#9b1c14',1)+rider(200,258,1.2)+rider(290,252,1.3,'#444',0,'#d8c8a8')+rider(345,266,1,'#444',0,'#d8c8a8')+'<circle cx="150" cy="205" r="3" fill="#ffd23a"/><circle cx="250" cy="220" r="2" fill="#ff7a1a"/>',
- folk:()=>sky('#3a0f0b','#e8a050')+hill(205,'#5a1f12',10)+yurt(50,236,.9)+yurt(350,240,1)+face(155,120,.8,{robe:'#3a2a1a',hat:HS,skin:'#d8a878'})+face(250,120,.8,{robe:'#2a2a3a',hat:HB,beard:1})+orn(290),
- mt:()=>sky('#14202e','#e3c58f')+'<path d="M-100 230L70 110L120 170L190 80L260 180L320 120L500 230Z" fill="#33414f" '+O+'/><path d="M190 80L170 110L190 102L205 114ZM70 110L54 136L72 127L88 139ZM320 120L304 144L322 135L338 146Z" fill="#fff"/>'+hill(248,'#2a1410',10)+rider(110,272,.9,'#7a1a14',1)+rider(160,278,.8)+rider(205,274,.8)+rider(250,280,.8),
- sad:()=>sky('#050302','#1a0b08')+st(40)+moon+hill(252,'#0b0706',8)+yurt(110,268,1,'#6b5a3a')+'<path d="M300 268V150" stroke="#d4a24a" stroke-width="2"/><path d="M300 150l32 10-32 14z" fill="#7a1a14"/>',
- mem:()=>sky('#050302','#3a0f0b')+st(70)+'<circle cx="200" cy="170" r="90" fill="#d4a24a" opacity=".15"/>'+hill(255,'#0b0706',8)+'<path d="M182 255V130L200 100L218 130V255Z" fill="#d4a24a" '+O+'/><circle cx="200" cy="160" r="9" fill="#7a1a14"/><path d="M140 255V190L152 170L164 190V255ZM236 255V190L248 170L260 190V255Z" fill="#a8792f" '+O+'/>'
+ cover:()=>sky('#1a0504','#e08a3a')+sun(200,175,36,'#f6cf63')+'<path d="M-100 210L40 120L120 190L200 100L290 195L360 130L500 210V400H-100Z" fill="#5a1710" '+O+'/><path d="M200 100L180 128L200 120L216 130ZM40 120L24 146L42 137L58 149Z" fill="#f2e6c8"/>'+hill(228,'#2a0d0a',14)+face(-10,170,1.3,{robe:'#d8392b',hat:HK,beard:1,mad:1})+face(410,185,1.2,{robe:'#2f8f94',hat:HN,mad:1})+hill(262,'#0b0706',8)+rider(170,266,1.8,'#d8392b',1,'#2a140c')+rider(250,276,1.4,'#b3261e',1,'#2a140c')+rider(110,278,1.1,'#b3261e',0,'#1a0b08')+rider(310,284,1,'#b3261e',0,'#1a0b08'),
+ dawn:()=>sky('#f08a4b','#fde2a0')+sun(285,170,22,'#fff3b0')+hill(200,'#7da23a',16)+hill(232,'#5f8a2a',12)+yurt(70,244,.9)+yurt(115,252,.7)+rider(190,250,1.2,'#d8392b',1)+rider(250,258,1,'#2f8f94'),
+ fort:()=>DAY()+hill(212,'#7da23a',10)+smoke(270,150)+fort(270,222,1.3)+yurt(60,250,1)+yurt(120,262,.7)+hill(270,'#5f8a2a',6),
+ zh:()=>sky('#2b3a67','#e8a060')+st(30)+moon+hill(238,'#3a4a2a',10)+yurt(60,252,1,'#d9c090')+face(185,100,1.2,{robe:'#555',hat:HW,beard:1})+dombra(235,225,-42),
+ mourn:()=>sky('#6a3a3a','#e9a56a')+sun(60,140,18,'#f3c070')+hill(236,'#3a4a2a',10)+face(195,100,1.2,{robe:'#555',hat:HW,beard:1})+dombra(235,225,-42),
+ k:()=>inter()+'<path d="M80 300V110" stroke="#5a3a1e" stroke-width="3"/><path d="M80 110l50 14-50 20z" fill="#d8392b" '+O+'/>'+face(200,100,1.25,{robe:'#d8392b',hat:HK,beard:1,mad:1}),
+ n:()=>inter()+face(200,100,1.25,{robe:'#2f8f94',hat:HN,mad:1}),
+ ride:()=>DAY()+hill(196,'#7da23a',14)+hill(230,'#5f8a2a',12)+rider(165,248,1.4,'#d8392b',1)+rider(240,256,1.4,'#2f8f94',1)+rider(305,246,1.1,'#7a6a44')+rider(95,258,.9,'#b3261e'),
+ council:()=>inter()+face(95,118,.85,{robe:'#4a6a8a',hat:HT,beard:1})+face(305,118,.85,{robe:'#6a5a3a',hat:HB,beard:1})+face(200,108,1,{robe:'#d8392b',hat:HK,beard:1,mad:1}),
+ attack:()=>sky('#6a8cb8','#e8c090')+smoke(210,130)+hill(228,'#5f8a2a',8)+fort(210,236,1.4)+fire(210,236,1.4)+rider(80,264,1.2,'#d8392b',1)+rider(330,268,1,'#2f8f94'),
+ battle:()=>sky('#8a5a4a','#f0b878')+'<path d="M20 120L380 230M60 95L330 245M120 80L390 200" stroke="#fff" stroke-width="1" opacity=".5"/>'+hill(218,'#5f7a2a',6)+rider(110,250,1.4,'#d8392b',1)+rider(200,258,1.2,'#2f8f94')+rider(290,252,1.3,'#555',0,'#d8c8a8')+rider(345,266,1,'#555',0,'#d8c8a8')+'<circle cx="150" cy="205" r="3" fill="#ffd23a"/><circle cx="250" cy="220" r="2" fill="#ff7a1a"/>',
+ folk:()=>DAY()+hill(205,'#7da23a',10)+yurt(50,236,.9)+yurt(350,240,1)+face(155,120,.8,{robe:'#d8392b',hat:HS,skin:'#e0aa7c'})+face(250,120,.8,{robe:'#4a6a8a',hat:HB,beard:1})+hill(280,'#5f8a2a',4),
+ mt:()=>sky('#6fa8dc','#e8f1f8')+cloud(300,40,1)+'<path d="M-100 230L70 110L120 170L190 80L260 180L320 120L500 230Z" fill="#6a7f96" '+O+'/><path d="M190 80L170 110L190 102L205 114ZM70 110L54 136L72 127L88 139ZM320 120L304 144L322 135L338 146Z" fill="#fff"/>'+hill(248,'#7da23a',10)+rider(110,272,.9,'#d8392b',1)+rider(160,278,.8,'#2f8f94')+rider(205,274,.8,'#b3261e')+rider(250,280,.8,'#7a6a44'),
+ sad:()=>sky('#1f2a4a','#6a5a6a')+st(40)+moon+hill(252,'#2a3a2a',8)+yurt(110,268,1,'#b9a478')+'<path d="M300 268V150" stroke="#e6b64a" stroke-width="2"/><path d="M300 150l32 10-32 14z" fill="#b3261e"/>',
+ mem:()=>sky('#12183a','#7a3a3a')+st(70)+'<circle cx="200" cy="170" r="90" fill="#e6b64a" opacity=".18"/>'+hill(255,'#1a2a1a',8)+'<path d="M182 255V130L200 100L218 130V255Z" fill="#e6b64a" '+O+'/><circle cx="200" cy="160" r="9" fill="#b3261e"/><path d="M140 255V190L152 170L164 190V255ZM236 255V190L248 170L260 190V255Z" fill="#c0912f" '+O+'/>'
 };
 /* ===== Комикс мазмұны ===== */
 const P=[
@@ -224,72 +238,18 @@ addEventListener('keydown',e=>{if($('app').style.display!=='flex')return;if(e.ke
 let tx=0,ty=0;
 addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
 addEventListener('touchend',e=>{if($('app').style.display!=='flex')return;const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>70&&Math.abs(dy)<60)show(dx<0?cur+1:cur-1)},{passive:true});
-
-/* ===== Улучшенная атмосферная музыка (Web Audio) ===== */
-let ac, mg, on = false;
-$('mus').onclick = () => {
- if (!ac) {
-  ac = new (window.AudioContext || window.webkitAudioContext)();
-  mg = ac.createGain();
-  mg.gain.value = 0;
-  mg.connect(ac.destination);
-
-  // 1. Глубокий гул (бас) - создает атмосферу степи
-  [55, 110].forEach(freq => {
-   const osc = ac.createOscillator();
-   const filter = ac.createBiquadFilter();
-   osc.type = 'sawtooth';
-   osc.frequency.value = freq;
-   filter.type = 'lowpass';
-   filter.frequency.value = 200;
-   osc.connect(filter);
-   filter.connect(mg);
-   osc.start();
-  });
-
-  // 2. Эхо (Delay) для эффекта простора
-  const delay = ac.createDelay();
-  delay.delayTime.value = 0.7;
-  const feedback = ac.createGain();
-  feedback.gain.value = 0.5;
-  delay.connect(feedback);
-  feedback.connect(delay);
-  delay.connect(mg);
-
-  // 3. Пентатоника (мотив степи) - звучит как перебор домбры
-  const notes = [220, 246.94, 293.66, 329.63, 392.00, 440.00];
-  const pattern = [0, 2, 1, 3, 2, 4, 5, 3]; // Мелодический узор
-  let step = 0;
-
-  setInterval(() => {
-   if (!on) return;
-   const osc = ac.createOscillator();
-   const gain = ac.createGain();
-   
-   osc.type = 'triangle';
-   osc.frequency.value = notes[pattern[step % pattern.length]];
-   
-   // Резкий старт (как щипок струны) и плавное затухание
-   gain.gain.setValueAtTime(0.001, ac.currentTime);
-   gain.gain.exponentialRampToValueAtTime(0.6, ac.currentTime + 0.05);
-   gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 2);
-   
-   osc.connect(gain);
-   gain.connect(mg); // Напрямую
-   gain.connect(delay); // И в эхо
-   
-   osc.start();
-   osc.stop(ac.currentTime + 2.1);
-   
-   step++;
-  }, 900); // Медленный, величественный темп
+/* ===== Музыка (Web Audio-мен жасалған, авторлық құқықсыз) ===== */
+let ac,mg,on=false;
+$('mus').onclick=()=>{
+ if(!ac){
+  ac=new(window.AudioContext||window.webkitAudioContext)();mg=ac.createGain();mg.gain.value=0;mg.connect(ac.destination);
+  [73.4,110,146.8].forEach(f=>{const o=ac.createOscillator(),l=ac.createBiquadFilter(),g=ac.createGain();o.type='sawtooth';o.frequency.value=f;l.type='lowpass';l.frequency.value=260;g.gain.value=.5;o.connect(l);l.connect(g);g.connect(mg);o.start()});
+  const sc=[293.7,329.6,370,440,493.9,587.3,440,370];let k=0;
+  setInterval(()=>{if(!on)return;const o=ac.createOscillator(),g=ac.createGain();o.type='triangle';o.frequency.value=sc[(k++*3+(k>>2))%sc.length];g.gain.setValueAtTime(.5,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+1.2);o.connect(g);g.connect(mg);o.start();o.stop(ac.currentTime+1.3)},650);
  }
- on = !on;
- ac.resume();
- mg.gain.setTargetAtTime(on ? 0.15 : 0, ac.currentTime, 0.5);
- $('mus').querySelector('span').textContent = 'Музыка: ' + (on ? 'қосулы' : 'өшірулі');
+ on=!on;ac.resume();mg.gain.setTargetAtTime(on?.14:0,ac.currentTime,.3);
+ $('mus').querySelector('span').textContent='Музыка: '+(on?'қосулы':'өшірулі');
 };
-
 /* ===== Ұшқын бөлшектері ===== */
 const cv=$('fx'),cx=cv.getContext('2d');const E=[];
 function rz(){cv.width=innerWidth;cv.height=innerHeight}rz();addEventListener('resize',rz);
