@@ -6,88 +6,87 @@
 <title>Кенесары – Наурызбай | Комикс</title>
 <style>
 *{box-sizing:border-box;margin:0}
-html,body{height:100%;background:#050302;color:#e3c58f;font-family:Georgia,"Times New Roman",serif;overflow:hidden}
-button{font:inherit;cursor:pointer}
-#cover,#app{position:fixed;inset:0}
+:root{--g:#d4a24a;--r:#9b1c14;--k:#0b0706;--t:#f3d58a}
+html,body{height:100%;background:#050302;color:#e3c58f;font-family:Georgia,serif;overflow:hidden}
+button{font:inherit;cursor:pointer;touch-action:manipulation}
+#cover,#app{position:fixed;inset:0;padding-top:env(safe-area-inset-top,0)}
 #cover{z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;transition:opacity 1s,transform 1s}
 #cover.out{opacity:0;transform:scale(1.2);pointer-events:none}
 .bg,.bg svg{position:absolute;inset:0;width:100%;height:100%}
 .vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,#0000 20%,#000e 100%)}
 #fx{position:fixed;inset:0;z-index:6;pointer-events:none;width:100%;height:100%}
 .smoke{position:absolute;bottom:-20%;width:60vmax;height:60vmax;border-radius:50%;background:radial-gradient(#000a,#0000 65%);filter:blur(30px);animation:sm 14s linear infinite}
-@keyframes sm{from{transform:translate(0,0)}to{transform:translate(20vw,-40vh) scale(1.5);opacity:0}}
-h1{position:relative;font-size:clamp(30px,8.5vw,108px);line-height:1.1;letter-spacing:.05em;color:#d4a24a;text-shadow:0 0 30px #7a1a14,0 4px 0 #3a0f0b,0 0 60px #000}
+@keyframes sm{to{transform:translate(20vw,-40vh) scale(1.5);opacity:0}}
+h1{position:relative;font-size:clamp(30px,8.5vw,120px);line-height:1.1;letter-spacing:.05em;color:var(--g);text-shadow:0 0 30px #7a1a14,0 4px 0 #3a0f0b,0 0 60px #000}
 h1 span,.fl span{display:inline-block;opacity:0;transform:translateY(40px) scale(1.5);filter:blur(8px);animation:ltr .9s forwards}
 @keyframes ltr{to{opacity:1;transform:none;filter:none}}
-.sub{position:relative;margin:18px 0 34px;font-style:italic;font-size:clamp(15px,3.2vw,26px);color:#f3d58a;text-shadow:0 2px 10px #000;opacity:0;animation:ltr 1.2s 2.2s forwards}
-.btn{position:relative;background:linear-gradient(#9b1c14,#5a0f0b);color:#f3d58a;border:2px solid #d4a24a;padding:14px 30px;letter-spacing:.12em;font-size:clamp(14px,3.4vw,20px);box-shadow:0 0 30px #9b1c1499;transition:.3s;opacity:0;animation:ltr 1s 2.8s forwards}
+.sub{position:relative;margin:18px 0 34px;font-style:italic;font-size:clamp(15px,3.2vw,30px);color:var(--t);text-shadow:0 2px 10px #000;opacity:0;animation:ltr 1.2s 2.2s forwards}
+.btn{position:relative;background:linear-gradient(#9b1c14,#5a0f0b);color:var(--t);border:2px solid var(--g);padding:16px 34px;letter-spacing:.12em;font-size:clamp(14px,3.4vw,24px);box-shadow:0 0 30px #9b1c1499;transition:.3s;opacity:0;animation:ltr 1s 2.8s forwards}
 .btn:hover{transform:scale(1.06);box-shadow:0 0 50px #d4a24a88}
 #app{display:none;flex-direction:column;z-index:2;background:radial-gradient(#2a0d0a,#050302)}
-.top,.bot{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 10px;background:#0b0706;border:0 solid #d4a24a55;flex:none}
-.top{border-bottom-width:1px}.bot{border-top-width:1px;justify-content:center;gap:12px}
-.top b{flex:1;text-align:center;font-size:clamp(12px,2.6vw,18px);color:#d4a24a}
-.ib{background:#2a0d0a;color:#f3d58a;border:1px solid #d4a24a;padding:6px 11px;font-size:14px;border-radius:3px}
-.ib:hover{background:#7a1a14}.ib[disabled]{opacity:.35;cursor:default}
-#cnt{min-width:60px;text-align:center;font-size:18px;color:#d4a24a}
-#prog{height:3px;background:#d4a24a;width:0;transition:width .6s;flex:none}
-#stage{flex:1;overflow:auto;padding:8px;min-height:0}
-.pg{height:100%;min-height:560px;display:grid;gap:8px}
-.fr{position:relative;overflow:hidden;border:3px solid #0b0706;outline:1px solid #d4a24a;background:#000;min-height:0;animation:pop .8s both;animation-delay:calc(var(--i)*.3s + .6s)}
+.top,.bot{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 10px;background:var(--k);border:0 solid #d4a24a55;flex:none}
+.top{border-bottom-width:1px}.bot{border-top-width:1px;justify-content:center;gap:14px;padding-bottom:max(6px,env(safe-area-inset-bottom))}
+.top b{flex:1;text-align:center;font-size:clamp(12px,2.2vw,24px);color:var(--g)}
+.ib{background:#2a0d0a;color:var(--t);border:1px solid var(--g);padding:8px 13px;font-size:clamp(14px,1.6vw,22px);border-radius:4px;min-height:40px}
+.ib:hover,.ib.on{background:#7a1a14}.ib[disabled]{opacity:.35;cursor:default}
+#cnt{min-width:60px;text-align:center;font-size:clamp(16px,2vw,26px);color:var(--g)}
+#dots{display:flex;gap:6px;padding:5px;justify-content:center;background:var(--k);flex:none}
+#dots i{width:10px;height:10px;border-radius:50%;background:#4a2a1a;cursor:pointer;transition:.3s}
+#dots i.a{background:var(--g);transform:scale(1.5)}
+#prog{height:4px;background:linear-gradient(90deg,var(--r),var(--g));width:0;transition:width .6s;flex:none}
+#stage{flex:1;overflow:auto;padding:8px;min-height:0;background:#262626}
+.pg{height:100%;min-height:560px;display:grid;gap:8px;background:#fff;padding:8px;max-width:1800px;margin:0 auto;box-shadow:0 0 40px #000}
+.fr{position:relative;overflow:hidden;border:3px solid #111;background:#fff;min-height:0;animation:pop .8s both;animation-delay:calc(var(--i)*.3s + .5s)}
 @keyframes pop{from{opacity:0;transform:scale(.9) rotate(-1deg);filter:brightness(2.5)}}
-.art{position:absolute;inset:0}
-.art svg{width:100%;height:100%;display:block}
-.ov{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:8px;gap:6px;pointer-events:none}
+.art{position:absolute;inset:0;overflow:hidden}
+.art svg{width:100%;height:100%;display:block;transition:transform .25s ease-out;transform:scale(1.06)}
+.ov{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:10px;gap:6px;pointer-events:none}
 .cap,.bb,.ov .btn{pointer-events:auto}
-.cap{align-self:flex-start;background:#f0dba8;color:#2a0d0a;border:2px solid #0b0706;padding:6px 10px;font-size:clamp(11px,1.35vw,16px);font-style:italic;line-height:1.3;max-width:90%;box-shadow:3px 3px 0 #0009}
+.cap,.bb{font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif;font-style:italic;text-transform:uppercase;text-align:center;line-height:1.25}
+.cap{align-self:flex-start;background:#fbeeb0;color:#222;border:2px solid #111;padding:7px 12px;font-size:clamp(10px,1.35vw,24px);font-weight:600;max-width:94%}
 .bs{display:flex;flex-direction:column;gap:12px;margin-top:auto}
-.bb{position:relative;background:#fff;color:#111;border:2px solid #111;border-radius:16px;padding:6px 11px;font-size:clamp(11px,1.4vw,16px);max-width:80%;line-height:1.3;font-weight:600;animation:bp .5s both;animation-delay:calc(var(--i)*.3s + 1.2s)}
+.bb{position:relative;background:#fff;color:#1a1a1a;border:2px solid #222;border-radius:50%/45%;padding:12px 22px;font-weight:600;font-size:clamp(10px,1.35vw,24px);max-width:76%;cursor:pointer;animation:bp .5s both;animation-delay:calc(var(--i)*.3s + 1.2s);transition:transform .2s}
+.bb:hover{transform:scale(1.04)}
 @keyframes bp{from{opacity:0;transform:scale(.5)}}
-.bb b{display:block;color:#9b1c14;font-size:.82em;letter-spacing:.05em}
+.bb b{display:block;color:#8a1a12;font-size:.78em;letter-spacing:.05em}
 .bb.l{align-self:flex-start;margin-bottom:8px}.bb.r{align-self:flex-end;margin-bottom:8px}
-.bb::after{content:"";position:absolute;bottom:-9px;border:8px solid transparent;border-top:9px solid #111;border-bottom:0}
-.bb.l::after{left:22px}.bb.r::after{right:22px}
-.big{position:absolute;left:0;right:0;top:36%;text-align:center;font-size:clamp(22px,6vw,76px);letter-spacing:.06em;color:#f3d58a;text-shadow:0 0 25px #d4a24a,0 0 60px #9b1c14,0 3px 0 #000;animation:gl 3s ease-in-out infinite alternate}
+.bb::after{content:"";position:absolute;bottom:-10px;border:8px solid transparent;border-top:10px solid #222;border-bottom:0}
+.bb.l::after{left:28px}.bb.r::after{right:28px}
+.big{position:absolute;left:0;right:0;top:36%;text-align:center;font-size:clamp(22px,6vw,110px);letter-spacing:.06em;color:var(--t);text-shadow:0 0 25px var(--g),0 0 60px var(--r),0 3px 0 #000;animation:gl 3s ease-in-out infinite alternate}
 @keyframes gl{from{filter:brightness(.8)}to{filter:brightness(1.4)}}
-.rs{align-self:center;opacity:1;animation:none;font-size:clamp(11px,1.6vw,16px);padding:10px 20px}
-.note{font-size:clamp(9px,1.1vw,12px);color:#f3d58a;opacity:.85;text-align:center}
-.fl{position:fixed;inset:0;z-index:15;display:flex;align-items:center;justify-content:center;pointer-events:none;text-align:center;font-size:clamp(30px,10vw,120px);color:#d4a24a;letter-spacing:.1em;text-shadow:0 0 40px #9b1c14,0 0 8px #000;opacity:0}
+.rs{align-self:center;opacity:1;animation:none;font-size:clamp(12px,1.6vw,22px);padding:10px 20px}
+.note{font-size:clamp(9px,1.1vw,16px);color:var(--t);text-align:center}
+.q{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:16px;background:linear-gradient(#1a0b08,#3a0f0b);color:var(--t);text-align:center}
+.q h2{font-size:clamp(20px,3.4vw,52px);color:var(--g)}
+.q p{font-size:clamp(16px,2.4vw,38px);max-width:900px}
+.q .o{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.q .o button{font-size:clamp(14px,2vw,32px);padding:12px 22px;background:#2a0d0a;color:var(--t);border:2px solid var(--g);border-radius:6px;transition:.2s}
+.q .o button:hover{background:#7a1a14}
+.q .o button.ok{background:#1f7a3a;border-color:#7aff9a}.q .o button.no{background:#7a1a14;border-color:#f66;opacity:.6}
+.fl{position:fixed;inset:0;z-index:15;display:flex;align-items:center;justify-content:center;pointer-events:none;text-align:center;font-size:clamp(30px,10vw,160px);color:var(--g);letter-spacing:.1em;text-shadow:0 0 40px var(--r),0 0 8px #000;opacity:0}
 .fl.on{animation:fo 2.2s}
 @keyframes fo{0%,85%{opacity:1}100%{opacity:0}}
 #cu{position:fixed;inset:0;z-index:20;pointer-events:none}
 #cu i{position:absolute;top:0;bottom:0;width:50.5%;background:linear-gradient(#0b0706,#4a120d);transition:transform .5s cubic-bezier(.7,0,.3,1)}
-#cu i:first-child{left:0;transform:translateX(-101%);border-right:3px solid #d4a24a}
-#cu i:last-child{right:0;transform:translateX(101%);border-left:3px solid #d4a24a}
+#cu i:first-child{left:0;transform:translateX(-101%);border-right:3px solid var(--g)}
+#cu i:last-child{right:0;transform:translateX(101%);border-left:3px solid var(--g)}
 #cu.go i{transform:none}
 @media(max-width:700px){
- .pg{display:flex!important;flex-direction:column;height:auto;min-height:0;gap:14px}
+ .pg{display:flex!important;flex-direction:column;height:auto;min-height:0;gap:14px;padding:6px}
  .fr{flex:none;animation-delay:calc(var(--i)*.12s)}
  .art{position:relative;inset:auto;aspect-ratio:4/3}
- .ov{position:static;padding:10px;gap:10px;background:linear-gradient(#1a0b08,#0b0706);pointer-events:auto}
- .cap{max-width:100%;align-self:stretch;font-size:15px;box-shadow:none}
+ .ov{position:static;padding:8px;gap:8px;background:#fff;pointer-events:auto}
+ .cap{max-width:100%;align-self:stretch;font-size:13px}
  .bs{gap:8px;margin:0}
- .bb{max-width:100%;align-self:stretch!important;margin:0!important;font-size:15px;border-radius:12px;animation:none}
+ .bb{max-width:100%;align-self:stretch!important;margin:0!important;font-size:13px;border-radius:18px;padding:8px 12px;animation:none}
  .bb::after{display:none}
  .big{top:30%;font-size:clamp(22px,8vw,40px)}
- .note{font-size:11px}
+ .note{color:#333;font-size:11px}
  .top .ib span{display:none}
+ #dots i{width:8px;height:8px}
+ .q{min-height:70vh}
 }
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-delay:0s!important}}
-</style>
-<style id="ref">
-#stage{background:#262626;padding:10px}
-.pg{background:#fff;padding:8px;gap:8px;max-width:1150px;margin:0 auto;box-shadow:0 0 40px #000}
-.fr{border:3px solid #111;outline:none;background:#fff}
-.cap,.bb{font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif;font-style:italic;text-transform:uppercase;text-align:center;line-height:1.25}
-.cap{background:#fbeeb0;color:#222;border:2px solid #111;border-radius:0;box-shadow:none;font-size:clamp(9px,1.1vw,14px);letter-spacing:.02em;font-weight:500;max-width:92%}
-.bb{background:#fff;color:#1a1a1a;border:1.5px solid #222;border-radius:50%/45%;padding:12px 20px;font-weight:500;font-size:clamp(9px,1.15vw,14px);max-width:72%}
-.bb b{color:#8a1a12;font-size:.78em;letter-spacing:.05em;margin-bottom:1px}
-.bb.l::after{left:28px}.bb.r::after{right:28px}
-@media(max-width:700px){
- .pg{padding:6px;gap:8px}
- .ov{background:#fff;padding:8px;gap:8px}
- .cap{font-size:12px;max-width:100%;align-self:stretch}
- .bb{font-size:12.5px;border-radius:18px;padding:8px 12px}
-}
 </style>
 </head>
 <body>
@@ -101,24 +100,25 @@ h1 span,.fl span{display:inline-block;opacity:0;transform:translateY(40px) scale
 </section>
 <main id="app">
  <div class="top">
-  <button class="ib" id="mus" title="Музыка">♪ <span>Музыка: өшірулі</span></button>
+  <button class="ib" id="mus">♪ <span>Музыка</span></button>
+  <button class="ib" id="ap">▶ <span>Авто</span></button>
   <b id="pt"></b>
-  <button class="ib" id="fs" title="Толық экран">⛶</button>
-  <button class="ib" id="rs1" title="Қайта бастау">↺ <span>Қайта бастау</span></button>
+  <button class="ib" id="fs">⛶</button>
+  <button class="ib" id="rs1">↺</button>
  </div>
  <div id="prog"></div>
  <div id="stage"></div>
+ <div id="dots"></div>
  <div class="bot">
-  <button class="ib" id="pv">◀ Алдыңғы бет</button>
-  <span id="cnt">1/10</span>
-  <button class="ib" id="nx">Келесі бет ▶</button>
+  <button class="ib" id="pv">◀ Алдыңғы</button>
+  <span id="cnt"></span>
+  <button class="ib" id="nx">Келесі ▶</button>
  </div>
 </main>
 <div class="fl" id="fl"></div>
 <div id="cu"><i></i><i></i></div>
 
 <script>
-/* ===== Иллюстрациялар: жарық түсті графикалық роман стилі (контур + плоский түс) ===== */
 let gid=0;
 const O='stroke="#1a1410" stroke-width="1.8" stroke-linejoin="round"';
 const W=b=>{const i='h'+gid++;return `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><defs><pattern id="${i}" width="4" height="4" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".8" fill="#000"/></pattern></defs>${b}<rect x="-200" y="-100" width="800" height="500" fill="url(#${i})" opacity=".05"/></svg>`};
@@ -136,18 +136,18 @@ const fire=(x,y,s)=>`<g transform="translate(${x} ${y}) scale(${s})"><path d="M-
 const smoke=(x,y)=>`<circle cx="${x}" cy="${y}" r="30" fill="#555" opacity=".45"/><circle cx="${x+25}" cy="${y-30}" r="26" fill="#555" opacity=".38"/><circle cx="${x+10}" cy="${y-62}" r="24" fill="#555" opacity=".3"/>`;
 const inter=()=>'<rect x="-200" y="-100" width="800" height="500" fill="#e6cc98"/>'+orn(40,'#cfae72')+orn(95,'#cfae72')+orn(150,'#cfae72')+orn(205,'#cfae72')+'<rect x="-200" y="252" width="800" height="60" fill="#c99a5a"/><path d="M-200 252H600" stroke="#1a1410" stroke-width="2"/>';
 const face=(x,y,s,o)=>{const sk=o.skin||'#d9a070',hr='#1a0e0a',br=o.mad?'M-19 -2L-4 -8M19 -2L4 -8':'M-18 -6Q-10 -10-3 -6M18 -6Q10 -10 3 -6';
-return `<g transform="translate(${x} ${y}) scale(${s})" ${O}><path d="M-68 190Q-66 52-24 40L24 40Q66 52 68 190Z" fill="${o.robe}"/><path d="M-44 90Q0 118 44 90M-60 140Q0 168 60 140" fill="none" stroke="#e6b64a" stroke-width="2.5"/><path d="M-17 40L0 98L17 40" fill="#00000030" stroke="#e6b64a" stroke-width="5"/><rect x="-11" y="16" width="22" height="30" fill="#b9854e"/><ellipse cx="-25" cy="6" rx="4" ry="7" fill="${sk}"/><ellipse cx="25" cy="6" rx="4" ry="7" fill="${sk}"/><path d="M-24-8Q-26 36 0 46Q26 36 24-8Q22-28 0-28Q-22-28-24-8Z" fill="${sk}"/><path d="M6-28Q24-26 24-8Q26 36 0 46Q16 20 6-28Z" fill="#7a3a10" opacity=".22" stroke="none"/><path d="M-16 1Q-10-3-4 1Q-10 5-16 1ZM16 1Q10-3 4 1Q10 5 16 1Z" fill="#fff" stroke-width="1.2"/><circle cx="-10" cy="1" r="2.3" fill="#000" stroke="none"/><circle cx="10" cy="1" r="2.3" fill="#000" stroke="none"/><path d="${br}" fill="none" stroke="${hr}" stroke-width="3.2" stroke-linecap="round"/><path d="M0 4L-3 16Q0 19 4 16" fill="none" stroke-width="1.4"/>${o.beard?`<path d="M-24 12Q-27 54 0 62Q27 54 24 12Q18 34 0 34Q-18 34-24 12Z" fill="${hr}"/>`:''}<path d="M-14 25Q-7 19 0 23Q7 19 14 25Q7 29 0 26Q-7 29-14 25Z" fill="${hr}" stroke-width="1"/><path d="M-5 33Q0 35 5 33" fill="none" stroke="#9a5a4a" stroke-width="1.6"/>${o.hat}</g>`};
+return `<g transform="translate(${x} ${y}) scale(${s})" ${O}><path d="M-68 190Q-66 52-24 40L24 40Q66 52 68 190Z" fill="${o.robe}"/><path d="M-44 90Q0 118 44 90M-60 140Q0 168 60 140" fill="none" stroke="#e6b64a" stroke-width="2.5"/><path d="M-17 40L0 98L17 40" fill="#00000030" stroke="#e6b64a" stroke-width="5"/><rect x="-11" y="16" width="22" height="30" fill="#b9854e"/><ellipse cx="-25" cy="6" rx="4" ry="7" fill="${sk}"/><ellipse cx="25" cy="6" rx="4" ry="7" fill="${sk}"/><path d="M-24-8Q-26 36 0 46Q26 36 24-8Q22-28 0-28Q-22-28-24-8Z" fill="${sk}"/><path d="M-16 1Q-10-3-4 1Q-10 5-16 1ZM16 1Q10-3 4 1Q10 5 16 1Z" fill="#fff" stroke-width="1.2"/><circle cx="-10" cy="1" r="2.3" fill="#000" stroke="none"/><circle cx="10" cy="1" r="2.3" fill="#000" stroke="none"/><path d="${br}" fill="none" stroke="${hr}" stroke-width="3.2" stroke-linecap="round"/><path d="M0 4L-3 16Q0 19 4 16" fill="none" stroke-width="1.4"/>${o.beard?`<path d="M-24 12Q-27 54 0 62Q27 54 24 12Q18 34 0 34Q-18 34-24 12Z" fill="${hr}"/>`:''}<path d="M-14 25Q-7 19 0 23Q7 19 14 25Q7 29 0 26Q-7 29-14 25Z" fill="${hr}" stroke-width="1"/><path d="M-5 33Q0 35 5 33" fill="none" stroke="#9a5a4a" stroke-width="1.6"/>${o.hat}</g>`};
 const cap=(c,f='#3a2a1e')=>`<path d="M-28-12Q-33-52 0-56Q33-52 28-12Q0-22-28-12Z" fill="${c}"/><path d="M-30-14Q0-26 30-14L29-2Q0-13-29-2Z" fill="${f}"/>`;
-const HK=cap('#d8392b')+'<path d="M-12-40Q0-46 12-40" fill="none" stroke="#e6b64a" stroke-width="2.5"/><circle cy="-34" r="3" fill="#e6b64a" stroke-width="1"/>';
-const HN='<path d="M-26-10Q-28-50 0-54Q28-50 26-10Q0-20-26-10Z" fill="#b8c2c8"/><path d="M-27-12Q0-22 27-12L26-4Q0-14-26-4Z" fill="#e6b64a"/><path d="M-2-54L0-76L2-54Z" fill="#e6b64a"/><path d="M-27-6Q-34 14-26 30L-20 6ZM27-6Q34 14 26 30L20 6Z" fill="#7a848a"/><path d="M-10-34Q0-40 10-34" stroke="#fff" stroke-width="2" fill="none" opacity=".7"/>';
+const HK=cap('#d8392b')+'<circle cy="-34" r="3" fill="#e6b64a" stroke-width="1"/>';
+const HN='<path d="M-26-10Q-28-50 0-54Q28-50 26-10Q0-20-26-10Z" fill="#b8c2c8"/><path d="M-27-12Q0-22 27-12L26-4Q0-14-26-4Z" fill="#e6b64a"/><path d="M-2-54L0-76L2-54Z" fill="#e6b64a"/>';
 const HW='<path d="M-26-12Q-30-52 0-58Q30-52 26-12Q0-22-26-12Z" fill="#f6f3ea"/><path d="M-28-14Q0-24 28-14L27-4Q0-14-27-4Z" fill="#222"/>';
 const HT=cap('#2f8f94'),HB=cap('#7a6a44');
-const HS='<path d="M-32-10Q-34-56 0-58Q34-56 32-10L33 52Q0 38-33 52ZM-22-10Q-24 36 0 44Q24 36 22-10Q22-24 0-26Q-22-24-22-10Z" fill="#f6f3ea" fill-rule="evenodd"/><path d="M-27-20Q0-32 27-20L26-12Q0-24-26-12Z" fill="#e6b64a"/>';
+const HS='<path d="M-32-10Q-34-56 0-58Q34-56 32-10L33 52Q0 38-33 52ZM-22-10Q-24 36 0 44Q24 36 22-10Q22-24 0-26Q-22-24-22-10Z" fill="#f6f3ea" fill-rule="evenodd"/>';
 const horse=c=>`<path d="M-34-4Q-34-18-14-18L14-18Q26-22 32-34L42-42L52-38L52-30L42-24Q36-10 30 8L28 30L22 30L24 10L8 8L-2 28L-8 28L-8 6L-24 6L-32 28L-38 28L-32 4Z" fill="${c}"/><path d="M-34-10Q-54-8-56 18Q-44 6-34 2Z" fill="${c}"/>`;
 const rider=(x,y,s,c='#d8392b',f=0,hc='#7a4a2a')=>`<g transform="translate(${x} ${y}) scale(${s})" ${O}>${horse(hc)}<path d="M-12-18L-8-44L6-44L10-18Z" fill="${c}"/><circle cx="-1" cy="-52" r="7" fill="#d9a070"/><path d="M-9-54Q-1-66 8-54Z" fill="#d8392b"/>${f?'<path d="M10-40L26-84" stroke="#e6b64a" stroke-width="2.4"/><path d="M26-84l24 6-20 13z" fill="#d8392b"/>':'<path d="M10-40L36-72" stroke="#e6b64a" stroke-width="2"/>'}</g>`;
 const dombra=(x,y,r)=>`<g transform="translate(${x} ${y}) rotate(${r})" ${O}><rect x="12" y="-3" width="100" height="6" fill="#5a2a10"/><ellipse rx="28" ry="19" fill="#c0813a"/><circle r="6" fill="#3a1a10"/></g>`;
 const SC={
- cover:()=>sky('#1a0504','#e08a3a')+sun(200,175,36,'#f6cf63')+'<path d="M-100 210L40 120L120 190L200 100L290 195L360 130L500 210V400H-100Z" fill="#5a1710" '+O+'/><path d="M200 100L180 128L200 120L216 130ZM40 120L24 146L42 137L58 149Z" fill="#f2e6c8"/>'+hill(228,'#2a0d0a',14)+face(-10,170,1.3,{robe:'#d8392b',hat:HK,beard:1,mad:1})+face(410,185,1.2,{robe:'#2f8f94',hat:HN,mad:1})+hill(262,'#0b0706',8)+rider(170,266,1.8,'#d8392b',1,'#2a140c')+rider(250,276,1.4,'#b3261e',1,'#2a140c')+rider(110,278,1.1,'#b3261e',0,'#1a0b08')+rider(310,284,1,'#b3261e',0,'#1a0b08'),
+ cover:()=>sky('#1a0504','#e08a3a')+sun(200,175,36,'#f6cf63')+'<path d="M-100 210L40 120L120 190L200 100L290 195L360 130L500 210V400H-100Z" fill="#5a1710" '+O+'/>'+hill(228,'#2a0d0a',14)+face(-10,170,1.3,{robe:'#d8392b',hat:HK,beard:1,mad:1})+face(410,185,1.2,{robe:'#2f8f94',hat:HN,mad:1})+hill(262,'#0b0706',8)+rider(170,266,1.8,'#d8392b',1,'#2a140c')+rider(250,276,1.4,'#b3261e',1,'#2a140c')+rider(110,278,1.1,'#b3261e',0,'#1a0b08')+rider(310,284,1,'#b3261e',0,'#1a0b08'),
  dawn:()=>sky('#f08a4b','#fde2a0')+sun(285,170,22,'#fff3b0')+hill(200,'#7da23a',16)+hill(232,'#5f8a2a',12)+yurt(70,244,.9)+yurt(115,252,.7)+rider(190,250,1.2,'#d8392b',1)+rider(250,258,1,'#2f8f94'),
  fort:()=>DAY()+hill(212,'#7da23a',10)+smoke(270,150)+fort(270,222,1.3)+yurt(60,250,1)+yurt(120,262,.7)+hill(270,'#5f8a2a',6),
  zh:()=>sky('#2b3a67','#e8a060')+st(30)+moon+hill(238,'#3a4a2a',10)+yurt(60,252,1,'#d9c090')+face(185,100,1.2,{robe:'#555',hat:HW,beard:1})+dombra(235,225,-42),
@@ -157,16 +157,15 @@ const SC={
  ride:()=>DAY()+hill(196,'#7da23a',14)+hill(230,'#5f8a2a',12)+rider(165,248,1.4,'#d8392b',1)+rider(240,256,1.4,'#2f8f94',1)+rider(305,246,1.1,'#7a6a44')+rider(95,258,.9,'#b3261e'),
  council:()=>inter()+face(95,118,.85,{robe:'#4a6a8a',hat:HT,beard:1})+face(305,118,.85,{robe:'#6a5a3a',hat:HB,beard:1})+face(200,108,1,{robe:'#d8392b',hat:HK,beard:1,mad:1}),
  attack:()=>sky('#6a8cb8','#e8c090')+smoke(210,130)+hill(228,'#5f8a2a',8)+fort(210,236,1.4)+fire(210,236,1.4)+rider(80,264,1.2,'#d8392b',1)+rider(330,268,1,'#2f8f94'),
- battle:()=>sky('#8a5a4a','#f0b878')+'<path d="M20 120L380 230M60 95L330 245M120 80L390 200" stroke="#fff" stroke-width="1" opacity=".5"/>'+hill(218,'#5f7a2a',6)+rider(110,250,1.4,'#d8392b',1)+rider(200,258,1.2,'#2f8f94')+rider(290,252,1.3,'#555',0,'#d8c8a8')+rider(345,266,1,'#555',0,'#d8c8a8')+'<circle cx="150" cy="205" r="3" fill="#ffd23a"/><circle cx="250" cy="220" r="2" fill="#ff7a1a"/>',
+ battle:()=>sky('#8a5a4a','#f0b878')+'<path d="M20 120L380 230M60 95L330 245M120 80L390 200" stroke="#fff" stroke-width="1" opacity=".5"/>'+hill(218,'#5f7a2a',6)+rider(110,250,1.4,'#d8392b',1)+rider(200,258,1.2,'#2f8f94')+rider(290,252,1.3,'#555',0,'#d8c8a8')+rider(345,266,1,'#555',0,'#d8c8a8'),
  folk:()=>DAY()+hill(205,'#7da23a',10)+yurt(50,236,.9)+yurt(350,240,1)+face(155,120,.8,{robe:'#d8392b',hat:HS,skin:'#e0aa7c'})+face(250,120,.8,{robe:'#4a6a8a',hat:HB,beard:1})+hill(280,'#5f8a2a',4),
- mt:()=>sky('#6fa8dc','#e8f1f8')+cloud(300,40,1)+'<path d="M-100 230L70 110L120 170L190 80L260 180L320 120L500 230Z" fill="#6a7f96" '+O+'/><path d="M190 80L170 110L190 102L205 114ZM70 110L54 136L72 127L88 139ZM320 120L304 144L322 135L338 146Z" fill="#fff"/>'+hill(248,'#7da23a',10)+rider(110,272,.9,'#d8392b',1)+rider(160,278,.8,'#2f8f94')+rider(205,274,.8,'#b3261e')+rider(250,280,.8,'#7a6a44'),
+ mt:()=>sky('#6fa8dc','#e8f1f8')+cloud(300,40,1)+'<path d="M-100 230L70 110L120 170L190 80L260 180L320 120L500 230Z" fill="#6a7f96" '+O+'/><path d="M190 80L170 110L190 102L205 114ZM70 110L54 136L72 127L88 139Z" fill="#fff"/>'+hill(248,'#7da23a',10)+rider(110,272,.9,'#d8392b',1)+rider(160,278,.8,'#2f8f94')+rider(205,274,.8,'#b3261e')+rider(250,280,.8,'#7a6a44'),
  sad:()=>sky('#1f2a4a','#6a5a6a')+st(40)+moon+hill(252,'#2a3a2a',8)+yurt(110,268,1,'#b9a478')+'<path d="M300 268V150" stroke="#e6b64a" stroke-width="2"/><path d="M300 150l32 10-32 14z" fill="#b3261e"/>',
  mem:()=>sky('#12183a','#7a3a3a')+st(70)+'<circle cx="200" cy="170" r="90" fill="#e6b64a" opacity=".18"/>'+hill(255,'#1a2a1a',8)+'<path d="M182 255V130L200 100L218 130V255Z" fill="#e6b64a" '+O+'/><circle cx="200" cy="160" r="9" fill="#b3261e"/><path d="M140 255V190L152 170L164 190V255ZM236 255V190L248 170L260 190V255Z" fill="#c0912f" '+O+'/>'
 };
-/* ===== Комикс мазмұны ===== */
 const P=[
 {t:'Тарихи кезең',a:"'a b' 'a c'",f:[
- {s:'dawn',n:'XIX ғасыр. Кең байтақ қазақ даласы Ресей империясы мен Қоқан хандығының қысымына түсті. Ел тәуелсіздігі мен жер тағдыры қыл үстінде тұрды.'},
+ {s:'dawn',n:'XIX ғасыр. Кең байтақ қазақ даласы Ресей империясы мен Қоқан хандығының қысымына түсті.'},
  {s:'fort',n:'Дала ішіне бекіністер салынып, құнарлы жайылымдар тарыла берді.',b:[['Ақсақал','Жайылым тарылса, мал қайда жайылады? Жер кетсе, ел де кетеді...','l']]},
  {s:'zh',n:'Сол заманның сырын жыраулар жырға қосты.',b:[['Нысанбай жырау','Жер — елдің анасы. Оны қорғамаған ел жетім қалады.','r']]}]},
 {t:'Кенесарының мақсаты',a:"'a b' 'c b'",nm:'КЕНЕСАРЫ',f:[
@@ -186,13 +185,13 @@ const P=[
  {s:'attack',n:'1838 жылы көтерілісшілер Ақмола бекінісін өртеді.',b:[['Наурызбай','Бекіністен қорықпаймыз. Ел азат болсын!','r']]},
  {s:'folk',n:'Халық батырларға бата берді.',b:[['Әже','Жолдарың болсын, балаларым! Құдай жар болсын!','l']]}]},
 {t:'Қиын шайқастар',a:"'a b' 'a c'",f:[
- {s:'battle',n:'Көтеріліс жылдары қазақ жасақтары патша әскерімен де, Қоқан бектерімен де шайқасты. Шайқастар ауыр, шығын көп болды.',b:[['Наурызбай','Тайма, жігіттер! Артымызда ел тұр!','l']]},
+ {s:'battle',n:'Қазақ жасақтары патша әскерімен де, Қоқан бектерімен де шайқасты. Шығын көп болды.',b:[['Наурызбай','Тайма, жігіттер! Артымызда ел тұр!','l']]},
  {s:'attack',n:'Бекіністер мен өзен бойындағы қақтығыс тоқтамады.',b:[['Кенесары','Жау көп, бірақ жүрегіміз мықты. Бірлікпен тұрайық!','r']]},
  {s:'sad',n:'Әр жеңіс қымбатқа түсті: аштық пен жоқшылық жасақты титықтатты.'}]},
 {t:'Қырғыз жеріне жорық',a:"'a b' 'c b'",f:[
  {s:'ride',n:'Мақсаты — жаңа тірек табу және күш жинау.',b:[['Кенесары','Таулы өлкеде ел жинап, күшімізді қайта жинаймыз.','l']]},
  {s:'mt',n:'1846 жылы Кенесары жасағымен Жетісу арқылы Іле Алатауы мен қырғыз жеріне бет алды.'},
- {s:'n',n:'Жағдай өте күрделі еді: қырғыз билеушілерінің бір бөлігі онымен келіспей, қарсы шықты.',b:[['Наурызбай','Әке, жол ауыр, бірақ біз бірге боламыз.','r']]}]},
+ {s:'n',n:'Жағдай күрделі еді: қырғыз билеушілерінің бір бөлігі онымен келіспей, қарсы шықты.',b:[['Наурызбай','Әке, жол ауыр, бірақ біз бірге боламыз.','r']]}]},
 {t:'Қайғылы оқиғалар',a:"'a b c'",f:[
  {s:'sad',n:'Жорық қайғылы аяқталды: 1846 жылы Наурызбай қаза тапты.'},
  {s:'mt',n:'1847 жылы Кенесары қырғыз манаптарының жасағымен болған ұрыстан кейін қолға түсіп, қаза тапты.'},
@@ -202,55 +201,102 @@ const P=[
  {s:'sad',n:'Дастан елдің мұңын, батырлардың тағдырын ұрпаққа жеткізеді.'},
  {s:'zh',n:'Жырау сөзі — халық жадының сақтаушысы.',b:[['Нысанбай жырау','Ер өлсе де, есімі атымен тірі жүреді.','l']]}]},
 {t:'Тарихта қалған есімдер',a:"'a b' 'a c'",f:[
- {s:'mem',n:'Кенесары мен Наурызбайдың есімі — ерлік пен азаттық идеясының белгісі.',big:'ТАРИХ ҰМЫТЫЛМАЙДЫ',rs:1},
+ {s:'mem',n:'Кенесары мен Наурызбайдың есімі — ерлік пен азаттық идеясының белгісі.',big:'ТАРИХ ҰМЫТЫЛМАЙДЫ'},
  {s:'k',n:'Кенесары — қазақтың соңғы ханы, ел тәуелсіздігі үшін күрескен тұлға.'},
- {s:'n',n:'Наурызбай — жас батыр, ерлік пен адалдықтың үлгісі.'}]}
+ {s:'n',n:'Наурызбай — жас батыр, ерлік пен адалдықтың үлгісі.'}]},
+{t:'Білімді тексер!',quiz:[
+ ['Кенесары кімнің немересі?',['Абылай хан','Жәңгір хан','Әбілқайыр хан'],0],
+ ['Көтеріліс қай жылы басталды?',['1802','1837','1889'],1],
+ ['Нысанбай жырау қай жылдары өмір сүрді?',['1815–1889','1802–1847','1837–1846'],0],
+ ['Наурызбай қай жылы қаза тапты?',['1837','1846','1847'],1]]}
 ];
-/* ===== Қозғалтқыш ===== */
 const $=i=>document.getElementById(i);
 const letters=(el,txt,d=.07)=>{el.innerHTML='';[...txt].forEach((c,i)=>{const s=document.createElement('span');s.textContent=c===' '?'\u00a0':c;s.style.animationDelay=i*d+'s';el.appendChild(s)})};
 $('cbg').innerHTML=W(SC.cover());
 letters($('h1'),'КЕНЕСАРЫ – НАУРЫЗБАЙ',.09);
-let cur=0,busy=false;
+$('dots').innerHTML=P.map((_,i)=>`<i data-i="${i}"></i>`).join('');
+$('dots').onclick=e=>{if(e.target.dataset.i!=null)show(+e.target.dataset.i)};
+/* ===== Дыбыс ===== */
+let ac,mg,on=false,sf=false;
+function initAudio(){
+ if(ac)return;
+ ac=new(window.AudioContext||window.webkitAudioContext)();mg=ac.createGain();mg.gain.value=0;mg.connect(ac.destination);const dl=ac.createDelay(),fb=ac.createGain(),wet=ac.createGain();dl.delayTime.value=.28;fb.gain.value=.35;wet.gain.value=.4;mg.connect(dl);dl.connect(fb);fb.connect(dl);dl.connect(wet);wet.connect(ac.destination);
+ [73.4,110].forEach(f=>{const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.value=f;g.gain.value=.07;o.connect(g);g.connect(mg);o.start()});
+ const pluck=(f,v=.5)=>{const sr=ac.sampleRate,n=Math.floor(sr*1.8),b=ac.createBuffer(1,n,sr),d=b.getChannelData(0),p=Math.round(sr/f);for(let i=0;i<p;i++)d[i]=(Math.random()*2-1)*v;for(let i=p;i<n;i++)d[i]=(d[i-p]+d[i-p+1])/2*.996;const s=ac.createBufferSource();s.buffer=b;s.connect(mg);s.start()};const mel=[293.7,0,440,392,349.2,392,293.7,0,293.7,349.2,392,440,523.3,440,392,0];let k=0;
+ setInterval(()=>{if(!on)return;const i=k++%mel.length;if(mel[i])pluck(mel[i]);if(i%8==0)pluck(146.8,.6)},300);
+}
+function sfx(f0,f1,d,v=.4,type='sine'){
+ if(!ac||!sf)return;const o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime;
+ o.type=type;o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(f1,t+d);
+ g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(ac.destination);o.start();o.stop(t+d+.05);
+}
+const drum=()=>{sfx(130,50,.5,.3);setTimeout(()=>sfx(110,45,.4,.2),240)};
+$('mus').onclick=()=>{
+ initAudio();on=!on;sf=on;ac.resume();mg.gain.setTargetAtTime(on?.7:0,ac.currentTime,.3);
+ $('mus').classList.toggle('on',on);$('mus').querySelector('span').textContent=on?'Қосулы':'Музыка';
+};
+/* ===== Қозғалтқыш ===== */
+let cur=0,busy=false,score=0;
+function quiz(p){
+ let i=0;score=0;const el=document.createElement('div');el.className='q';
+ const draw=()=>{
+  if(i>=p.quiz.length){
+   const r=score==p.quiz.length?'Тамаша! Сен нағыз тарихшысың!':score>=2?'Жақсы! Тағы бір қайталап көр.':'Комиксті қайта оқып шық!';
+   el.innerHTML=`<h2>Нәтиже: ${score} / ${p.quiz.length}</h2><p>${r}</p><button class="btn rs" style="opacity:1;animation:none">↺ ҚАЙТА БАСТАУ</button>`;
+   el.querySelector('button').onclick=()=>show(0);if(score==p.quiz.length)drum();return}
+  const [q,o,a]=p.quiz[i];
+  el.innerHTML=`<h2>Сұрақ ${i+1} / ${p.quiz.length}</h2><p>${q}</p><div class="o">${o.map((x,j)=>`<button data-j="${j}">${x}</button>`).join('')}</div>`;
+  el.querySelectorAll('.o button').forEach(b=>b.onclick=()=>{
+   const j=+b.dataset.j;el.querySelectorAll('.o button').forEach(x=>x.disabled=true);
+   el.querySelectorAll('.o button')[a].classList.add('ok');
+   if(j==a){score++;sfx(660,990,.3,.12)}else{b.classList.add('no');sfx(220,130,.35,.12)}
+   setTimeout(()=>{i++;draw()},1300)});
+ };
+ draw();return el;
+}
 function render(n){
- cur=n;const p=P[n],g=$('stage'),rw=p.a.split("' '");
- const cols=rw[0].replace(/'/g,'').split(' ').length;
+ cur=n;const p=P[n],g=$('stage');
+ $('pt').textContent=(n+1)+'-бет · '+p.t;$('cnt').textContent=(n+1)+'/'+P.length;
+ $('prog').style.width=(n+1)/P.length*100+'%';$('pv').disabled=n==0;$('nx').disabled=n==P.length-1;
+ document.querySelectorAll('#dots i').forEach((d,i)=>d.classList.toggle('a',i==n));
+ if(p.quiz){g.innerHTML='<div class="pg" style="display:block;padding:0"></div>';g.firstChild.appendChild(quiz(p));g.firstChild.firstChild.style.minHeight='100%';return}
+ const rw=p.a.split("' '"),cols=rw[0].replace(/'/g,'').split(' ').length;
  let h=`<div class="pg" style="grid-template-areas:${p.a};grid-template-columns:repeat(${cols},1fr);grid-template-rows:repeat(${rw.length},1fr)">`;
  p.f.forEach((f,i)=>{
-  h+=`<div class="fr" style="grid-area:${'abcd'[i]};--i:${i}"><div class="art">${W(SC[f.s]())}${f.big?`<div class="big">${f.big}</div>`:''}</div><div class="ov"><div class="cap">${f.n}</div><div class="bs">`+(f.b||[]).map((b,j)=>`<div class="bb ${b[2]}" style="--i:${i+j+1}"><b>${b[0]}</b>${b[1]}</div>`).join('')+(f.rs?`<button class="btn rs" onclick="show(0)">↺ КОМИКСТІ ҚАЙТА БАСТАУ</button>`:'')+(n==9&&i==0?`<div class="note">Ескерту: даталар тарихи деректерге сүйенеді; диалогтар — көркем баяндау.</div>`:'')+`</div></div></div>`;
+  h+=`<div class="fr" style="grid-area:${'abcd'[i]};--i:${i}"><div class="art">${W(SC[f.s]())}${f.big?`<div class="big">${f.big}</div>`:''}</div><div class="ov"><div class="cap">${f.n}</div><div class="bs">`+(f.b||[]).map((b,j)=>`<div class="bb ${b[2]}" style="--i:${i+j+1}"><b>${b[0]}</b>${b[1]}</div>`).join('')+(n==9&&i==0?`<div class="note">Даталар тарихи деректерге сүйенеді; диалогтар — көркем баяндау.</div>`:'')+`</div></div></div>`;
  });
  g.innerHTML=h+'</div>';g.scrollTop=0;
- $('pt').textContent=(n+1)+'-бет · '+p.t;$('cnt').textContent=(n+1)+'/'+P.length;
- $('prog').style.width=(n+1)*10+'%';$('pv').disabled=n==0;$('nx').disabled=n==P.length-1;
- if(p.nm){const f=$('fl');letters(f,p.nm,.08);f.classList.remove('on');void f.offsetWidth;f.classList.add('on')}
+ if(p.nm){const f=$('fl');letters(f,p.nm,.08);f.classList.remove('on');void f.offsetWidth;f.classList.add('on');drum()}
 }
 function show(n){
- if(busy||n<0||n>=P.length)return;busy=true;$('cu').classList.add('go');
+ if(busy||n<0||n>=P.length)return;busy=true;$('cu').classList.add('go');sfx(500,250,.25,.06);
  setTimeout(()=>render(n),550);setTimeout(()=>{$('cu').classList.remove('go');busy=false},1150);
 }
-$('start').onclick=()=>{
- const d=document.documentElement;(d.requestFullscreen||d.webkitRequestFullscreen||(()=>0)).call(d);
- $('cover').classList.add('out');$('app').style.display='flex';busy=false;show(0);
-};
+const fsOn=()=>{const d=document.documentElement;try{(d.requestFullscreen||d.webkitRequestFullscreen||(()=>0)).call(d)}catch(e){}};
+$('start').onclick=()=>{fsOn();initAudio();$('cover').classList.add('out');$('app').style.display='flex';busy=false;show(0);try{navigator.wakeLock&&navigator.wakeLock.request('screen')}catch(e){}};
 $('nx').onclick=()=>show(cur+1);$('pv').onclick=()=>show(cur-1);$('rs1').onclick=()=>show(0);
-$('fs').onclick=()=>{document.fullscreenElement?document.exitFullscreen():(document.documentElement.requestFullscreen||(()=>0)).call(document.documentElement)};
-addEventListener('keydown',e=>{if($('app').style.display!=='flex')return;if(e.key==='ArrowRight')show(cur+1);if(e.key==='ArrowLeft')show(cur-1)});
+$('fs').onclick=()=>{document.fullscreenElement?document.exitFullscreen():fsOn()};
+let at=null;
+$('ap').onclick=()=>{
+ if(at){clearInterval(at);at=null}else{at=setInterval(()=>{if(cur>=P.length-2){clearInterval(at);at=null;$('ap').classList.remove('on')}else show(cur+1)},14000)}
+ $('ap').classList.toggle('on',!!at);
+};
+addEventListener('keydown',e=>{
+ if($('app').style.display!=='flex')return;
+ if(['ArrowRight','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();show(cur+1)}
+ if(['ArrowLeft','PageUp','Backspace'].includes(e.key))show(cur-1);
+ if(e.key==='Home')show(0);if(e.key==='End')show(P.length-1);
+});
 let tx=0,ty=0;
 addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
 addEventListener('touchend',e=>{if($('app').style.display!=='flex')return;const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>70&&Math.abs(dy)<60)show(dx<0?cur+1:cur-1)},{passive:true});
-/* ===== Музыка (Web Audio-мен жасалған, авторлық құқықсыз) ===== */
-let ac,mg,on=false;
-$('mus').onclick=()=>{
- if(!ac){
-  ac=new(window.AudioContext||window.webkitAudioContext)();mg=ac.createGain();mg.gain.value=0;mg.connect(ac.destination);
-  [73.4,110,146.8].forEach(f=>{const o=ac.createOscillator(),l=ac.createBiquadFilter(),g=ac.createGain();o.type='sawtooth';o.frequency.value=f;l.type='lowpass';l.frequency.value=260;g.gain.value=.5;o.connect(l);l.connect(g);g.connect(mg);o.start()});
-  const sc=[293.7,329.6,370,440,493.9,587.3,440,370];let k=0;
-  setInterval(()=>{if(!on)return;const o=ac.createOscillator(),g=ac.createGain();o.type='triangle';o.frequency.value=sc[(k++*3+(k>>2))%sc.length];g.gain.setValueAtTime(.5,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+1.2);o.connect(g);g.connect(mg);o.start();o.stop(ac.currentTime+1.3)},650);
- }
- on=!on;ac.resume();mg.gain.setTargetAtTime(on?.14:0,ac.currentTime,.3);
- $('mus').querySelector('span').textContent='Музыка: '+(on?'қосулы':'өшірулі');
-};
-/* ===== Ұшқын бөлшектері ===== */
+/* параллакс */
+$('stage').addEventListener('pointermove',e=>{
+ const x=(e.clientX/innerWidth-.5)*-14,y=(e.clientY/innerHeight-.5)*-10;
+ document.querySelectorAll('.art svg').forEach(s=>s.style.transform=`scale(1.06) translate(${x}px,${y}px)`);
+});
+$('stage').addEventListener('click',e=>{if(e.target.closest('.bb'))sfx(800,600,.1,.06)});
+/* ұшқындар */
 const cv=$('fx'),cx=cv.getContext('2d');const E=[];
 function rz(){cv.width=innerWidth;cv.height=innerHeight}rz();addEventListener('resize',rz);
 for(let i=0;i<60;i++)E.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*2+.5,v:Math.random()*.8+.3,d:Math.random()*6});
