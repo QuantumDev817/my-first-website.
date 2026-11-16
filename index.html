@@ -278,7 +278,7 @@ $('nx').onclick=()=>show(cur+1);$('pv').onclick=()=>show(cur-1);$('rs1').onclick
 $('fs').onclick=()=>{document.fullscreenElement?document.exitFullscreen():fsOn()};
 let at=null;
 $('ap').onclick=()=>{
- if(at){clearInterval(at);at=null}else{at=setInterval(()=>{if(cur>=P.length-2){clearInterval(at);at=null;$('ap').classList.remove('on')}else show(cur+1)},74000)}
+ if(at){clearInterval(at);at=null}else{at=setInterval(()=>{if(cur>=P.length-2){clearInterval(at);at=null;$('ap').classList.remove('on')}else show(cur+1)},62000)}
  $('ap').classList.toggle('on',!!at);
 };
 addEventListener('keydown',e=>{
